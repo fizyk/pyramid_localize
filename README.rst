@@ -25,7 +25,7 @@ Instalation:
 
 ``pip install pyramid_localize``
 
-or add **pyramid_localize* to your **setup.py** requirements.
+or add **pyramid_localize** to your **setup.py** requirements.
 
 
 Tests:
