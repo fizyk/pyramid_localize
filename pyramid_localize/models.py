@@ -5,6 +5,8 @@ from sqlalchemy import Sequence
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Unicode
+from sqlalchemy import DateTime
+from sqlalchemy import func
 
 from pyramid_basemodel import Base
 
