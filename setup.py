@@ -12,7 +12,10 @@ with open(os.path.join(here, 'pyramid_localize', '__init__.py')) as v_file:
 def read(fname):
     return open(os.path.join(here, fname)).read()
 
-requirements = ['pyramid']
+requirements = [
+    'pyramid',
+    'Babel >= 0.9'
+]
 
 test_requires = [
     'WebTest',
@@ -56,5 +59,9 @@ setup(
     test_suite='tests',
     include_package_data=True,
     zip_safe=False,
+    message_extractors={'pyramid_localize': [
+                          ('**.py', 'python', None),
+                          ('resources/templates/**.mako', 'mako', None),
+                          ('resources/static/**', 'ignore', None)]},
     extras_require=extras_require,
 )

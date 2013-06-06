@@ -1,0 +1,58 @@
+# Translations template for pyramid_localize.
+# Copyright (C) 2013 ORGANIZATION
+# This file is distributed under the same license as the pyramid_localize
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: pyramid_localize 0.0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2013-06-06 22:20+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: pyramid_localize/resources/templates/_list.mako:5
+msgid "Language"
+msgstr ""
+
+#: pyramid_localize/resources/templates/_list.mako:6
+msgid "Translation domain"
+msgstr ""
+
+#: pyramid_localize/resources/templates/_list.mako:7
+#: pyramid_localize/resources/templates/_list.mako:8
+#: pyramid_localize/resources/templates/_list.mako:9
+msgid "${type} modification time"
+msgstr ""
+
+#: pyramid_localize/resources/templates/index.mako:4
+msgid "Translations"
+msgstr ""
+
+#: pyramid_localize/resources/templates/index.mako:6
+msgid "Update catalog"
+msgstr ""
+
+#: pyramid_localize/resources/templates/index.mako:7
+msgid "Compile catalog"
+msgstr ""
+
+#: pyramid_localize/resources/templates/index.mako:8
+msgid "Reload catalog"
+msgstr ""
+
+#: pyramid_localize/resources/templates/layout.mako:3
+msgid "Welcome, to pyramid_localize!"
+msgstr ""
+
+#: pyramid_localize/views/catalog.py:166
+msgid "Localizators has been reloaded"
+msgstr ""
+
