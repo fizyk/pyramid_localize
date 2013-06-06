@@ -13,6 +13,7 @@ def read(fname):
     return open(os.path.join(here, fname)).read()
 
 requirements = [
+    'tzf.pyramid_yml >=0.2',
     'pyramid',
     'Babel >= 0.9'
 ]
