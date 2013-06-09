@@ -6,7 +6,8 @@ python:
     # - "3.3"
 install:
     - "python setup.py install"
-    - "pip install pyramid_localize[babel] pyramid_localize[tests] coveralls --use-mirrors"
+    - "pip install pyramid_localize[babel] --use-mirrors"
+    - "pip install pyramid_localize[tests] coveralls --use-mirrors"
 script:
     - "python setup.py nosetests"
 after_success:
