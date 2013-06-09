@@ -15,8 +15,7 @@ def read(fname):
 requirements = [
     'pyramid_basemodel',
     'tzf.pyramid_yml >=0.2',
-    'pyramid',
-    'Babel >= 0.9'
+    'pyramid'
 ]
 
 test_requires = [
@@ -27,7 +26,8 @@ test_requires = [
 
 extras_require = {
     'docs': ['sphinx', 'sphinx_bootstrap_theme'],
-    'tests': test_requires
+    'tests': test_requires,
+    'babel': ['Babel >= 0.9']
 }
 
 setup(
