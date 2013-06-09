@@ -58,7 +58,7 @@ copyright = u'2013, ' + author
 # The short X.Y version.
 
 import re
-with open(os.path.join(os.path.dirname(__file__), '..', 'namespace', 'package', '__init__.py')) as v_file:
+with open(os.path.join(os.path.dirname(__file__), '..', '..', 'pyramid_localize', '__init__.py')) as v_file:
     version = re.compile(r".*__version__ = '(.*?)'", re.S).match(v_file.read()).group(1)
 
 # The full version, including alpha/beta/rc tags.
