@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-try:
+try:  # pragma: no cover
     import babel
 except ImportError:
     babel = False
@@ -26,7 +26,7 @@ def includeme(configurator):
     configuration = configurator.registry['config'].get('localize')
     # let's check if we have any configuration, or not
     if babel:
-        configurator.scan('pyramid_localize.subscribers')
+        configurator.scan('pyramid_localize.subscribers.i18n')
         if configuration:
             app_domain = configuration
             configurator.set_locale_negotiator(tools.locale_negotiator)
@@ -49,6 +49,5 @@ def includeme(configurator):
             configurator.add_request_method(locales, name='locales')
             configurator.add_request_method(locale_id, name='locale_id', reify=True)
     else:
-        # TODO: install fake translation methods only.
-        # TODO: emit log warnings if babel is present, but no config
+        configurator.scan('pyramid_localize.subscribers.fake')
         pass
