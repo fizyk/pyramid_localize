@@ -20,7 +20,6 @@ def includeme(configurator):
     '''
         i18n includeme action
     '''
-    config_defaults(configurator, 'pyramid_localize:config')
 
     # TODO: Find a better way to run other stuff than translation methods
     configuration = configurator.registry['config'].get('localize')
@@ -28,7 +27,9 @@ def includeme(configurator):
     if babel:
         configurator.scan('pyramid_localize.subscribers.i18n')
         if configuration:
-            app_domain = configuration
+            # once user allowed for localization, lets set up default values!
+            config_defaults(configurator, 'pyramid_localize:config')
+
             configurator.set_locale_negotiator(tools.locale_negotiator)
             translation_dirs = configuration.translation.dirs
             # if it's not a list, lets make it a list. This is to allow creating both single, and list-like config entry
@@ -49,5 +50,5 @@ def includeme(configurator):
             configurator.add_request_method(locales, name='locales')
             configurator.add_request_method(locale_id, name='locale_id', reify=True)
     else:
+        # including fake subscribers
         configurator.scan('pyramid_localize.subscribers.fake')
-        pass
