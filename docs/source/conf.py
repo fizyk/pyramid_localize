@@ -305,4 +305,5 @@ epub_copyright = u'2012, ' + author
 autoclass_content = 'both'
 
 # Intersphinx configuration
-intersphinx_mapping = {'python': ('http://docs.python.org/', None)}
+intersphinx_mapping = {'python': ('http://docs.python.org/', None),
+                       'pyramid': ('http://docs.pylonsproject.org/projects/pyramid/en/1.4-branch/', None)}

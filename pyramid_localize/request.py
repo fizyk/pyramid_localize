@@ -16,8 +16,9 @@ class LocalizeRequestMixin(object):
 
             :returns: kw
         '''
-        if 'locale' not in kw or kw['locale'] not in self.config.localize.available_languages:
-            kw['locale'] = self.locale
+        if '__LOCALE__' not in kw or\
+                kw['__LOCALE__'] not in self.config.localize.available_languages:
+            kw['__LOCALE__'] = self.locale
 
         return kw
 
@@ -40,6 +41,24 @@ def locale(request):
         :rtype: string
     '''
     return get_locale_name(request)
+
+
+def locale_id(request):
+    '''
+        Returns database id of a current locale name
+
+        :returns: database id of a language code needed for translations
+        :rtype: int
+    '''
+
+    if not request.locale in request._database_locales:
+        locale = Language(name=request.locale,
+                          native_name=request.locale,
+                          language_code=request.locale)
+        Session.add(locale)
+        request._database_locales = database_locales(request)
+
+    return request._database_locales[request.locale].id
 
 
 def database_locales(request):
@@ -73,21 +92,3 @@ def locales(request, config=False):
         return locales
 
     return request._database_locales
-
-
-def locale_id(request):
-    '''
-        Returns database id of a current locale name
-
-        :returns: database id of a language code needed for translations
-        :rtype: int
-    '''
-
-    if not request.locale in request._database_locales:
-        locale = Language(name=request.locale,
-                          native_name=request.locale,
-                          language_code=request.locale)
-        Session.add(locale)
-        request._database_locales = database_locales(request)
-
-    return request._database_locales[request.locale].id

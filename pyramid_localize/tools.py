@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+'''
+    methods in this module are tools, thank to which pyramid_localize works most of its magic
+'''
 import sys
 import os
 import logging
@@ -28,7 +31,8 @@ def set_localizer(request, reset=False):
         request.localizer = None
         for locale in request.config.localize.available_languages:
             logger.debug('Resetting {0} localizator'.format(locale))
-            tdirs = request.registry.queryUtility(ITranslationDirectories, default=[])
+            tdirs = request.registry.queryUtility(ITranslationDirectories,
+                                                  default=[])
             localizer = make_localizer(locale, tdirs)
             request.registry.registerUtility(localizer, ILocalizer,
                                              name=locale)
@@ -36,11 +40,13 @@ def set_localizer(request, reset=False):
     localizer = get_localizer(request)
 
     def auto_translate(*args, **kwargs):
-        # lets pass default domain, so we don't have to determine it with each _() function in apps.
+        # lets pass default domain, so we don't have to determine it with
+        # each _() function in apps.
         if len(args) <= 1 and not 'domain' in kwargs:
             kwargs['domain'] = request.config.localize.domain
 
-        # unlike in examples we use TranslationString, to make sure we always use appropriate domain
+        # unlike in examples we use TranslationString, to make sure we always
+        # use appropriate domain
         return localizer.translate(TranslationString(*args, **kwargs))
 
     request.localizer = localizer
@@ -50,6 +56,7 @@ def set_localizer(request, reset=False):
 def locale_negotiator(request):
     '''
         Locale negotiator. It sets best suited locale variable for given user:
+
         1. Tries the address url first, if the first part has locale indicator.
         2. It checks cookies, for value set here
         3. Tries to best match accepted language for browser user is visiting website with
@@ -60,20 +67,22 @@ def locale_negotiator(request):
         :rtype: str
 
     '''
+    available_languages = request.config.localize.available_languages
     locale = 'en'
     # We do not have a matchdict present at the moment, lets get our own split
     # (request.path is always a /, so we'll get two elements)
     route_elements = request.path.split('/')
     # we check if route_element[1] is a locale indicator for path
-    if len(route_elements[1]) == 2 and route_elements[1] in request.config.localize.available_languages:
+    if len(route_elements[1]) == 2 and route_elements[1] in available_languages:
         locale = route_elements[1]
-        # TODO: Code below is a wish. After detecting locale on url, remove it and progress with standard url name
+        # TODO: Code below is a wish,. After detecting locale on url, remove it and progress with standard url name
         # route_elements.remove(locale)
         # request.set_property(lambda request: '/'.join(route_elements), name='path', reify=True)
-    elif request.cookies and 'lang' in request.cookies and request.cookies['lang'] in request.config.localize.available_languages:
+    elif request.cookies and 'lang' in request.cookies and\
+            request.cookies['lang'] in available_languages:
         locale = request.cookies['lang']
     elif request.accept_language:
-        locale = request.accept_language.best_match(request.config.localize.available_languages)
+        locale = request.accept_language.best_match(available_languages)
 
     return locale
 

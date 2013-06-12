@@ -26,6 +26,8 @@ Contents
    :maxdepth: 2
 
    basic
+   advanced
+   api
 
 TODO
 ----
