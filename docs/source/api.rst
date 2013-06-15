@@ -7,3 +7,4 @@ API
    api/models
    api/request
    api/tools
+   api/views

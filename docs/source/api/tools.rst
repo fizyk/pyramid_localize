@@ -1,4 +1,4 @@
-Tools
+tools
 =====
 
 .. automodule:: pyramid_localize.tools

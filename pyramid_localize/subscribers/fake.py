@@ -39,6 +39,9 @@ def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
         :param str default: Default message
         :param dict mapping: Mapping dictionary for message variables
 
+        :returns: *translated* string
+        :rtype: str
+
     '''
     # Try to return defaults first:
     tstr = None

@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 class CatalogView(object):
 
     '''
-            Class for all translation views
+            View class for catalog manipulation actions
     '''
 
     def __init__(request):
@@ -59,7 +59,23 @@ class CatalogView(object):
     @view_config(route_name='localize:index', renderer='pyramid_localize:resources/templates/index.mako')
     def index(self):
         '''
-            Simple action to return list of files, and list of domains (preferably with additional data, like compilation date, .po creation date)
+            Simple action listing domains, and its files of files with additional data, like compilation date, .po update date.
+
+            :returns:
+
+                .. code-block:: python
+
+                    {
+                        'language': {
+                            'domain1': {
+                                'po': 'modification time',
+                                'pot': 'modification time',
+                                'mo': 'modification time',
+                                },
+                            # more domains
+                        },
+                        # more languages
+                    }
         '''
         translations = {}
         translation_sources = self.request.config.localize.translation.sources
@@ -89,7 +105,10 @@ class CatalogView(object):
     @view_config(route_name='localize:update', renderer='pyramid_localize:resources/templates/index.mako')
     def update_catalog(self):
         '''
-            This action updates or initializes catalogs
+            This action updates or initializes translation catalogs (.po files) from their respective transaltion templates (.pot).
+            This action is performed for every language defined within `localize.available_languages` config key.
+
+            Redirects itself to **localize:index**.
         '''
         data = self.index()
         translation_sources = self.request.config.localize.translation.sources
@@ -128,7 +147,9 @@ class CatalogView(object):
     @view_config(route_name='localize:compile', renderer='pyramid_localize:resources/templates/index.mako')
     def compile_catalog(self):
         '''
-            This action compiles catalogs
+            This action compiles all translation files (.po) for every language defined into .mo file that's used by gettext.
+
+            redirects to **localize:index**.
         '''
         data = self.index()
         translation_sources = self.request.config.localize.translation.sources
@@ -155,10 +176,26 @@ class CatalogView(object):
     @view_config(route_name='localize:reload', renderer='pyramid_localize:resources/templates/index.mako')
     def reload_catalog(self):
         '''
-            This action is responsible for reloading catalogs
+            Reloads transation caalog for application it's run in.
+
+            .. note::
+                To see how is this happening, you might want to see :func:`~pyramid_localize.tools.set_localizer`
+
+            :returns:
+
+                Only for xhr requests:
+
+                .. code-block:: python
+
+                    {
+                        'status': True,
+                        'msg': 'Localizators has been reloaded' # translated
+                    }
+
+                non xhr requests: Redirects to **localize:index**.
+
+
         '''
-        data = self.index()
-        translation_sources = self.request.config.localize.translation.sources
 
         set_localizer(self.request, True)
 
