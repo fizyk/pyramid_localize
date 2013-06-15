@@ -3,7 +3,6 @@
 from pyramid.events import subscriber
 from pyramid.events import BeforeRender
 from pyramid.events import NewRequest
-from translationstring import _interp_regex
 
 from pyramid_localizer.tools import dummy_autotranslate
 

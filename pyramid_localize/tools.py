@@ -6,6 +6,7 @@ import sys
 import os
 import logging
 
+from translationstring import _interp_regex
 from pyramid.i18n import get_localizer
 from pyramid.i18n import make_localizer
 from pyramid.i18n import TranslationString
