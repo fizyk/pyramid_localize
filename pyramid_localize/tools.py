@@ -31,7 +31,7 @@ def set_localizer(request, reset=False):
     if reset:
 
         request.localizer = None
-        for locale in request.config.localize.available_languages:
+        for locale in request.config.localize.locales.available:
             logger.debug('Resetting {0} localizator'.format(locale))
             tdirs = request.registry.queryUtility(ITranslationDirectories,
                                                   default=[])
@@ -69,7 +69,7 @@ def locale_negotiator(request):
         :rtype: str
 
     '''
-    available_languages = request.config.localize.available_languages
+    available_languages = request.config.localize.locales.available
     locale = 'en'
     # We do not have a matchdict present at the moment, lets get our own split
     # (request.path is always a /, so we'll get two elements)
@@ -98,7 +98,7 @@ def destination_path(request):
         :returns: A combined translation destination path
         :rtype: str
     '''
-    package_name, filename = resolve_asset_spec(request.config.i18n.translation.destination)
+    package_name, filename = resolve_asset_spec(request.config.localize.translation.destination)
 
     if package_name is None:  # absolute filename
         directory = filename
@@ -136,4 +136,3 @@ def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
         tstr = _interp_regex.sub(replace, tstr)
 
     return tstr
-

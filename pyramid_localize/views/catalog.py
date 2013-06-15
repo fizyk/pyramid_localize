@@ -80,7 +80,7 @@ class CatalogView(object):
         translations = {}
         translation_sources = self.request.config.localize.translation.sources
 
-        for language in self.request.config.localize.available_languages:
+        for language in self.request.config.localize.locales.available:
             translations[language] = {}
             for domain in translation_sources:
                 translations[language][domain] = {
@@ -106,7 +106,7 @@ class CatalogView(object):
     def update_catalog(self):
         '''
             This action updates or initializes translation catalogs (.po files) from their respective transaltion templates (.pot).
-            This action is performed for every language defined within `localize.available_languages` config key.
+            This action is performed for every language defined within `localize.locales.available` config key.
 
             Redirects itself to **localize:index**.
         '''
@@ -120,7 +120,7 @@ class CatalogView(object):
             if not os.path.isfile(pot_file):
                 logger.critical('pot file for {domain} does not exists!'.format(domain=domain))
 
-            for language in self.request.config.localize.available_languages:
+            for language in self.request.config.localize.locales.available:
                 po_file = self._translation_file(language, domain)
                 if os.path.isfile(po_file):
                     logger.debug('po file for {domain}, {language} exists, proceeding with update'.format(
@@ -156,7 +156,7 @@ class CatalogView(object):
 
         for domain in translation_sources:
 
-            for language in self.request.config.localize.available_languages:
+            for language in self.request.config.localize.locales.available:
                 po_file = self._translation_file(language, domain)
                 mo_file = self._translation_file(language, domain, 'mo')
                 if os.path.isfile(po_file):

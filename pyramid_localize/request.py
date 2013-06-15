@@ -17,7 +17,7 @@ class LocalizeRequestMixin(object):
             :returns: kw
         '''
         if '__LOCALE__' not in kw or\
-                kw['__LOCALE__'] not in self.config.localize.available_languages:
+                kw['__LOCALE__'] not in self.config.localize.locales.available:
             kw['__LOCALE__'] = self.locale
 
         return kw
@@ -86,7 +86,7 @@ def locales(request, config=False):
     '''
     if config:
         locales = {}
-        for locale in request.config.localize.available_languages:
+        for locale in request.config.localize.locales.available:
             locales[locale] = request._database_locales[locale]
 
         return locales
