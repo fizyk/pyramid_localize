@@ -5,8 +5,7 @@ from pyramid.events import BeforeRender
 from pyramid.events import NewRequest
 from translationstring import _interp_regex
 
-
-from pyramid.compat import text_type
+from pyramid_localizer.tools import dummy_autotranslate
 
 
 @subscriber(BeforeRender)
@@ -28,32 +27,3 @@ def add_localizer(event):
     '''
 
     event.request._ = dummy_autotranslate
-
-
-def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
-    '''
-        Method that simulate autotranslate
-
-        :param str msgid: Message or message id
-        :param str domain: Translation domain
-        :param str default: Default message
-        :param dict mapping: Mapping dictionary for message variables
-
-        :returns: *translated* string
-        :rtype: str
-
-    '''
-    # Try to return defaults first:
-    tstr = None
-    if default:
-        tstr = default
-    else:
-        tstr = msgid
-
-    if mapping and tstr:
-        def replace(match):
-            whole, param1, param2 = match.groups()
-            return text_type(mapping.get(param1 or param2, whole))
-        tstr = _interp_regex.sub(replace, tstr)
-
-    return tstr

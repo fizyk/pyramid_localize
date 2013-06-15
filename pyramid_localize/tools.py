@@ -12,8 +12,9 @@ from pyramid.i18n import TranslationString
 from pyramid.asset import resolve_asset_spec
 from pyramid.path import package_path
 from pyramid.httpexceptions import HTTPNotFound
-
-from pyramid.interfaces import ILocalizer, ITranslationDirectories
+from pyramid.interfaces import ILocalizer
+from pyramid.interfaces import ITranslationDirectories
+from pyramid.compat import text_type
 
 logger = logging.getLogger(__name__)
 
@@ -105,3 +106,33 @@ def destination_path(request):
         package = sys.modules[package_name]
         directory = os.path.join(package_path(package), filename)
     return directory
+
+
+def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
+    '''
+        Method that simulate autotranslate
+
+        :param str msgid: Message or message id
+        :param str domain: Translation domain
+        :param str default: Default message
+        :param dict mapping: Mapping dictionary for message variables
+
+        :returns: *translated* string
+        :rtype: str
+
+    '''
+    # Try to return defaults first:
+    tstr = None
+    if default:
+        tstr = default
+    else:
+        tstr = msgid
+
+    if mapping and tstr:
+        def replace(match):
+            whole, param1, param2 = match.groups()
+            return text_type(mapping.get(param1 or param2, whole))
+        tstr = _interp_regex.sub(replace, tstr)
+
+    return tstr
+
