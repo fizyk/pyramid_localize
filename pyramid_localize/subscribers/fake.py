@@ -4,7 +4,7 @@ from pyramid.events import subscriber
 from pyramid.events import BeforeRender
 from pyramid.events import NewRequest
 
-from pyramid_localizer.tools import dummy_autotranslate
+from pyramid_localize.tools import dummy_autotranslate
 
 
 @subscriber(BeforeRender)
