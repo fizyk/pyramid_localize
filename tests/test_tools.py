@@ -6,10 +6,55 @@ import unittest
 from mock import Mock
 
 from pyramid.path import package_path
+from pyramid.request import Request
+from pyramid.i18n import Localizer
+from pyramid import testing
 
 from pyramid_localize.tools import dummy_autotranslate
 from pyramid_localize.tools import destination_path
 from pyramid_localize.tools import locale_negotiator
+from pyramid_localize.tools import set_localizer
+
+
+class SetLocalizerTests(unittest.TestCase):
+
+    def setUp(self):
+        self.config = testing.setUp()
+
+    def tearDown(self):
+        testing.tearDown()
+
+    def _makeRequest(self, environ=None):
+        if environ is None:
+            environ = {}
+        request = Request(environ)
+        request.registry = self.config.registry
+        request.config = Mock()
+        mock_configuration = {
+            'localize.locales.available': ['en', 'pl', 'de', 'cz']}
+        request.config.configure_mock(**mock_configuration)
+        set_localizer(request)
+        return request
+
+    def test_simple(self):
+        '''simple localizer setting test'''
+        request = self._makeRequest()
+        self.assertTrue(isinstance(request.localizer, Localizer))
+        self.assertTrue(hasattr(request, '_'))
+
+    def test_reset(self):
+        '''test resetting localizer capabilites'''
+        request = self._makeRequest()
+        old_localizer = request.localizer
+        self.assertEqual(old_localizer, request.localizer)
+        set_localizer(request, reset=True)
+        self.assertNotEqual(old_localizer, request.localizer)
+
+    def test_translate(self):
+        '''simple test for translating method call'''
+        request = self._makeRequest()
+        msgid = 'Test message'
+        self.assertEqual(msgid, request._(msgid))
 
 
 class LocaleNegotiatorTests(unittest.TestCase):
