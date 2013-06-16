@@ -49,6 +49,15 @@ class SubscribersTests(unittest.TestCase):
         '''i18n:Test before render'''
         self.config.scan('pyramid_localize.subscribers.i18n')
         request = self._makeRequest()
+        before_render_event = self._makeBeforeRender({'request': request}, {})
+        request.registry.notify(before_render_event)
+        self.assertTrue('localizer' in before_render_event)
+        self.assertTrue('_' in before_render_event)
+
+    def test_i18n_before_render_and_request(self):
+        '''i18n:Test before render with new request'''
+        self.config.scan('pyramid_localize.subscribers.i18n')
+        request = self._makeRequest()
         request.registry.notify(NewRequest(request))
         before_render_event = self._makeBeforeRender({'request': request}, {})
         request.registry.notify(before_render_event)
