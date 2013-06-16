@@ -70,7 +70,7 @@ def locale_negotiator(request):
 
     '''
     available_languages = request.config.localize.locales.available
-    locale = 'en'
+    locale = request.config.localize.locales.default
     # We do not have a matchdict present at the moment, lets get our own split
     # (request.path is always a /, so we'll get two elements)
     route_elements = request.path.split('/')

@@ -21,7 +21,7 @@ class DestinationPathTests(unittest.TestCase):
         self.assertEqual(result, path)
 
     def test_package(self):
-        '''testing translation fullpath resolve'''
+        '''testing translation package:path resolve'''
         request = Mock()
         mock_configuration = {
             'config.localize.translation.destination': 'tests:translations'}
