@@ -19,6 +19,8 @@ Package to provide translation methods for pyramid, and means to reload translat
     :target: https://crate.io/packages/pyramid_localize/
     :alt: Number of PyPI downloads
 
+Documentation can be found on `readthedocs.org <https://pyramid_localize.readthedocs.org/en/latest/>`_.
+
 
 Instalation:
 ============
