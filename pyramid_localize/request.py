@@ -2,6 +2,7 @@
 
 import pyramid.request
 from pyramid.i18n import get_locale_name
+from pyramid.compat import text_type
 from pyramid_basemodel import Session
 from pyramid_localize.models import Language
 
@@ -52,11 +53,7 @@ def locale_id(request):
     '''
 
     if not request.locale in request._database_locales:
-        locale = Language(name=request.locale,
-                          native_name=request.locale,
-                          language_code=request.locale)
-        Session.add(locale)
-        request._database_locales = database_locales(request)
+        _create_locale(request.locale, request)
 
     return request._database_locales[request.locale].id
 
@@ -87,8 +84,18 @@ def locales(request, config=False):
     if config:
         locales = {}
         for locale in request.config.localize.locales.available:
+            if not locale in request._database_locales:
+                _create_locale(locale, request)
             locales[locale] = request._database_locales[locale]
 
         return locales
 
     return request._database_locales
+
+
+def _create_locale(locale, request):
+    new_locale = Language(name=text_type(locale),
+                          native_name=text_type(locale),
+                          language_code=text_type(locale))
+    Session.add(new_locale)
+    request._database_locales = database_locales(request)
