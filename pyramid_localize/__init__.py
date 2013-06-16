@@ -2,7 +2,7 @@
 
 try:  # pragma: no cover
     import babel
-except ImportError:
+except ImportError:  # pragma: no cover
     babel = False
 
 from tzf.pyramid_yml import config_defaults

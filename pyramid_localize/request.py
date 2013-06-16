@@ -22,7 +22,7 @@ class LocalizeRequestMixin(object):
 
         return kw
 
-    def route_url(self, route_name, *elements, **kw):
+    def route_url(self, route_name, *elements, **kw):  # pragma: no cover
         '''
             Overwrites original route_url to handle default locale
 
@@ -32,7 +32,7 @@ class LocalizeRequestMixin(object):
         return pyramid.request.Request.route_url(self, route_name, *elements, **self.default_locale(**kw))
 
 
-def locale(request):
+def locale(request):  # pragma: no cover
     '''
         When called for the first time, it ask enviroment for languagecode, which is later available as a pure property
         overriding this method

@@ -25,13 +25,13 @@ class Language(Base):
     native_name = Column(Unicode(45), nullable=False)
     language_code = Column(String(2), unique=True, nullable=False)  # ISO 639-1 (Alpha2)
 
-    def __unicode__(self):
+    def __unicode__(self):  # pragma: no cover
         '''
             Language to unicode conversion
         '''
         return self.name
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         '''
             Language to string conversion
         '''
