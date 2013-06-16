@@ -22,6 +22,7 @@ test_requires = [
     'WebTest',
     'nose',
     'coverage',
+    'mock'
 ]
 
 extras_require = {
