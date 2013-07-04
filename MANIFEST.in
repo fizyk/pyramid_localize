@@ -1,4 +1,6 @@
 include *.rst *.py
-recursive-include pyramid_localize *.py
+recursive-include pyramid_localize *.py *.yml
+recursive-include pyramid_localize/resources *.mako *.pot
 recursive-include docs *
 prune docs/build
+recursive-include tests *.py *.yml
