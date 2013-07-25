@@ -25,7 +25,7 @@ class CatalogView(object):
             View class for catalog manipulation actions
     '''
 
-    def __init__(request):
+    def __init__(self, request):
         '''Assign request'''
         self.request = request
 
