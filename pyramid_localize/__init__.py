@@ -13,7 +13,7 @@ from pyramid_localize.request import database_locales
 from pyramid_localize.request import locales
 from pyramid_localize.request import locale_id
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 
 def includeme(configurator):
