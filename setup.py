@@ -28,7 +28,7 @@ test_requires = [
 extras_require = {
     'docs': ['sphinx'],
     'tests': test_requires,
-    'babel': ['Babel >= 0.9']
+    'babel': ['Babel >= 1.0']
 }
 
 setup(
