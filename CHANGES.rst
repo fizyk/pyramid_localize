@@ -1,6 +1,11 @@
 =======
 CHANGES
 =======
+
+current
+-------
+- license information
+
 0.0.2
 -----
 - fixed MANIFEST.in [fizyk]
