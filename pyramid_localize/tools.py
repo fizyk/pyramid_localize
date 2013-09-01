@@ -35,7 +35,6 @@ def set_localizer(request, reset=False):
 
     if reset:
 
-        request.localizer = None
         for locale in request.config.localize.locales.available:
             logger.debug('Resetting {0} localizator'.format(locale))
             tdirs = request.registry.queryUtility(ITranslationDirectories,
@@ -43,8 +42,6 @@ def set_localizer(request, reset=False):
             localizer = make_localizer(locale, tdirs)
             request.registry.registerUtility(localizer, ILocalizer,
                                              name=locale)
-
-    localizer = get_localizer(request)
 
     def auto_translate(*args, **kwargs):
         # lets pass default domain, so we don't have to determine it with
@@ -54,9 +51,8 @@ def set_localizer(request, reset=False):
 
         # unlike in examples we use TranslationString, to make sure we always
         # use appropriate domain
-        return localizer.translate(TranslationString(*args, **kwargs))
+        return request.localizer.translate(TranslationString(*args, **kwargs))
 
-    request.localizer = localizer
     request._ = auto_translate
 
 

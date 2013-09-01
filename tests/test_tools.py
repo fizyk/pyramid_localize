@@ -8,6 +8,7 @@ from mock import Mock
 from pyramid.path import package_path
 from pyramid.request import Request
 from pyramid.i18n import Localizer
+from pyramid.interfaces import ILocalizer
 from pyramid import testing
 
 from pyramid_localize.tools import dummy_autotranslate
@@ -46,8 +47,15 @@ class SetLocalizerTests(unittest.TestCase):
         '''test resetting localizer capabilites'''
         request = self._makeRequest()
         old_localizer = request.localizer
-        self.assertEqual(old_localizer, request.localizer)
+        request_utility = request.registry.queryUtility(ILocalizer,
+                                                        name=request.locale_name)
+        self.assertEqual(request_utility, request.localizer)
         set_localizer(request, reset=True)
+        # these are equal due to request.localizer
+        # being reify property since pyramid 1.5
+        self.assertEqual(old_localizer, request.localizer)
+        # let's create a new request, to check that
+        request = self._makeRequest()
         self.assertNotEqual(old_localizer, request.localizer)
 
     def test_translate(self):

@@ -15,7 +15,7 @@ def read(fname):
 requirements = [
     'pyramid_basemodel',
     'tzf.pyramid_yml >=0.2',
-    'pyramid'
+    'pyramid >=1.5a1'
 ]
 
 test_requires = [

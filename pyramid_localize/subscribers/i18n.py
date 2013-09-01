@@ -18,8 +18,7 @@ def global_renderer(event):
         Subscriber, which extends variables available for renderer with translator method, and localizer object
     '''
     request = event['request']
-    if not hasattr(request, 'localizer'):
-        set_localizer(request)
+    set_localizer(request)
 
     event['_'] = request._
     event['localizer'] = request.localizer
