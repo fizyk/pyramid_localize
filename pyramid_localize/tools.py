@@ -60,10 +60,12 @@ def locale_negotiator(request):
     '''
         Locale negotiator. It sets best suited locale variable for given user:
 
-        1. Tries the address url first, if the first part has locale indicator.
-        2. It checks cookies, for value set here
-        3. Tries to best match accepted language for browser user is visiting website with
-        4. Defaults to en
+        1. Check for presence and value of **request._LOCALE_** value
+        2. Then tries the address url, if the first part has locale indicator.
+        3. It checks cookies, for value set here
+        4. Tries to best match accepted language for browser user is visiting
+            website with
+        5. Defaults to **localize.locales.default** configuration setting value
 
         :param pyramid.request.Request request: a request object
         :returns: locale name
@@ -75,15 +77,14 @@ def locale_negotiator(request):
     # We do not have a matchdict present at the moment, lets get our own split
     # (request.path is always a /, so we'll get two elements)
     route_elements = request.path.split('/')
+    if hasattr(request, '_LOCALE_') and request._LOCALE_ in available_languages:
+        locale = request._LOCALE_
     # we check if route_element[1] is a locale indicator for path
-    if len(route_elements[1]) == 2 and route_elements[1] in available_languages:
+    elif len(route_elements[1]) == 2 and route_elements[1] in available_languages:
         locale = route_elements[1]
-        # TODO: Code below is a wish,. After detecting locale on url, remove it and progress with standard url name
-        # route_elements.remove(locale)
-        # request.set_property(lambda request: '/'.join(route_elements), name='path', reify=True)
-    elif request.cookies and 'lang' in request.cookies and\
-            request.cookies['lang'] in available_languages:
-        locale = request.cookies['lang']
+    elif request.cookies and '_LOCALE_' in request.cookies and\
+            request.cookies['_LOCALE_'] in available_languages:
+        locale = request.cookies['_LOCALE_']
     elif request.accept_language:
         locale = request.accept_language.best_match(available_languages)
 

@@ -73,7 +73,7 @@ class LocaleNegotiatorTests(unittest.TestCase):
         mock_configuration = {
             'config.localize.locales.available': ['en', 'pl', 'de', 'cz'],
             'config.localize.locales.default': 'en',
-            'cookies': {'lang': 'cz'},
+            'cookies': {'_LOCALE_': 'cz'},
             'accept_language.best_match.return_value': 'de',
             'path': '/pl/page'}
         self.request.configure_mock(**mock_configuration)
