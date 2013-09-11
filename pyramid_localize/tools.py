@@ -60,12 +60,12 @@ def locale_negotiator(request):
     '''
         Locale negotiator. It sets best suited locale variable for given user:
 
-        1. Check for presence and value of request._LOCALE_ value
+        1. Check for presence and value of **request._LOCALE_** value
         2. Then tries the address url, if the first part has locale indicator.
-        2. It checks cookies, for value set here
-        3. Tries to best match accepted language for browser user is visiting
+        3. It checks cookies, for value set here
+        4. Tries to best match accepted language for browser user is visiting
             website with
-        4. Defaults to **localize.locales.default** configuration setting value
+        5. Defaults to **localize.locales.default** configuration setting value
 
         :param pyramid.request.Request request: a request object
         :returns: locale name
