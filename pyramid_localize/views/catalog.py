@@ -39,7 +39,9 @@ class CatalogView(object):
         '''
 
         translation_destination = destination_path(self.request)
-        return os.path.join(translation_destination, language, 'LC_MESSAGES', domain + '.' + extension)
+        return os.path.abspath(os.path.join(translation_destination, language,
+                                            'LC_MESSAGES',
+                                            domain + '.' + extension))
 
     def _translation_template_path(self, spec):
         '''
@@ -50,11 +52,12 @@ class CatalogView(object):
         # resolving possible asset spec to path (pyramid way):
         package_name, filename = resolve_asset_spec(spec)
         if package_name is None:  # absolute filename
-            return filename
+            return os.path.abspath(filename)
         else:
             __import__(package_name)
             package = sys.modules[package_name]
-            return os.path.join(package_path(package), filename)
+            return os.path.abspath(os.path.join(package_path(package),
+                                                filename))
 
     @view_config(route_name='localize:index', renderer='pyramid_localize:resources/templates/index.mako')
     def index(self):
@@ -116,7 +119,6 @@ class CatalogView(object):
         for domain in translation_sources:
 
             pot_file = self._translation_template_path(translation_sources[domain])
-
             if not os.path.isfile(pot_file):
                 logger.critical('pot file for {domain} does not exists!'.format(domain=domain))
 
@@ -125,6 +127,7 @@ class CatalogView(object):
                 if os.path.isfile(po_file):
                     logger.debug('po file for {domain}, {language} exists, proceeding with update'.format(
                         domain=domain, language=language))
+
                     if subprocess.call([self.request.config.localize.pybabel,
                                         'update',
                                         '-l', language,
