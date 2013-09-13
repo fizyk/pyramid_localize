@@ -13,6 +13,11 @@ backward incompatible
 +++++++++++++++++++++
 - required cookie name changed to _LOCALE_ to be consistent with other places
 
+
+0.0.4
+-----
+- fix issue with translation files path beeing not related to cwd [fizyk]
+
 0.0.2
 -----
 - fixed MANIFEST.in [fizyk]
