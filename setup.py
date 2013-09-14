@@ -43,7 +43,7 @@ setup(
     keywords='python template',
     author='Grzegorz Sliwinski',
     author_email='username: fizyk, domain: fizyk.net.pl',
-    url='https://github.com/fizyk/pyramid_routing',
+    url='https://github.com/fizyk/pyramid_localize',
     license="MIT License",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
