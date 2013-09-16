@@ -13,6 +13,10 @@ backward incompatible
 +++++++++++++++++++++
 - required cookie name changed to _LOCALE_ to be consistent with other places
 
+0.0.5
+-----
+- fixes in catalog/index template [zusel, fizyk]
+- destination path added in translation_dirs as a translation source as well [fizyk]
 
 0.0.4
 -----

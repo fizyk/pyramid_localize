@@ -9,3 +9,5 @@ localize:
     locales:    # available and default locale for your app
         available: [en, de, pl]
         default: en
+    translation:
+        dirs: []

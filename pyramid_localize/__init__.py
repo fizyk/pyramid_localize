@@ -40,6 +40,11 @@ def includeme(configurator):
             # if it's not a list, lets make it a list. This is to allow creating both single, and list-like config entry
             if not isinstance(translation_dirs, list):
                 translation_dirs = [translation_dirs]
+
+            # let's add destination folder to the list
+            if 'destination' in configuration.translation:
+                translation_dirs.append(configuration.translation.destination)
+
             configurator.add_translation_dirs(*translation_dirs)
             # let scan all subscribers
             configurator.scan('pyramid_localize.views')
