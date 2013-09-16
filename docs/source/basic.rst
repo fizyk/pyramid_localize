@@ -43,9 +43,12 @@ This is full usage example, where **pyramid_localize** provides everything neede
             available: [en, de, pl]
             default: en
         translation:
-            dirs: 'roots.app:resources/locale'  # directory, where translatons can be found, might be a list
+            # directory, where translatons can be found, might be a list,
+            # defaults to empty list
+            dirs: 'roots.app:resources/locale'
             # destination, where .po and .mo files will be created
-            # can be same format as pyramid's asset path, it's also added to dirs
+            # can be same format as pyramid's asset path,
+            # it's also added to dirs, as translation source
             destination: 'app:resources/locale'
             # sources, where translations can be found domain: localisation
             # can be same format as pyramid's asset path
