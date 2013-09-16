@@ -1,4 +1,4 @@
-<%inherit file="pyramid_localize:layout.mako" />
+<%inherit file="pyramid_localize:resources/templates/layout.mako" />
 <div class="row">
 <div class="span9">
     <h1>${_('Translations', domain='pyramid_localize')}</h1>
