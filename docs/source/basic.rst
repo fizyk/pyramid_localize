@@ -45,7 +45,7 @@ This is full usage example, where **pyramid_localize** provides everything neede
         translation:
             dirs: 'roots.app:resources/locale'  # directory, where translatons can be found, might be a list
             # destination, where .po and .mo files will be created
-            # can be same format as pyramid's asset path
+            # can be same format as pyramid's asset path, it's also added to dirs
             destination: 'app:resources/locale'
             # sources, where translations can be found domain: localisation
             # can be same format as pyramid's asset path
