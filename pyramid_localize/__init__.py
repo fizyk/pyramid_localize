@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+# Copyright (c) 2013 by pyramid_localize authors and contributors <see AUTHORS file>
+#
+# This module is part of pyramid_localize and is released under
+# the MIT License (MIT): http://opensource.org/licenses/MIT
+
 try:  # pragma: no cover
     import babel
 except ImportError:  # pragma: no cover
@@ -13,7 +18,7 @@ from pyramid_localize.request import database_locales
 from pyramid_localize.request import locales
 from pyramid_localize.request import locale_id
 
-__version__ = '0.0.4'
+__version__ = '0.1a1'
 
 
 def includeme(configurator):

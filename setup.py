@@ -15,7 +15,7 @@ def read(fname):
 requirements = [
     'pyramid_basemodel',
     'tzf.pyramid_yml >=0.2',
-    'pyramid <1.5a1'  # this version isn't compatible with pyramid 1.5
+    'pyramid >=1.5a1'
 ]
 
 test_requires = [
@@ -26,9 +26,9 @@ test_requires = [
 ]
 
 extras_require = {
-    'docs': ['sphinx', 'sphinx_bootstrap_theme'],
+    'docs': ['sphinx'],
     'tests': test_requires,
-    'babel': ['Babel >= 0.9']
+    'babel': ['Babel >= 1.0']
 }
 
 setup(
@@ -43,17 +43,18 @@ setup(
     keywords='python template',
     author='Grzegorz Sliwinski',
     author_email='username: fizyk, domain: fizyk.net.pl',
-    url='https://github.com/fizyk/pyramid_routing',
+    url='https://github.com/fizyk/pyramid_localize',
+    license="MIT License",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
-        'License :: Public Domain',
+        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     packages=find_packages(),
