@@ -32,6 +32,7 @@ def includeme(configurator):
     if babel:
         configurator.scan('pyramid_localize.subscribers.i18n')
         if configuration:
+            configurator.include('pyramid_mako')
             # once user allowed for localization, lets set up default values!
             config_defaults(configurator, 'pyramid_localize:config')
 

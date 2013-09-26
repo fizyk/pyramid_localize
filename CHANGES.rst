@@ -8,6 +8,7 @@ CHANGES
 - requires at least pyramid 1.5a1 (rely on default localizer reify method)
 - py3 compatibility (require at least babel 1.0)
 - locale negotiator looks first for request attribute _LOCALE_
+- added pyramid_mako dependency (required by pyramid 1.5a2 changes)
 
 backward incompatible
 +++++++++++++++++++++
