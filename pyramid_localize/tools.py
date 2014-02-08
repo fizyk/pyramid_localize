@@ -12,17 +12,84 @@ import os
 import logging
 
 from translationstring import _interp_regex
-from pyramid.i18n import get_localizer
 from pyramid.i18n import make_localizer
 from pyramid.i18n import TranslationString
 from pyramid.asset import resolve_asset_spec
 from pyramid.path import package_path
-from pyramid.httpexceptions import HTTPNotFound
 from pyramid.interfaces import ILocalizer
 from pyramid.interfaces import ITranslationDirectories
 from pyramid.compat import text_type
 
 logger = logging.getLogger(__name__)
+
+
+class LocaleNegotiator(object):
+    '''
+        Locale negotiator. It sets best suited locale variable for given user.
+
+        Check in order defined in private attribute __order.
+
+        1. Check for presence and value of **request._LOCALE_** value
+        2. Then tries the address url, if the first part has locale indicator.
+        3. It checks cookies, for value set here
+        4. Tries to best match accepted language for browser user is visiting
+            website with
+        5. Defaults to **localize.locales.default** configuration setting value
+
+        To change ordering or add new method, expand this class and remember to
+        set __order in yours new class.
+
+        :param pyramid.request.Request request: a request object
+        :returns: locale name
+        :rtype: str
+
+    '''
+    __order = [
+        'request_locale',
+        'route_element',
+        'cookie',
+        'accept_language',
+        'default'
+    ]
+
+    def request_locale(self, request):
+        if hasattr(request, '_LOCALE_') and request._LOCALE_ in self.available_languages:
+            return request._LOCALE_
+
+    def route_element(self, request):
+        # We do not have a matchdict present at the moment, lets get our own split
+        # (request.path is always a /, so we'll get two elements)
+        route_elements = request.path.split('/')
+        # we check if route_element[1] is a locale indicator for path
+        if len(route_elements[1]) == 2 and route_elements[1] in self.available_languages:
+            return route_elements[1]
+
+    def cookie(self, request):
+        if request.cookies and '_LOCALE_' in request.cookies and\
+                request.cookies['_LOCALE_'] in self.available_languages:
+            return request.cookies['_LOCALE_']
+
+    def accept_language(self, request):
+        if request.accept_language:
+            return request.accept_language.best_match(self.available_languages)
+
+    def dummy(self, request):
+        logger.warn('dummy locale negotiatol called, check yours negotiation process')
+
+    def default(self, request):
+        return request.config.localize.locales.default
+
+    def __call__(self, request):
+        self.available_languages = request.config.localize.locales.available
+        for method in self.__order:
+            locale = getattr(self, method, self.dummy)(request)
+            if locale:
+                return locale
+
+        return locale
+
+
+locale_negotiator = LocaleNegotiator()
 
 
 def set_localizer(request, reset=False):
@@ -54,41 +121,6 @@ def set_localizer(request, reset=False):
         return request.localizer.translate(TranslationString(*args, **kwargs))
 
     request._ = auto_translate
-
-
-def locale_negotiator(request):
-    '''
-        Locale negotiator. It sets best suited locale variable for given user:
-
-        1. Check for presence and value of **request._LOCALE_** value
-        2. Then tries the address url, if the first part has locale indicator.
-        3. It checks cookies, for value set here
-        4. Tries to best match accepted language for browser user is visiting
-            website with
-        5. Defaults to **localize.locales.default** configuration setting value
-
-        :param pyramid.request.Request request: a request object
-        :returns: locale name
-        :rtype: str
-
-    '''
-    available_languages = request.config.localize.locales.available
-    locale = request.config.localize.locales.default
-    # We do not have a matchdict present at the moment, lets get our own split
-    # (request.path is always a /, so we'll get two elements)
-    route_elements = request.path.split('/')
-    if hasattr(request, '_LOCALE_') and request._LOCALE_ in available_languages:
-        locale = request._LOCALE_
-    # we check if route_element[1] is a locale indicator for path
-    elif len(route_elements[1]) == 2 and route_elements[1] in available_languages:
-        locale = route_elements[1]
-    elif request.cookies and '_LOCALE_' in request.cookies and\
-            request.cookies['_LOCALE_'] in available_languages:
-        locale = request.cookies['_LOCALE_']
-    elif request.accept_language:
-        locale = request.accept_language.best_match(available_languages)
-
-    return locale
 
 
 def destination_path(request):
