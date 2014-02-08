@@ -6,6 +6,7 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 localize:
     pybabel: pybabel
+    locale_negotiator: tools.locale_negotiator
     locales:    # available and default locale for your app
         available: [en, de, pl]
         default: en

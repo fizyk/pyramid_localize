@@ -36,7 +36,10 @@ def includeme(configurator):
             # once user allowed for localization, lets set up default values!
             config_defaults(configurator, 'pyramid_localize:config')
 
-            configurator.set_locale_negotiator(tools.locale_negotiator)
+            negotiator_config = configuration.locale_negotiator.split('.')
+            negotiator_module = __import__(negotiator_config[:-1], fromlist=[''])
+            negotiator_object = negotiator_module.__getattribute__(negotiator_config[-1])
+            configurator.set_locale_negotiator(negotiator_object)  # tools.locale_negotiator
             translation_dirs = configuration.translation.dirs
             # if it's not a list, lets make it a list. This is to allow creating both single, and list-like config entry
             if not isinstance(translation_dirs, list):
