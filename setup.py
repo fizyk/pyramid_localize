@@ -20,9 +20,8 @@ requirements = [
 ]
 
 test_requires = [
-    'WebTest',
-    'nose',
-    'coverage',
+    'pytest_pyramid',
+    'pytest-cov',
     'mock'
 ]
 
