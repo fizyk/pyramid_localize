@@ -7,7 +7,20 @@ install:
     - "python setup.py install"
     - "pip install pyramid_localize[babel] --use-mirrors"
     - "pip install pyramid_localize[tests] coveralls --use-mirrors"
+    # manually install wheel for deployment
+    - "pip install wheel --use-mirrors"
 script:
     - "python setup.py nosetests"
 after_success:
     - coveralls
+
+
+deploy:
+    provider: pypi
+    user: fizyk
+    password:
+        secure: DwNZeHXX6sLDVUZpRGy866jP1IuScKOqrYdQ3FmceDn2bRVfH3ebMzVQJLlOlqVizuR+SxhJ0W+/gfWdGxog2dDpEquUolNXx8S85I1GQaoUqqrMt8z9LqLIYjtgumMUczVvnWc7tQ0GFKrmQzjXxVfBxaFSjwB5BBgmWJXE+UY=
+    on:
+        tags: true
+        repo: fizyk/pyramid_localize
+    distributions: "sdist bdist_egg bdist_wheel"
