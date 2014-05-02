@@ -9,8 +9,6 @@ from sqlalchemy.pool import NullPool
 from zope.sqlalchemy import ZopeTransactionExtension
 
 from pyramid_localize.models import Language
-from pyramid_localize.request import locale_id
-from pyramid_localize.request import locales
 
 
 @pytest.mark.parametrize('kwargs, expected_locale', (
@@ -72,17 +70,14 @@ def db_locales(db_session):
 
 def test_locale_id(db_locales, web_request):
     '''Test for creating, and getting loacel id'''
-    lid = locale_id(web_request)
-    assert isinstance(lid, int)
+    assert isinstance(web_request.locale_id, int)
 
 
 def test_locales(db_locales, web_request):
     '''test return locales list'''
-    locales_list = locales(web_request)
-    assert len(locales_list) == 3
+    assert len(web_request.locales()) == 3
 
 
 def test_locales_config(db_locales, web_request):
     '''test return locales list limited by config'''
-    locales_list = locales(web_request, True)
-    assert 4 == len(locales_list)
+    assert len(web_request.locales(True)) == 4

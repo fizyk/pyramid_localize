@@ -10,6 +10,8 @@ def web_request():
     from pyramid_localize.request import LocalizeRequestMixin
     from pyramid_localize.request import locale
     from pyramid_localize.request import database_locales
+    from pyramid_localize.request import locale_id
+    from pyramid_localize.request import locales
 
     class TestRequest(LocalizeRequestMixin, Mock):
 
@@ -20,6 +22,13 @@ def web_request():
         @reify
         def _database_locales(self):
             return database_locales(self)
+
+        @reify
+        def locale_id(self):
+            return locale_id(self)
+
+        def locales(self, *args, **kwargs):
+            return locales(self, *args, **kwargs)
 
     request = TestRequest()
     config = Mock()
