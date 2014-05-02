@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 
-import unittest
 import pytest
 from mock import Mock
 
