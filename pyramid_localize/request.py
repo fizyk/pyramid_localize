@@ -8,7 +8,8 @@
 import pyramid.request
 from pyramid.i18n import get_locale_name
 from pyramid.compat import text_type
-from pyramid_basemodel import Session
+import pyramid_basemodel
+
 from pyramid_localize.models import Language
 
 
@@ -22,13 +23,12 @@ class LocalizeRequestMixin(object):
 
             :returns: kw
         '''
-        if '__LOCALE__' not in kw or\
-                kw['__LOCALE__'] not in self.config.localize.locales.available:
+        if '__LOCALE__' not in kw or kw['__LOCALE__'] not in self.registry['config'].localize.locales.available:
             kw['__LOCALE__'] = self.locale
 
         return kw
 
-    def route_url(self, route_name, *elements, **kw):  # pragma: no cover
+    def route_url(self, route_name, *elements, **kw):
         '''
             Overwrites original route_url to handle default locale
 
@@ -38,7 +38,7 @@ class LocalizeRequestMixin(object):
         return pyramid.request.Request.route_url(self, route_name, *elements, **self.default_locale(**kw))
 
 
-def locale(request):  # pragma: no cover
+def locale(request):
     '''
         When called for the first time, it ask enviroment for languagecode, which is later available as a pure property
         overriding this method
@@ -71,7 +71,7 @@ def database_locales(request):
         :rtype: dict
     '''
     locales = {}
-    for language in Session.query(Language).all():
+    for language in pyramid_basemodel.Session.query(Language).all():
         locales[language.language_code] = language
 
     return locales
@@ -88,7 +88,7 @@ def locales(request, config=False):
     '''
     if config:
         locales = {}
-        for locale in request.config.localize.locales.available:
+        for locale in request.registry['config'].localize.locales.available:
             if not locale in request._database_locales:
                 _create_locale(locale, request)
             locales[locale] = request._database_locales[locale]
@@ -102,5 +102,5 @@ def _create_locale(locale, request):
     new_locale = Language(name=text_type(locale),
                           native_name=text_type(locale),
                           language_code=text_type(locale))
-    Session.add(new_locale)
+    pyramid_basemodel.Session.add(new_locale)
     request._database_locales = database_locales(request)
