@@ -1,6 +1,8 @@
 import pytest
 from mock import Mock
 from pyramid.decorator import reify
+from pyramid.request import Request
+from pyramid import testing
 
 
 @pytest.fixture
@@ -13,7 +15,7 @@ def web_request():
     from pyramid_localize.request import locale_id
     from pyramid_localize.request import locales
 
-    class TestRequest(LocalizeRequestMixin, Mock):
+    class TestRequest(LocalizeRequestMixin, Request):
 
         @reify
         def locale(self):
@@ -30,16 +32,30 @@ def web_request():
         def locales(self, *args, **kwargs):
             return locales(self, *args, **kwargs)
 
-    request = TestRequest()
+    request = TestRequest({})
     config = Mock()
     config.configure_mock(
         **{'localize.locales.available': ['en', 'pl', 'de', 'cz']}
     )
-    request.configure_mock(
-        **{
-            'registry': {'config': config},
-            'locale_name': 'en'
-        }
-    )
+    configurator = testing.setUp()
+    request.registry = configurator.registry
+    request.registry['config'] = config
 
+    return request
+
+
+@pytest.fixture
+def locale_negotiator_request():
+    request = Mock()
+    mock_configuration = {
+        'cookies': {'_LOCALE_': 'cz'},
+        'accept_language.best_match.return_value': 'de',
+        'path': '/pl/page'}
+    request.configure_mock(**mock_configuration)
+    config = Mock()
+    config.configure_mock(**{
+        'localize.locales.available': ['en', 'pl', 'de', 'cz'],
+        'localize.locales.default': 'en'
+    })
+    request.registry = {'config': config}
     return request
