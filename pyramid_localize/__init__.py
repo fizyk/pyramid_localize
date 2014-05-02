@@ -26,11 +26,10 @@ def includeme(configurator):
         i18n includeme action
     '''
 
-    # TODO: Find a better way to run other stuff than translation methods
-    configuration = configurator.registry['config'].get('localize')
     # let's check if we have any configuration, or not
     if babel:
         configurator.scan('pyramid_localize.subscribers.i18n')
+        configuration = configurator.registry.get('config', {}).get('localize')
         if configuration:
             configurator.include('pyramid_mako')
             # once user allowed for localization, lets set up default values!
@@ -60,6 +59,9 @@ def includeme(configurator):
             configurator.add_request_method(database_locales, name='_database_locales', reify=True)
             configurator.add_request_method(locales, name='locales')
             configurator.add_request_method(locale_id, name='locale_id', reify=True)
-    else:
-        # including fake subscribers
-        configurator.scan('pyramid_localize.subscribers.fake')
+
+            # if configured
+            return
+
+    # including fake subscribers
+    configurator.scan('pyramid_localize.subscribers.fake')

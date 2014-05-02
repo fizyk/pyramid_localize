@@ -1,79 +1,83 @@
-# -*- coding: utf-8 -*-
+import pytest
 
-
-from sqlalchemy import create_engine
+import transaction
 from pyramid.compat import text_type
-from pyramid_basemodel import Base
-from pyramid_basemodel import Session
+import pyramid_basemodel
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.pool import NullPool
+from zope.sqlalchemy import ZopeTransactionExtension
 
-from tests import BaseRequestTest
 from pyramid_localize.models import Language
-from pyramid_localize.request import locale_id
-from pyramid_localize.request import locales
 
 
-class RequestTest(BaseRequestTest):
+@pytest.mark.parametrize('kwargs, expected_locale', (
+    (  # not filled __LOCALE__ , should return default one
+        {'slug': 'some-slug'},
+        'en'
+    ),
+    (  # filled __LOCALE__ within available, returned exact that
+        {
+            'slug': 'some-slug',
+            '__LOCALE__': 'pl'
+        },
+        'pl'
+    ),
+    (  # filled __LOCALE__ within one not in available, returned default one
+        {
+            'slug': 'some-slug',
+            '__LOCALE__': 'fr'
+        },
+        'en'
+    ),
+))
+def test_request(web_request, kwargs, expected_locale):
+    """Test whether route-parameters gets filled correctly."""
+    route_parameters = web_request.default_locale(**kwargs)
+    assert '__LOCALE__' in route_parameters
+    assert route_parameters['__LOCALE__'] in web_request.registry['config'].localize.locales.available
+    assert route_parameters['__LOCALE__'] == expected_locale
 
-    def test_request(self):
-        '''Test whether route-parameters gets filled'''
-        request = self._makeRequest()
-        route_parameters = request.default_locale(slug='some-slug')
-        self.assertTrue('__LOCALE__' in route_parameters)
-        self.assertTrue(route_parameters['__LOCALE__'] in
-                        request.config.localize.locales.available)
 
-    def test_filled(self):
-        '''Test whether correct __LOCALE__ is left'''
-        request = self._makeRequest()
-        route_parameters = request.default_locale(slug='some-slug', __LOCALE__='pl')
-        self.assertEqual(route_parameters['__LOCALE__'], 'pl')
+@pytest.fixture
+def db_session(request):
+    """SQLAlchemy session."""
+    from pyramid_localize.models import Base
 
-    def test_filled_wrong(self):
-        '''Test whether wrong locale is change'''
-        request = self._makeRequest()
-        route_parameters = request.default_locale(slug='some-slug', __LOCALE__='fr')
-        self.assertTrue(route_parameters['__LOCALE__'] in
-                        request.config.localize.locales.available)
+    engine = create_engine('sqlite:///fullauth.sqlite', echo=False, poolclass=NullPool)
+    pyramid_basemodel.Session = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+    pyramid_basemodel.bind_engine(engine, pyramid_basemodel.Session, should_drop=True)
 
-engine = create_engine('sqlite://', echo=False)
-Session.configure(bind=engine)
-Base.metadata.bind = engine
-
-
-class RequestMethodTest(BaseRequestTest):
-
-    def setUp(self):
-        '''
-            setUp test method @see unittest.TestCase.setUp
-        '''
-        Base.metadata.create_all(engine)
-
-        for locale in ['pl', 'cz', 'fr']:
-            locale_object = Language(name=text_type(locale),
-                                     native_name=text_type(locale),
-                                     language_code=text_type(locale))
-            Session.add(locale_object)
-
-    def tearDown(self):
-        '''
-            This tears tests down
-        '''
+    def destroy():
+        transaction.commit()
         Base.metadata.drop_all(engine)
 
-    def test_locale_id(self):
-        '''Test for creating, and getting loacel id'''
-        request = self._makeRequest()
-        lid = locale_id(request)
-        self.assertTrue(isinstance(lid, int))
+    request.addfinalizer(destroy)
 
-    def test_locales(self):
-        '''test return locales list'''
-        request = self._makeRequest()
-        locales_list = locales(request)
-        self.assertEqual(3, len(locales_list))
+    return pyramid_basemodel.Session
 
-    def test_locales_config(self):
-        '''test return locales list limited by config'''
-        request = self._makeRequest()
-        locales_list = locales(request, True)
-        self.assertEqual(4, len(locales_list))
+
+@pytest.fixture
+def db_locales(db_session):
+
+    for locale in ['pl', 'cz', 'fr']:
+        locale_object = Language(name=text_type(locale),
+                                 native_name=text_type(locale),
+                                 language_code=text_type(locale))
+        db_session.add(locale_object)
+    transaction.commit()
+
+
+def test_locale_id(db_locales, web_request):
+    '''Test for creating, and getting loacel id'''
+    assert isinstance(web_request.locale_id, int)
+
+
+def test_locales(db_locales, web_request):
+    '''test return locales list'''
+    assert len(web_request.locales()) == 3
+
+
+def test_locales_config(db_locales, web_request):
+    '''test return locales list limited by config'''
+    assert len(web_request.locales(True)) == 4

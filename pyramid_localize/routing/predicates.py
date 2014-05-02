@@ -11,7 +11,7 @@ def language(field):
         '''
             Checks whether language is one of the defaults
         '''
-        if field in info['match'] and info['match'][field] in request.config.localize.locales.available:
+        if field in info['match'] and info['match'][field] in request.registry['config'].localize.locales.available:
             return True
         return False
     return predicate

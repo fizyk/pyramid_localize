@@ -35,7 +35,7 @@ def set_localizer(request, reset=False):
 
     if reset:
 
-        for locale in request.config.localize.locales.available:
+        for locale in request.registry['config'].localize.locales.available:
             logger.debug('Resetting {0} localizator'.format(locale))
             tdirs = request.registry.queryUtility(ITranslationDirectories,
                                                   default=[])
@@ -47,7 +47,7 @@ def set_localizer(request, reset=False):
         # lets pass default domain, so we don't have to determine it with
         # each _() function in apps.
         if len(args) <= 1 and not 'domain' in kwargs:
-            kwargs['domain'] = request.config.localize.domain
+            kwargs['domain'] = request.registry['config'].localize.domain
 
         # unlike in examples we use TranslationString, to make sure we always
         # use appropriate domain
@@ -72,8 +72,8 @@ def locale_negotiator(request):
         :rtype: str
 
     '''
-    available_languages = request.config.localize.locales.available
-    locale = request.config.localize.locales.default
+    available_languages = request.registry['config'].localize.locales.available
+    locale = request.registry['config'].localize.locales.default
     # We do not have a matchdict present at the moment, lets get our own split
     # (request.path is always a /, so we'll get two elements)
     route_elements = request.path.split('/')
@@ -100,7 +100,7 @@ def destination_path(request):
         :returns: A combined translation destination path
         :rtype: str
     '''
-    package_name, filename = resolve_asset_spec(request.config.localize.translation.destination)
+    package_name, filename = resolve_asset_spec(request.registry['config'].localize.translation.destination)
 
     if package_name is None:  # absolute filename
         directory = filename

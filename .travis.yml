@@ -10,7 +10,7 @@ install:
     # manually install wheel for deployment
     - "pip install wheel --use-mirrors"
 script:
-    - "python setup.py nosetests"
+    - "py.test -v --cov pyramid_localize tests/"
 after_success:
     - coveralls
 

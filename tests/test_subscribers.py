@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 
-import unittest
+import pytest
 from mock import Mock
 
 
@@ -17,73 +16,66 @@ from pyramid.i18n import Localizer
 # from pyramid_localize.subscribers.fake import add_localizer
 
 
-class SubscribersTests(unittest.TestCase):
+@pytest.fixture
+def request_i18n():
+    '''i18n:Test new request'''
+    config = testing.setUp()
+    config.scan('pyramid_localize.subscribers.i18n')
+    request = Request({})
+    request.registry = config.registry
+    return request
 
-    def setUp(self):
-        self.config = testing.setUp()
 
-    def tearDown(self):
-        testing.tearDown()
+def test_i18n_new_request(request_i18n):
+    """Test method are being added."""
+    request_i18n.registry.notify(NewRequest(request_i18n))
+    assert isinstance(request_i18n.localizer, Localizer)
+    assert hasattr(request_i18n, '_')
 
-    def _makeRequest(self, environ=None):
-        if environ is None:
-            environ = {}
-        request = Request(environ)
-        request.registry = self.config.registry
 
-        return request
+def test_i18n_before_render(request_i18n):
+    '''i18n:Test before render'''
+    before_render_event = BeforeRender({'request': request_i18n}, {})
+    request_i18n.registry.notify(before_render_event)
+    assert 'localizer' in before_render_event
+    assert '_' in before_render_event
 
-    def _makeBeforeRender(self, system, val=None):
-        from pyramid.events import BeforeRender
-        return BeforeRender(system, val)
 
-    def test_i18n_new_request(self):
-        '''i18n:Test new request'''
-        self.config.scan('pyramid_localize.subscribers.i18n')
-        request = self._makeRequest()
-        request.registry.notify(NewRequest(request))
-        self.assertTrue(isinstance(request.localizer, Localizer))
-        self.assertTrue(hasattr(request, '_'))
+def test_i18n_before_render_and_request(request_i18n):
+    '''i18n:Test before render with new request'''
+    request_i18n.registry.notify(NewRequest(request_i18n))
+    before_render_event = BeforeRender({'request': request_i18n}, {})
+    request_i18n.registry.notify(before_render_event)
+    assert 'localizer' in before_render_event
+    assert '_' in before_render_event
 
-    def test_i18n_before_render(self):
-        '''i18n:Test before render'''
-        self.config.scan('pyramid_localize.subscribers.i18n')
-        request = self._makeRequest()
-        before_render_event = self._makeBeforeRender({'request': request}, {})
-        request.registry.notify(before_render_event)
-        self.assertTrue('localizer' in before_render_event)
-        self.assertTrue('_' in before_render_event)
 
-    def test_i18n_before_render_and_request(self):
-        '''i18n:Test before render with new request'''
-        self.config.scan('pyramid_localize.subscribers.i18n')
-        request = self._makeRequest()
-        request.registry.notify(NewRequest(request))
-        before_render_event = self._makeBeforeRender({'request': request}, {})
-        request.registry.notify(before_render_event)
-        self.assertTrue('localizer' in before_render_event)
-        self.assertTrue('_' in before_render_event)
+@pytest.fixture
+def request_fake():
+    '''i18n:Test new request'''
+    config = testing.setUp()
+    config.scan('pyramid_localize.subscribers.fake')
+    request = Request({})
+    request.registry = config.registry
+    return request
 
-    def test_fake_new_request(self):
-        '''fakei18n:Test new request'''
-        self.config.scan('pyramid_localize.subscribers.fake')
-        request = self._makeRequest()
-        request.registry.notify(NewRequest(request))
-        self.assertTrue(hasattr(request, '_'))
 
-    def test_fake_before_render(self):
-        '''fakei18n:Test before render'''
-        self.config.scan('pyramid_localize.subscribers.fake')
-        request = self._makeRequest()
-        request.registry.notify(NewRequest(request))
-        before_render_event = self._makeBeforeRender({'request': request}, {})
-        request.registry.notify(before_render_event)
-        self.assertTrue('_' in before_render_event)
+def test_fake_new_request(request_fake):
+    '''fakei18n:Test new request'''
+    request_fake.registry.notify(NewRequest(request_fake))
+    assert hasattr(request_fake, '_')
 
-    def test_fake_before_render_norequest(self):
-        '''fakei18n:Test before render'''
-        self.config.scan('pyramid_localize.subscribers.fake')
-        request = self._makeRequest()
-        before_render_event = self._makeBeforeRender({'request': request}, {})
-        request.registry.notify(before_render_event)
-        self.assertTrue('_' in before_render_event)
+
+def test_fake_before_render(request_fake):
+    '''fakei18n:Test before render'''
+    request_fake.registry.notify(NewRequest(request_fake))
+    before_render_event = BeforeRender({'request': request_fake}, {})
+    request_fake.registry.notify(before_render_event)
+    assert '_' in before_render_event
+
+
+def test_fake_before_render_norequest(request_fake):
+    '''fakei18n:Test before render'''
+    before_render_event = BeforeRender({'request': request_fake}, {})
+    request_fake.registry.notify(before_render_event)
+    assert '_' in before_render_event

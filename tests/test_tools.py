@@ -16,143 +16,116 @@ from pyramid_localize.tools import destination_path
 from pyramid_localize.tools import locale_negotiator
 from pyramid_localize.tools import set_localizer
 
-
-class SetLocalizerTests(unittest.TestCase):
-
-    def setUp(self):
-        self.config = testing.setUp()
-
-    def tearDown(self):
-        testing.tearDown()
-
-    def _makeRequest(self, environ=None):
-        if environ is None:
-            environ = {}
-        request = Request(environ)
-        request.registry = self.config.registry
-        request.config = Mock()
-        mock_configuration = {
-            'localize.locales.available': ['en', 'pl', 'de', 'cz']}
-        request.config.configure_mock(**mock_configuration)
-        set_localizer(request)
-        return request
-
-    def test_simple(self):
-        '''simple localizer setting test'''
-        request = self._makeRequest()
-        self.assertTrue(isinstance(request.localizer, Localizer))
-        self.assertTrue(hasattr(request, '_'))
-
-    def test_reset(self):
-        '''test resetting localizer capabilites'''
-        request = self._makeRequest()
-        old_localizer = request.localizer
-        request_utility = request.registry.queryUtility(ILocalizer,
-                                                        name=request.locale_name)
-        self.assertEqual(request_utility, request.localizer)
-        set_localizer(request, reset=True)
-        # these are equal due to request.localizer
-        # being reify property since pyramid 1.5
-        self.assertEqual(old_localizer, request.localizer)
-        # let's create a new request, to check that
-        request = self._makeRequest()
-        self.assertNotEqual(old_localizer, request.localizer)
-
-    def test_translate(self):
-        '''simple test for translating method call'''
-        request = self._makeRequest()
-        msgid = 'Test message'
-        self.assertEqual(msgid, request._(msgid))
+from tests.conftest import web_request as web_request_func
 
 
-class LocaleNegotiatorTests(unittest.TestCase):
-
-    def setUp(self):
-
-        self.request = Mock()
-        mock_configuration = {
-            'config.localize.locales.available': ['en', 'pl', 'de', 'cz'],
-            'config.localize.locales.default': 'en',
-            'cookies': {'_LOCALE_': 'cz'},
-            'accept_language.best_match.return_value': 'de',
-            'path': '/pl/page'}
-        self.request.configure_mock(**mock_configuration)
-
-    def test_negotiate_path(self):
-        '''locale_negotiator:path'''
-        locale = locale_negotiator(self.request)
-
-        self.assertEqual(locale, 'pl')
-
-    def test_negotiate_cookie(self):
-        '''locale_negotiator:cookie'''
-        self.request.path = '/page'
-        locale = locale_negotiator(self.request)
-
-        self.assertEqual(locale, 'cz')
-
-    def test_negotiate_headers(self):
-        '''locale_negotiator:header
-        That's more like a webob job, should be tested there
-        '''
-
-        self.request.path = '/page'
-        self.request.cookies = {}
-        locale = locale_negotiator(self.request)
-
-        self.assertEqual(locale, 'de')
-
-    def test_negotiate_default(self):
-        '''locale_negotiator:default'''
-
-        self.request.path = '/page'
-        self.request.cookies = {}
-        self.request.accept_language = None
-        locale = locale_negotiator(self.request)
-
-        self.assertEqual(locale, 'en')
+def test_simple(web_request):
+    '''simple localizer setting test'''
+    set_localizer(web_request)
+    assert isinstance(web_request.localizer, Localizer)
+    assert hasattr(web_request, '_')
 
 
-class DestinationPathTests(unittest.TestCase):
-
-    def test_filename(self):
-        '''testing translation fullpath resolve'''
-        request = Mock()
-        path = '/some/path/to/translations'
-        mock_configuration = {
-            'config.localize.translation.destination': path}
-        request.configure_mock(**mock_configuration)
-        result = destination_path(request)
-        self.assertEqual(result, path)
-
-    def test_package(self):
-        '''testing translation package:path resolve'''
-        request = Mock()
-        mock_configuration = {
-            'config.localize.translation.destination': 'tests:translations'}
-        request.configure_mock(**mock_configuration)
-        result = destination_path(request)
-        self.assertEqual(result,
-                         os.path.join(package_path(sys.modules['tests']),
-                                      'translations'))
+def test_reset(web_request):
+    '''test resetting localizer capabilites'''
+    set_localizer(web_request)
+    old_localizer = web_request.localizer
+    request_utility = web_request.registry.queryUtility(ILocalizer,
+                                                        name=web_request.locale_name)
+    assert request_utility == web_request.localizer
+    set_localizer(web_request, reset=True)
+    # these are equal due to request.localizer
+    # being reify property since pyramid 1.5
+    assert old_localizer == web_request.localizer
+    # let's create a new request, to check that
+    request = web_request_func()
+    set_localizer(web_request)
+    assert old_localizer is not request.localizer
 
 
-class DummyTranslationTests(unittest.TestCase):
+def test_translate(web_request):
+    '''simple test for translating method call'''
+    msgid = 'Test message'
+    set_localizer(web_request)
+    assert msgid == web_request._(msgid)
 
-    def test_message(self):
-        '''dummy_autotranslate::simple'''
-        text = 'Simple fake text'
-        translated_text = dummy_autotranslate(text)
-        self.assertEqual(text, translated_text)
 
-    def test_default(self):
-        '''dummy_autotranslate::default'''
-        text = 'Simple fake text'
-        translated_text = dummy_autotranslate('test-msgid', default=text)
-        self.assertEqual(text, translated_text)
+def test_negotiate_path(locale_negotiator_request):
+    '''locale_negotiator:path'''
+    locale = locale_negotiator(locale_negotiator_request)
 
-    def test_replace(self):
-        '''dummy_autotranslate::default'''
-        text = 'Simple ${what} text'
-        translated_text = dummy_autotranslate(text, mapping={'what': 'fake'})
-        self.assertEqual('Simple fake text', translated_text)
+    assert locale == 'pl'
+
+
+def test_negotiate_cookie(locale_negotiator_request):
+    '''locale_negotiator:cookie'''
+    locale_negotiator_request.path = '/page'
+    locale = locale_negotiator(locale_negotiator_request)
+
+    assert locale == 'cz'
+
+
+def test_negotiate_headers(locale_negotiator_request):
+    '''locale_negotiator:header
+    That's more like a webob job, should be tested there
+    '''
+
+    locale_negotiator_request.path = '/page'
+    locale_negotiator_request.cookies = {}
+    locale = locale_negotiator(locale_negotiator_request)
+
+    assert locale == 'de'
+
+
+def test_negotiate_default(locale_negotiator_request):
+    '''locale_negotiator:default'''
+
+    locale_negotiator_request.path = '/page'
+    locale_negotiator_request.cookies = {}
+    locale_negotiator_request.accept_language = None
+    locale = locale_negotiator(locale_negotiator_request)
+
+    assert locale == 'en'
+
+
+def test_destination_filename():
+    '''testing translation fullpath resolve'''
+    request = Mock()
+    request.registry = {'config': Mock()}
+    path = '/some/path/to/translations'
+    mock_configuration = {
+        'localize.translation.destination': path}
+    request.registry['config'].configure_mock(**mock_configuration)
+    result = destination_path(request)
+    assert result == path
+
+
+def test_destination_package():
+    '''testing translation package:path resolve'''
+    request = Mock()
+    request.registry = {'config': Mock()}
+    mock_configuration = {'localize.translation.destination': 'tests:translations'}
+    request.registry['config'].configure_mock(**mock_configuration)
+    result = destination_path(request)
+    assert result == os.path.join(package_path(sys.modules['tests']), 'translations')
+
+
+def test_dummy_message():
+    '''dummy_autotranslate::simple'''
+    text = 'Simple fake text'
+    translated_text = dummy_autotranslate(text)
+    assert text == translated_text
+
+
+def test_dummy_default():
+    '''dummy_autotranslate::default'''
+    text = 'Simple fake text'
+    translated_text = dummy_autotranslate('test-msgid', default=text)
+    assert text == translated_text
+
+
+def test_dummy_replace():
+    '''dummy_autotranslate::default'''
+    text = 'Simple ${what} text'
+    translated_text = dummy_autotranslate(text, mapping={'what': 'fake'})
+    assert 'Simple fake text' == translated_text

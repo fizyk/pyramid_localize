@@ -86,9 +86,9 @@ class CatalogView(object):
                     }
         '''
         translations = {}
-        translation_sources = self.request.config.localize.translation.sources
+        translation_sources = self.request.registry['config'].localize.translation.sources
 
-        for language in self.request.config.localize.locales.available:
+        for language in self.request.registry['config'].localize.locales.available:
             translations[language] = {}
             for domain in translation_sources:
                 translations[language][domain] = {
@@ -119,7 +119,7 @@ class CatalogView(object):
             Redirects itself to **localize:index**.
         '''
         data = self.index()
-        translation_sources = self.request.config.localize.translation.sources
+        translation_sources = self.request.registry['config'].localize.translation.sources
 
         for domain in translation_sources:
 
@@ -127,13 +127,13 @@ class CatalogView(object):
             if not os.path.isfile(pot_file):
                 logger.critical('pot file for {domain} does not exists!'.format(domain=domain))
 
-            for language in self.request.config.localize.locales.available:
+            for language in self.request.registry['config'].localize.locales.available:
                 po_file = self._translation_file(language, domain)
                 if os.path.isfile(po_file):
                     logger.debug('po file for {domain}, {language} exists, proceeding with update'.format(
                         domain=domain, language=language))
 
-                    if subprocess.call([self.request.config.localize.pybabel,
+                    if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'update',
                                         '-l', language,
                                         '-i', pot_file,
@@ -143,7 +143,7 @@ class CatalogView(object):
                 else:
                     logger.debug('po file for {domain}, {language} does not exists, proceeding with initialize'.format(
                         domain=domain, language=language))
-                    if subprocess.call([self.request.config.localize.pybabel,
+                    if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'init',
                                         '-l', language,
                                         '-i', pot_file,
@@ -160,17 +160,17 @@ class CatalogView(object):
             redirects to **localize:index**.
         '''
         data = self.index()
-        translation_sources = self.request.config.localize.translation.sources
+        translation_sources = self.request.registry['config'].localize.translation.sources
 
         for domain in translation_sources:
 
-            for language in self.request.config.localize.locales.available:
+            for language in self.request.registry['config'].localize.locales.available:
                 po_file = self._translation_file(language, domain)
                 mo_file = self._translation_file(language, domain, 'mo')
                 if os.path.isfile(po_file):
                     logger.debug('po file for {domain}, {language} exists, proceeding with compilation'.format(
                         domain=domain, language=language))
-                    if subprocess.call([self.request.config.localize.pybabel,
+                    if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'compile',
                                         '-l', language,
                                         '-i', po_file,
