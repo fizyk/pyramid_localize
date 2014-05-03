@@ -57,7 +57,7 @@ def locale_id(request):
         :rtype: int
     '''
 
-    if not request.locale in request._database_locales:
+    if request.locale not in request._database_locales:
         _create_locale(request.locale, request)
 
     return request._database_locales[request.locale].id
@@ -89,7 +89,7 @@ def locales(request, config=False):
     if config:
         locales = {}
         for locale in request.registry['config'].localize.locales.available:
-            if not locale in request._database_locales:
+            if locale not in request._database_locales:
                 _create_locale(locale, request)
             locales[locale] = request._database_locales[locale]
 

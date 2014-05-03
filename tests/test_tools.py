@@ -2,14 +2,11 @@
 
 import sys
 import os
-import unittest
 from mock import Mock
 
 from pyramid.path import package_path
-from pyramid.request import Request
 from pyramid.i18n import Localizer
 from pyramid.interfaces import ILocalizer
-from pyramid import testing
 
 from pyramid_localize.tools import dummy_autotranslate
 from pyramid_localize.tools import destination_path

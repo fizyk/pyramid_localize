@@ -12,12 +12,10 @@ import os
 import logging
 
 from translationstring import _interp_regex
-from pyramid.i18n import get_localizer
 from pyramid.i18n import make_localizer
 from pyramid.i18n import TranslationString
 from pyramid.asset import resolve_asset_spec
 from pyramid.path import package_path
-from pyramid.httpexceptions import HTTPNotFound
 from pyramid.interfaces import ILocalizer
 from pyramid.interfaces import ITranslationDirectories
 from pyramid.compat import text_type
@@ -46,7 +44,7 @@ def set_localizer(request, reset=False):
     def auto_translate(*args, **kwargs):
         # lets pass default domain, so we don't have to determine it with
         # each _() function in apps.
-        if len(args) <= 1 and not 'domain' in kwargs:
+        if len(args) <= 1 and 'domain' not in kwargs:
             kwargs['domain'] = request.registry['config'].localize.domain
 
         # unlike in examples we use TranslationString, to make sure we always

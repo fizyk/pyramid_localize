@@ -118,7 +118,7 @@ class CatalogView(object):
 
             Redirects itself to **localize:index**.
         '''
-        data = self.index()
+        self.index()
         translation_sources = self.request.registry['config'].localize.translation.sources
 
         for domain in translation_sources:
@@ -159,7 +159,7 @@ class CatalogView(object):
 
             redirects to **localize:index**.
         '''
-        data = self.index()
+        self.index()
         translation_sources = self.request.registry['config'].localize.translation.sources
 
         for domain in translation_sources:

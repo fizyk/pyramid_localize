@@ -1,9 +1,5 @@
 import pytest
 
-from mock import Mock
-
-from pyramid.request import Request
-
 from pyramid_localize.routing.predicates import language
 
 
