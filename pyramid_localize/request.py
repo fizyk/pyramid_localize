@@ -5,7 +5,6 @@
 # This module is part of pyramid_localize and is released under
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 
-import pyramid.request
 from pyramid.i18n import get_locale_name
 from pyramid.compat import text_type
 import pyramid_basemodel
@@ -23,7 +22,8 @@ class LocalizeRequestMixin(object):
 
             :returns: kw
         '''
-        if '__LOCALE__' not in kw or kw['__LOCALE__'] not in self.registry['config'].localize.locales.available:
+        if '__LOCALE__' not in kw \
+                or kw['__LOCALE__'] not in self.registry['config'].localize.locales.available:
             kw['__LOCALE__'] = self.locale
 
         return kw
@@ -35,12 +35,15 @@ class LocalizeRequestMixin(object):
             .. note:: see :meth:`pyramid.request.Request.route_url`
         '''
 
-        return pyramid.request.Request.route_url(self, route_name, *elements, **self.default_locale(**kw))
+        return super(LocalizeRequestMixin, self).route_url(
+            route_name, *elements, **self.default_locale(**kw)
+        )
 
 
 def locale(request):
     '''
-        When called for the first time, it ask enviroment for languagecode, which is later available as a pure property
+        When called for the first time, it ask enviroment for languagecode,
+        which is later available as a pure property
         overriding this method
 
         :returns: language code needed for translations

@@ -15,7 +15,8 @@ from pyramid_localize.tools import set_localizer
 @subscriber(BeforeRender)
 def global_renderer(event):
     '''
-        Subscriber, which extends variables available for renderer with translator method, and localizer object
+        Subscriber, which extends variables available for renderer with translator method,
+        and localizer object
     '''
     request = event['request']
     set_localizer(request)
@@ -27,6 +28,7 @@ def global_renderer(event):
 @subscriber(NewRequest)
 def add_localizer(event):
     '''
-        We add localzer for each new request (we use tools.set_localizer method, as to not repeat yourself)
+        We add localzer for each new request
+        (we use tools.set_localizer method, as to not repeat yourself)
     '''
     set_localizer(event.request)

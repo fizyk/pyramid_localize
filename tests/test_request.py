@@ -33,10 +33,10 @@ from pyramid_localize.models import Language
 ))
 def test_request(web_request, kwargs, expected_locale):
     """Test whether route-parameters gets filled correctly."""
-    route_parameters = web_request.default_locale(**kwargs)
-    assert '__LOCALE__' in route_parameters
-    assert route_parameters['__LOCALE__'] in web_request.registry['config'].localize.locales.available
-    assert route_parameters['__LOCALE__'] == expected_locale
+    route_params = web_request.default_locale(**kwargs)
+    assert '__LOCALE__' in route_params
+    assert route_params['__LOCALE__'] in web_request.registry['config'].localize.locales.available
+    assert route_params['__LOCALE__'] == expected_locale
 
 
 @pytest.fixture

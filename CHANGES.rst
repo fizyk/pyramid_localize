@@ -4,8 +4,14 @@ CHANGES
 
 current
 -------
-- refactor tests to pytest
 - weaker pyramid_yml requirements. Use ``registry['config']`` instead of ``request.config`` which gets added only when explicitly including tzf.pyramid_yml package.
+
+tests
++++++
+- refactor tests to pytest
+- introduced pylama checks for:
+    - pep8
+    - pyflakes
 
 0.1.0 (prerelease)
 ------------------

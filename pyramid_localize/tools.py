@@ -98,7 +98,9 @@ def destination_path(request):
         :returns: A combined translation destination path
         :rtype: str
     '''
-    package_name, filename = resolve_asset_spec(request.registry['config'].localize.translation.destination)
+    package_name, filename = resolve_asset_spec(
+        request.registry['config'].localize.translation.destination
+    )
 
     if package_name is None:  # absolute filename
         directory = filename

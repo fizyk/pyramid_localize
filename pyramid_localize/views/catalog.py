@@ -23,7 +23,8 @@ from pyramid_localize.tools import set_localizer
 logger = logging.getLogger(__name__)
 
 
-@view_defaults(permission='manage_translations')
+@view_defaults(permission='manage_translations',
+               renderer='pyramid_localize:resources/templates/index.mako')
 class CatalogView(object):
 
     '''
@@ -64,10 +65,11 @@ class CatalogView(object):
             return os.path.abspath(os.path.join(package_path(package),
                                                 filename))
 
-    @view_config(route_name='localize:index', renderer='pyramid_localize:resources/templates/index.mako')
+    @view_config(route_name='localize:index')
     def index(self):
         '''
-            Simple action listing domains, and its files of files with additional data, like compilation date, .po update date.
+            Simple action listing domains, and its files of files with additional data,
+            like compilation date, .po update date.
 
             :returns:
 
@@ -110,11 +112,13 @@ class CatalogView(object):
 
         return {'translations': translations}
 
-    @view_config(route_name='localize:update', renderer='pyramid_localize:resources/templates/index.mako')
+    @view_config(route_name='localize:update')
     def update_catalog(self):
         '''
-            This action updates or initializes translation catalogs (.po files) from their respective transaltion templates (.pot).
-            This action is performed for every language defined within `localize.locales.available` config key.
+            This action updates or initializes translation catalogs (.po files)
+            from their respective transaltion templates (.pot).
+            This action is performed for every language defined within
+            `localize.locales.available` config key.
 
             Redirects itself to **localize:index**.
         '''
@@ -130,8 +134,9 @@ class CatalogView(object):
             for language in self.request.registry['config'].localize.locales.available:
                 po_file = self._translation_file(language, domain)
                 if os.path.isfile(po_file):
-                    logger.debug('po file for {domain}, {language} exists, proceeding with update'.format(
-                        domain=domain, language=language))
+                    logger.debug(
+                        'po file for {domain}, {language} exists, proceeding with update'.format(
+                            domain=domain, language=language))
 
                     if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'update',
@@ -141,8 +146,9 @@ class CatalogView(object):
                                         '--previous']):
                         logger.error('Error while trying to update {po} file!'.format(po=po_file))
                 else:
-                    logger.debug('po file for {domain}, {language} does not exists, proceeding with initialize'.format(
-                        domain=domain, language=language))
+                    logger.debug(
+                        '''po file for {domain}, {language} does not exists,
+                         proceeding with initialize'''.format(domain=domain, language=language))
                     if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'init',
                                         '-l', language,
@@ -152,10 +158,11 @@ class CatalogView(object):
 
         return HTTPFound(location=self.request.route_url('localize:index'))
 
-    @view_config(route_name='localize:compile', renderer='pyramid_localize:resources/templates/index.mako')
+    @view_config(route_name='localize:compile')
     def compile_catalog(self):
         '''
-            This action compiles all translation files (.po) for every language defined into .mo file that's used by gettext.
+            This action compiles all translation files (.po)
+            for every language defined into .mo file that's used by gettext.
 
             redirects to **localize:index**.
         '''
@@ -168,8 +175,9 @@ class CatalogView(object):
                 po_file = self._translation_file(language, domain)
                 mo_file = self._translation_file(language, domain, 'mo')
                 if os.path.isfile(po_file):
-                    logger.debug('po file for {domain}, {language} exists, proceeding with compilation'.format(
-                        domain=domain, language=language))
+                    logger.debug(
+                        '''po file for {domain}, {language} exists,
+                        proceeding with compilation'''.format(domain=domain, language=language))
                     if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'compile',
                                         '-l', language,
@@ -181,13 +189,14 @@ class CatalogView(object):
         return HTTPFound(location=self.request.route_url('localize:index'))
 
     @view_config(route_name='localize:reload', xhr='True', renderer='json')
-    @view_config(route_name='localize:reload', renderer='pyramid_localize:resources/templates/index.mako')
+    @view_config(route_name='localize:reload')
     def reload_catalog(self):
         '''
             Reloads transation caalog for application it's run in.
 
             .. note::
-                To see how is this happening, you might want to see :func:`~pyramid_localize.tools.set_localizer`
+                To see how is this happening, you might want to see
+                :func:`~pyramid_localize.tools.set_localizer`
 
             :returns:
 
