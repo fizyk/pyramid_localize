@@ -9,9 +9,10 @@ install:
     - "pip install pyramid_localize[babel] --use-mirrors"
     - "pip install pyramid_localize[tests] coveralls --use-mirrors"
     # manually install wheel for deployment
-    - "pip install wheel --use-mirrors"
+    - "pip install wheel pylama --use-mirrors"
 script:
     - "py.test -v --cov pyramid_localize tests/"
+    - pylama
 after_success:
     - coveralls
 

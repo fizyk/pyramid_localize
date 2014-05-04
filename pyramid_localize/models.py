@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2013 by pyramid_localize authors and contributors <see AUTHORS file>
 #
 # This module is part of pyramid_localize and is released under
 # the MIT License (MIT): http://opensource.org/licenses/MIT
+"""Language model."""
+
 
 from sqlalchemy import Column
 from sqlalchemy import Sequence
@@ -18,9 +18,7 @@ from pyramid_basemodel import Base
 
 class Language(Base):
 
-    '''
-        languages table model definition
-    '''
+    """Language table model definition."""
 
     __tablename__ = 'languages'
 
@@ -31,13 +29,9 @@ class Language(Base):
     language_code = Column(String(2), unique=True, nullable=False)  # ISO 639-1 (Alpha2)
 
     def __unicode__(self):  # pragma: no cover
-        '''
-            Language to unicode conversion
-        '''
+        """Language to unicode conversion."""
         return self.name
 
     def __str__(self):  # pragma: no cover
-        '''
-            Language to string conversion
-        '''
+        """Language to string conversion."""
         return self.name.encode('utf8')

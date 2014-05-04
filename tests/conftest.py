@@ -1,3 +1,4 @@
+"""Test suite main conftest."""
 import pytest
 from mock import Mock
 from pyramid.decorator import reify
@@ -8,7 +9,6 @@ from pyramid import testing
 @pytest.fixture
 def web_request():
     """Mocked web request for views testing."""
-
     from pyramid_localize.request import LocalizeRequestMixin
     from pyramid_localize.request import locale
     from pyramid_localize.request import database_locales
@@ -46,6 +46,7 @@ def web_request():
 
 @pytest.fixture
 def locale_negotiator_request():
+    """Request for locale_negotiator tests."""
     request = Mock()
     mock_configuration = {
         'cookies': {'_LOCALE_': 'cz'},

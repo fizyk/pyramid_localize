@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""pyramid_localize installation file."""
 
 import os
 import re
@@ -10,6 +10,7 @@ with open(os.path.join(here, 'pyramid_localize', '__init__.py')) as v_file:
 
 
 def read(fname):
+    """Read file (fname)."""
     return open(os.path.join(here, fname)).read()
 
 requirements = [
@@ -34,7 +35,8 @@ extras_require = {
 setup(
     name='pyramid_localize',
     version=package_version,
-    description='Package to provide translation methods for pyramid, and means to reload translations without stopping the application',
+    description='''Package to provide translation methods for pyramid,
+        and means to reload translations without stopping the application''',
     long_description=(
         read('README.rst')
         + '\n\n' +
