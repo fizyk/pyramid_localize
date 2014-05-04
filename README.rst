@@ -21,8 +21,10 @@ pyramid_localize
     :target: https://pypi.python.org/pypi/pyramid_localize/
     :alt: License
 
-Package provides translation methods for pyramid, and means to reload translations
-without stopping the application.
+**pyramid_localize** is a pyramid extension providing ready-to-use, translation
+functionality for your pyramid based projects. All you need is to add Babel,
+and add some configuration. localize provides also a web interface that allows
+you to reload translations live, without reloading application.
 
 
 Package status
