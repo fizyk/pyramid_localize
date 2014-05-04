@@ -10,16 +10,11 @@ from pyramid import testing
 def web_request():
     """Mocked web request for views testing."""
     from pyramid_localize.request import LocalizeRequestMixin
-    from pyramid_localize.request import locale
     from pyramid_localize.request import database_locales
     from pyramid_localize.request import locale_id
     from pyramid_localize.request import locales
 
     class TestRequest(LocalizeRequestMixin, Request):
-
-        @reify
-        def locale(self):
-            return locale(self)
 
         @reify
         def _database_locales(self):

@@ -4,7 +4,8 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Request related code."""
 
-from pyramid.i18n import get_locale_name
+import warnings
+
 from pyramid.compat import text_type
 import pyramid_basemodel
 
@@ -27,7 +28,7 @@ class LocalizeRequestMixin(object):
         """
         if '__LOCALE__' not in kw \
                 or kw['__LOCALE__'] not in self.registry['config'].localize.locales.available:
-            kw['__LOCALE__'] = self.locale
+            kw['__LOCALE__'] = self.locale_name
 
         return kw
 
@@ -58,7 +59,13 @@ def locale(request):
     :returns: language code needed for translations
     :rtype: string
     """
-    return get_locale_name(request)
+    warnings.warn(
+        'request.locale is deprecated as of pyramid_localize 0.1. '
+        'Please use request.locale_name delivered by Pyramid 1.5.',
+        DeprecationWarning,
+        2
+    )
+    return request.locale_name
 
 
 def locale_id(request):
@@ -68,10 +75,10 @@ def locale_id(request):
     :returns: database id of a language code needed for translations
     :rtype: int
     """
-    if request.locale not in request._database_locales:
-        _create_locale(request.locale, request)
+    if request.locale_name not in request._database_locales:
+        _create_locale(request.locale_name, request)
 
-    return request._database_locales[request.locale].id
+    return request._database_locales[request.locale_name].id
 
 
 def database_locales(request):
