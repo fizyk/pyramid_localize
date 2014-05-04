@@ -3,10 +3,12 @@ CHANGES
 =======
 
 
-current
--------
+0.1.0
+-----
+
 - weaker pyramid_yml requirements. Use ``registry['config']`` instead of ``request.config`` which gets added only when explicitly including tzf.pyramid_yml package.
 - deprecated request.locale in favour of request.locale_name delivered by Pyramid 1.5
+- moved locale negotiator into it's own submodule
 
 backward incompatible
 +++++++++++++++++++++
