@@ -15,7 +15,7 @@ from pyramid_localize.request import (
     locale, database_locales, locales, locale_id
 )
 
-__version__ = '0.1a2'
+__version__ = '0.1.0'
 
 
 def includeme(configurator):
