@@ -6,6 +6,12 @@ CHANGES
 current
 -------
 - weaker pyramid_yml requirements. Use ``registry['config']`` instead of ``request.config`` which gets added only when explicitly including tzf.pyramid_yml package.
+- deprecated request.locale in favour of request.locale_name delivered by Pyramid 1.5
+
+backward incompatible
++++++++++++++++++++++
+- required cookie name changed to _LOCALE_ to be consistent with other places
+- fixed a typo from catalog to catalogue
 
 tests
 +++++
@@ -21,11 +27,6 @@ tests
 - py3 compatibility (require at least babel 1.0)
 - locale negotiator looks first for request attribute _LOCALE_
 - added pyramid_mako dependency (required by pyramid 1.5a2 changes)
-
-backward incompatible
-+++++++++++++++++++++
-- required cookie name changed to _LOCALE_ to be consistent with other places
-- fixed a typo from catalog to catalogue
 
 0.0.5
 -----
