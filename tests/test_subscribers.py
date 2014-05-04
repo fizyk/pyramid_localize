@@ -1,4 +1,4 @@
-
+"""Subscribers related tests."""
 import pytest
 
 
@@ -17,7 +17,7 @@ from pyramid.i18n import Localizer
 
 @pytest.fixture
 def request_i18n():
-    '''i18n:Test new request'''
+    """New request with i18n subscribers on."""
     config = testing.setUp()
     config.scan('pyramid_localize.subscribers.i18n')
     request = Request({})
@@ -26,14 +26,14 @@ def request_i18n():
 
 
 def test_i18n_new_request(request_i18n):
-    """Test method are being added."""
+    """Test if method are being added to request."""
     request_i18n.registry.notify(NewRequest(request_i18n))
     assert isinstance(request_i18n.localizer, Localizer)
     assert hasattr(request_i18n, '_')
 
 
 def test_i18n_before_render(request_i18n):
-    '''i18n:Test before render'''
+    """Test if appropriate methods are being added to render context."""
     before_render_event = BeforeRender({'request': request_i18n}, {})
     request_i18n.registry.notify(before_render_event)
     assert 'localizer' in before_render_event
@@ -41,7 +41,7 @@ def test_i18n_before_render(request_i18n):
 
 
 def test_i18n_before_render_and_request(request_i18n):
-    '''i18n:Test before render with new request'''
+    """Test if appropriate methods are being added to both context and request."""
     request_i18n.registry.notify(NewRequest(request_i18n))
     before_render_event = BeforeRender({'request': request_i18n}, {})
     request_i18n.registry.notify(before_render_event)
@@ -51,7 +51,7 @@ def test_i18n_before_render_and_request(request_i18n):
 
 @pytest.fixture
 def request_fake():
-    '''i18n:Test new request'''
+    """New request with fake i18n subscribers on."""
     config = testing.setUp()
     config.scan('pyramid_localize.subscribers.fake')
     request = Request({})
@@ -60,13 +60,13 @@ def request_fake():
 
 
 def test_fake_new_request(request_fake):
-    '''fakei18n:Test new request'''
+    """Test if method are being added to request."""
     request_fake.registry.notify(NewRequest(request_fake))
     assert hasattr(request_fake, '_')
 
 
 def test_fake_before_render(request_fake):
-    '''fakei18n:Test before render'''
+    """Test if appropriate methods are being added to both context and request."""
     request_fake.registry.notify(NewRequest(request_fake))
     before_render_event = BeforeRender({'request': request_fake}, {})
     request_fake.registry.notify(before_render_event)
@@ -74,7 +74,7 @@ def test_fake_before_render(request_fake):
 
 
 def test_fake_before_render_norequest(request_fake):
-    '''fakei18n:Test before render'''
+    """Test if appropriate methods are being added to render context."""
     before_render_event = BeforeRender({'request': request_fake}, {})
     request_fake.registry.notify(before_render_event)
     assert '_' in before_render_event

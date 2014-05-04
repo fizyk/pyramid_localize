@@ -1,3 +1,5 @@
+"""Route predicate related tests."""
+
 import pytest
 
 from pyramid_localize.routing.predicates import language
@@ -16,5 +18,6 @@ from pyramid_localize.routing.predicates import language
     )
 ))
 def test_predicate(web_request, match_info, matched):
+    """Test matches according to web_request config."""
     predicate = language('_LOCALE_')
     assert predicate(match_info, web_request) == matched

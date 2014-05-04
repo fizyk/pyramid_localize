@@ -1,3 +1,5 @@
+"""Test request related code."""
+
 import pytest
 
 import transaction
@@ -59,7 +61,7 @@ def db_session(request):
 
 @pytest.fixture
 def db_locales(db_session):
-
+    """Add Languages to db_session."""
     for locale in ['pl', 'cz', 'fr']:
         locale_object = Language(name=text_type(locale),
                                  native_name=text_type(locale),
@@ -69,15 +71,19 @@ def db_locales(db_session):
 
 
 def test_locale_id(db_locales, web_request):
-    '''Test for creating, and getting loacel id'''
+    """Test for creating, and getting loacel id."""
     assert isinstance(web_request.locale_id, int)
 
 
 def test_locales(db_locales, web_request):
-    '''test return locales list'''
+    """test return locales list."""
     assert len(web_request.locales()) == 3
 
 
 def test_locales_config(db_locales, web_request):
-    '''test return locales list limited by config'''
+    """
+    test return locales list limited by config.
+
+    There's a new locale, so it should create new Language entry.
+    """
     assert len(web_request.locales(True)) == 4
