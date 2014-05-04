@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""pyramid_localize installation file."""
 
 import os
 import re
@@ -10,6 +10,7 @@ with open(os.path.join(here, 'pyramid_localize', '__init__.py')) as v_file:
 
 
 def read(fname):
+    """Read file (fname)."""
     return open(os.path.join(here, fname)).read()
 
 requirements = [

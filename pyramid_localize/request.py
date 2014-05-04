@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2013 by pyramid_localize authors and contributors <see AUTHORS file>
 #
 # This module is part of pyramid_localize and is released under
 # the MIT License (MIT): http://opensource.org/licenses/MIT
+"""Request related code."""
 
 from pyramid.i18n import get_locale_name
 from pyramid.compat import text_type
@@ -14,14 +13,18 @@ from pyramid_localize.models import Language
 
 class LocalizeRequestMixin(object):
 
+    """Mixin adding overwriting Request methods."""
+
     def default_locale(self, **kw):
-        '''
-            Sets up default locale for path kwargs. Can be used in custom route_url overwrites
+        """
+        Set up default locale for path kwargs.
 
-            :param kwargs kw: list of route parts
+        Can be used in custom route_url overwrites.
 
-            :returns: kw
-        '''
+        :param kwargs kw: list of route parts
+
+        :returns: kw
+        """
         if '__LOCALE__' not in kw \
                 or kw['__LOCALE__'] not in self.registry['config'].localize.locales.available:
             kw['__LOCALE__'] = self.locale
@@ -29,37 +32,42 @@ class LocalizeRequestMixin(object):
         return kw
 
     def route_url(self, route_name, *elements, **kw):
-        '''
-            Overwrites original route_url to handle default locale
+        """
+        Overwrite original route_url to handle default locale within route.
 
-            .. note:: see :meth:`pyramid.request.Request.route_url`
-        '''
-
+        .. note:: see :meth:`pyramid.request.Request.route_url`
+        """
         return super(LocalizeRequestMixin, self).route_url(
             route_name, *elements, **self.default_locale(**kw)
         )
 
 
 def locale(request):
-    '''
-        When called for the first time, it ask enviroment for languagecode,
-        which is later available as a pure property
-        overriding this method
+    """
+    Return locale name.
 
-        :returns: language code needed for translations
-        :rtype: string
-    '''
+    .. warning::
+
+        Since pyramid 1.5 this function is obsolete and will be deprecated
+        in future versions of pyramid_localize
+
+    When called for the first time, it ask environment for language code,
+    which is later available as a pure property
+    overriding this method
+
+    :returns: language code needed for translations
+    :rtype: string
+    """
     return get_locale_name(request)
 
 
 def locale_id(request):
-    '''
-        Returns database id of a current locale name
+    """
+    Return database id of a current locale name.
 
-        :returns: database id of a language code needed for translations
-        :rtype: int
-    '''
-
+    :returns: database id of a language code needed for translations
+    :rtype: int
+    """
     if request.locale not in request._database_locales:
         _create_locale(request.locale, request)
 
@@ -67,12 +75,12 @@ def locale_id(request):
 
 
 def database_locales(request):
-    '''
-        Returns list of all database locales available
+    """
+    Return list of all database locales available.
 
-        :returns: dictionary of Language objects language_code: Language
-        :rtype: dict
-    '''
+    :returns: dictionary of Language objects language_code: Language
+    :rtype: dict
+    """
     locales = {}
     for language in pyramid_basemodel.Session.query(Language).all():
         locales[language.language_code] = language
@@ -81,14 +89,14 @@ def database_locales(request):
 
 
 def locales(request, config=False):
-    '''
-        Returns a list of locales
+    """
+    Return a list of locales.
 
-        :param bool config: Whether to restrict list with config
+    :param bool config: Whether to restrict list with config
 
-        :returns: dictionary of Language objects language_code: Language
-        :rtype: dict
-    '''
+    :returns: dictionary of Language objects language_code: Language
+    :rtype: dict
+    """
     if config:
         locales = {}
         for locale in request.registry['config'].localize.locales.available:

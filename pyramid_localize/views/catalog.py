@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2013 by pyramid_localize authors and contributors <see AUTHORS file>
 #
 # This module is part of pyramid_localize and is released under
 # the MIT License (MIT): http://opensource.org/licenses/MIT
+"""Catalogue view."""
+
+
 import sys
 import os
 import time
@@ -27,34 +28,35 @@ logger = logging.getLogger(__name__)
                renderer='pyramid_localize:resources/templates/index.mako')
 class CatalogView(object):
 
-    '''
-            View class for catalog manipulation actions
-    '''
+    """View class for catalog manipulation actions."""
 
     def __init__(self, request):
-        '''Assign request'''
+        """
+        Assign request.
+
+        :param pyramid.request.Request request:
+        """
         self.request = request
 
     def _translation_file(self, language, domain, extension='po'):
-        '''
-            Creates a translation file path
+        """
+        Create a translation file path.
 
-            :param str language: two-letetr language code
-            :param str domain: translation domain name
-            :param str extension: translation file extension (po/mo)
-        '''
-
+        :param str language: two-letetr language code
+        :param str domain: translation domain name
+        :param str extension: translation file extension (po/mo)
+        """
         translation_destination = destination_path(self.request)
         return os.path.abspath(os.path.join(translation_destination, language,
                                             'LC_MESSAGES',
                                             domain + '.' + extension))
 
     def _translation_template_path(self, spec):
-        '''
-            calculates path to translation template file
+        """
+        Calculate path to translation template file.
 
-            :param str spec: either full path, or package related path
-        '''
+        :param str spec: either full path, or package related path
+        """
         # resolving possible asset spec to path (pyramid way):
         package_name, filename = resolve_asset_spec(spec)
         if package_name is None:  # absolute filename
@@ -67,26 +69,25 @@ class CatalogView(object):
 
     @view_config(route_name='localize:index')
     def index(self):
-        '''
-            Simple action listing domains, and its files of files with additional data,
-            like compilation date, .po update date.
+        """
+        Simple action listing domains, and its files of files with metadata.
 
-            :returns:
+        :returns:
 
-                .. code-block:: python
+            .. code-block:: python
 
-                    {
-                        'language': {
-                            'domain1': {
-                                'po': 'modification time',
-                                'pot': 'modification time',
-                                'mo': 'modification time',
-                                },
-                            # more domains
-                        },
-                        # more languages
-                    }
-        '''
+                {
+                    'language': {
+                        'domain1': {
+                            'po': 'modification time',
+                            'pot': 'modification time',
+                            'mo': 'modification time',
+                            },
+                        # more domains
+                    },
+                    # more languages
+                }
+        """
         translations = {}
         translation_sources = self.request.registry['config'].localize.translation.sources
 
@@ -114,14 +115,15 @@ class CatalogView(object):
 
     @view_config(route_name='localize:update')
     def update_catalog(self):
-        '''
-            This action updates or initializes translation catalogs (.po files)
-            from their respective transaltion templates (.pot).
-            This action is performed for every language defined within
-            `localize.locales.available` config key.
+        """
+        Update or initialize translation catalogs.
 
-            Redirects itself to **localize:index**.
-        '''
+        Create (.po files) for each language/catalogue from their respective
+        translation templates (.pot). This action is performed for every language
+        defined within `localize.locales.available` config key.
+
+        Redirects itself to **localize:index**.
+        """
         self.index()
         translation_sources = self.request.registry['config'].localize.translation.sources
 
@@ -160,12 +162,13 @@ class CatalogView(object):
 
     @view_config(route_name='localize:compile')
     def compile_catalog(self):
-        '''
-            This action compiles all translation files (.po)
-            for every language defined into .mo file that's used by gettext.
+        """
+        Compile all translation files.
 
-            redirects to **localize:index**.
-        '''
+        For every language defined compile .po files into into .mo file that's used by gettext.
+
+        Redirects to **localize:index**.
+        """
         self.index()
         translation_sources = self.request.registry['config'].localize.translation.sources
 
@@ -191,29 +194,29 @@ class CatalogView(object):
     @view_config(route_name='localize:reload', xhr='True', renderer='json')
     @view_config(route_name='localize:reload')
     def reload_catalog(self):
-        '''
-            Reloads transation caalog for application it's run in.
+        """
+        Reload translation catalogue for application it's run in.
 
-            .. note::
-                To see how is this happening, you might want to see
-                :func:`~pyramid_localize.tools.set_localizer`
+        .. note::
 
-            :returns:
+            To see how is this happening, you might want to see
+            :func:`~pyramid_localize.tools.set_localizer`
 
-                Only for xhr requests:
+        :returns:
 
-                .. code-block:: python
+            Only for xhr requests:
 
-                    {
-                        'status': True,
-                        'msg': 'Localizators has been reloaded' # translated
-                    }
+            .. code-block:: python
 
-                non xhr requests: Redirects to **localize:index**.
+                {
+                    'status': True,
+                    'msg': 'Localizators has been reloaded' # translated
+                }
+
+            non xhr requests: Redirects to **localize:index**.
 
 
-        '''
-
+        """
         set_localizer(self.request, True)
 
         if self.request.is_xhr:

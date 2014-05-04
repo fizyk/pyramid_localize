@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2013 by pyramid_localize authors and contributors <see AUTHORS file>
 #
 # This module is part of pyramid_localize and is released under
 # the MIT License (MIT): http://opensource.org/licenses/MIT
-'''
-    methods in this module are tools, thank to which pyramid_localize works most of its magic
-'''
+"""methods in this module are tools, thank to which pyramid_localize works most of its magic."""
+
 import sys
 import os
 import logging
@@ -24,13 +21,12 @@ logger = logging.getLogger(__name__)
 
 
 def set_localizer(request, reset=False):
-    '''
-        Sets localizer and auto_translate methods for request
+    """
+    Set localizer and auto_translate methods for request.
 
-        :param pyramid.request.Request request: request object
-        :param bool reset: flag that directs resetting localizer within app
-    '''
-
+    :param pyramid.request.Request request: request object
+    :param bool reset: flag that directs resetting localizer within app
+    """
     if reset:
 
         for locale in request.registry['config'].localize.locales.available:
@@ -55,21 +51,22 @@ def set_localizer(request, reset=False):
 
 
 def locale_negotiator(request):
-    '''
-        Locale negotiator. It sets best suited locale variable for given user:
+    """
+    Locale negotiator.
 
-        1. Check for presence and value of **request._LOCALE_** value
-        2. Then tries the address url, if the first part has locale indicator.
-        3. It checks cookies, for value set here
-        4. Tries to best match accepted language for browser user is visiting
-            website with
-        5. Defaults to **localize.locales.default** configuration setting value
+    It sets best suited locale variable for given user:
 
-        :param pyramid.request.Request request: a request object
-        :returns: locale name
-        :rtype: str
+    1. Check for presence and value of **request._LOCALE_** value
+    2. Then tries the address url, if the first part has locale indicator.
+    3. It checks cookies, for value set here
+    4. Tries to best match accepted language for browser user is visiting
+        website with
+    5. Defaults to **localize.locales.default** configuration setting value
 
-    '''
+    :param pyramid.request.Request request: a request object
+    :returns: locale name
+    :rtype: str
+    """
     available_languages = request.registry['config'].localize.locales.available
     locale = request.registry['config'].localize.locales.default
     # We do not have a matchdict present at the moment, lets get our own split
@@ -90,14 +87,14 @@ def locale_negotiator(request):
 
 
 def destination_path(request):
-    '''
-        Returns absolute path of the translation destination
+    """
+    Return absolute path of the translation destination.
 
-        :param pyramid.request.Request request: a request object
+    :param pyramid.request.Request request: a request object
 
-        :returns: A combined translation destination path
-        :rtype: str
-    '''
+    :returns: A combined translation destination path
+    :rtype: str
+    """
     package_name, filename = resolve_asset_spec(
         request.registry['config'].localize.translation.destination
     )
@@ -112,18 +109,17 @@ def destination_path(request):
 
 
 def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
-    '''
-        Method that simulate autotranslate
+    """
+    Method that simulate autotranslate.
 
-        :param str msgid: Message or message id
-        :param str domain: Translation domain
-        :param str default: Default message
-        :param dict mapping: Mapping dictionary for message variables
+    :param str msgid: Message or message id
+    :param str domain: Translation domain
+    :param str default: Default message
+    :param dict mapping: Mapping dictionary for message variables
 
-        :returns: *translated* string
-        :rtype: str
-
-    '''
+    :returns: *translated* string
+    :rtype: str
+    """
     # Try to return defaults first:
     tstr = None
     if default:

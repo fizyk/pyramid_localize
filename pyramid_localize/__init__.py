@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2013 by pyramid_localize authors and contributors <see AUTHORS file>
 #
 # This module is part of pyramid_localize and is released under
 # the MIT License (MIT): http://opensource.org/licenses/MIT
+"""pyramid_localize configuration module."""
 
 try:  # pragma: no cover
     import babel
@@ -22,10 +21,7 @@ __version__ = '0.1a2'
 
 
 def includeme(configurator):
-    '''
-        i18n includeme action
-    '''
-
+    """pyramid_localize configuration method."""
     # let's check if we have any configuration, or not
     if babel:
         configurator.scan('pyramid_localize.subscribers.i18n')
