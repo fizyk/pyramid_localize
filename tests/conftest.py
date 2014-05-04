@@ -45,12 +45,13 @@ def locale_negotiator_request():
     request = Mock()
     mock_configuration = {
         'cookies': {'_LOCALE_': 'cz'},
+        '_LOCALE_': 'fr',
         'accept_language.best_match.return_value': 'de',
         'path': '/pl/page'}
     request.configure_mock(**mock_configuration)
     config = Mock()
     config.configure_mock(**{
-        'localize.locales.available': ['en', 'pl', 'de', 'cz'],
+        'localize.locales.available': ['en', 'pl', 'de', 'cz', 'fr'],
         'localize.locales.default': 'en'
     })
     request.registry = {'config': config}

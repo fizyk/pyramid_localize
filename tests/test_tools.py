@@ -11,7 +11,7 @@ from pyramid.interfaces import ILocalizer
 
 from pyramid_localize.tools import dummy_autotranslate
 from pyramid_localize.tools import destination_path
-from pyramid_localize.tools import locale_negotiator
+from pyramid_localize.negotiator import locale_negotiator
 from pyramid_localize.tools import set_localizer
 
 from tests.conftest import web_request as web_request_func
@@ -68,9 +68,18 @@ def test_negotiate_path(locale_negotiator_request):
     assert locale == 'pl'
 
 
+def test_negotiate_attr(locale_negotiator_request):
+    """Locale_negotiator - negotiate locale from path."""
+    locale_negotiator_request.path = '/page'
+    locale = locale_negotiator(locale_negotiator_request)
+
+    assert locale == 'fr'
+
+
 def test_negotiate_cookie(locale_negotiator_request):
     """locale_negotiator - negotiate locale from cookie."""
     locale_negotiator_request.path = '/page'
+    locale_negotiator_request._LOCALE_ = None
     locale = locale_negotiator(locale_negotiator_request)
 
     assert locale == 'cz'
@@ -83,6 +92,7 @@ def test_negotiate_headers(locale_negotiator_request):
     Negotiate locale from a header.
     """
     locale_negotiator_request.path = '/page'
+    locale_negotiator_request._LOCALE_ = None
     locale_negotiator_request.cookies = {}
     locale = locale_negotiator(locale_negotiator_request)
 
@@ -96,6 +106,7 @@ def test_negotiate_default(locale_negotiator_request):
     Other ways fail, return default locale.
     """
     locale_negotiator_request.path = '/page'
+    locale_negotiator_request._LOCALE_ = None
     locale_negotiator_request.cookies = {}
     locale_negotiator_request.accept_language = None
     locale = locale_negotiator(locale_negotiator_request)

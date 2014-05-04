@@ -11,11 +11,9 @@ except ImportError:  # pragma: no cover
 
 from tzf.pyramid_yml import config_defaults
 
-from pyramid_localize import tools
-from pyramid_localize.request import locale
-from pyramid_localize.request import database_locales
-from pyramid_localize.request import locales
-from pyramid_localize.request import locale_id
+from pyramid_localize.request import (
+    locale, database_locales, locales, locale_id
+)
 
 __version__ = '0.1a2'
 
@@ -31,7 +29,7 @@ def includeme(configurator):
             # once user allowed for localization, lets set up default values!
             config_defaults(configurator, 'pyramid_localize:config')
 
-            configurator.set_locale_negotiator(tools.locale_negotiator)
+            configurator.set_locale_negotiator('pyramid_localize.negotiator.locale_negotiator')
             translation_dirs = configuration.translation.dirs
             # if it's not a list, lets make it a list.
             # This is to allow creating both single, and list-like config entry

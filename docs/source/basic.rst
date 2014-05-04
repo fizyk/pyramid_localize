@@ -35,7 +35,7 @@ Configuration
 .. note::
     Plugins uses `tzf.pyramid_yml <https://tzfpyramid_yml.readthedocs.org/en/latest/>`_ for its configuration settings
 
-This is full usage example, where **pyramid_localize** provides everything needed for your application, including :func:`~pyramid_localize.tools.locale_negotiator`, and sqlalchemy model for :class:`~pyramid_localize.models.Language`, to be able to store localized data in database.
+This is full usage example, where **pyramid_localize** provides everything needed for your application, including :func:`~pyramid_localize.negotiator.locale_negotiator`, and sqlalchemy model for :class:`~pyramid_localize.models.Language`, to be able to store localized data in database.
 
 .. code-block:: yaml
 
