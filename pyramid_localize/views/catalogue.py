@@ -26,9 +26,9 @@ logger = logging.getLogger(__name__)
 
 @view_defaults(permission='manage_translations',
                renderer='pyramid_localize:resources/templates/index.mako')
-class CatalogView(object):
+class CatalogueView(object):
 
-    """View class for catalog manipulation actions."""
+    """View class for catalogue manipulation actions."""
 
     def __init__(self, request):
         """
@@ -42,7 +42,7 @@ class CatalogView(object):
         """
         Create a translation file path.
 
-        :param str language: two-letetr language code
+        :param str language: two-letter language code
         :param str domain: translation domain name
         :param str extension: translation file extension (po/mo)
         """
@@ -114,9 +114,9 @@ class CatalogView(object):
         return {'translations': translations}
 
     @view_config(route_name='localize:update')
-    def update_catalog(self):
+    def update_catalogue(self):
         """
-        Update or initialize translation catalogs.
+        Update or initialize translation catalogues.
 
         Create (.po files) for each language/catalogue from their respective
         translation templates (.pot). This action is performed for every language
@@ -161,7 +161,7 @@ class CatalogView(object):
         return HTTPFound(location=self.request.route_url('localize:index'))
 
     @view_config(route_name='localize:compile')
-    def compile_catalog(self):
+    def compile_catalogue(self):
         """
         Compile all translation files.
 
@@ -193,7 +193,7 @@ class CatalogView(object):
 
     @view_config(route_name='localize:reload', xhr='True', renderer='json')
     @view_config(route_name='localize:reload')
-    def reload_catalog(self):
+    def reload_catalogue(self):
         """
         Reload translation catalogue for application it's run in.
 

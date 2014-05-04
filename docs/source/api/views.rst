@@ -1,10 +1,10 @@
 views
 =====
 
-catalog
--------
+catalogue
+---------
 
-.. automodule:: pyramid_localize.views.catalog
+.. automodule:: pyramid_localize.views.catalogue
 
-    .. autoclass:: CatalogView
+    .. autoclass:: CatalogueView
         :members:

@@ -46,10 +46,10 @@ def includeme(configurator):
             # let scan all subscribers
             configurator.scan('pyramid_localize.views')
 
-            configurator.add_route(name='localize:index', pattern='catalog')
-            configurator.add_route(name='localize:update', pattern='catalog/update')
-            configurator.add_route(name='localize:compile', pattern='catalog/compile')
-            configurator.add_route(name='localize:reload', pattern='catalog/reload')
+            configurator.add_route(name='localize:index', pattern='catalogue')
+            configurator.add_route(name='localize:update', pattern='catalogue/update')
+            configurator.add_route(name='localize:compile', pattern='catalogue/compile')
+            configurator.add_route(name='localize:reload', pattern='catalogue/reload')
 
             # getting requests methods
             configurator.add_request_method(locale, name='locale', reify=True)

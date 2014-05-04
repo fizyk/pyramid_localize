@@ -18,10 +18,10 @@ At the moment, it includes loading them into application, creating /updating cat
 
 Lists of actions per their route names:
 
-* **localize:index** action, lists all configured translation domains, and it's file along with data such as modification date. See :meth:`~pyramid_localize.views.catalog.CatalogView.index`.
+* **localize:index** action, lists all configured translation domains, and it's file along with data such as modification date. See :meth:`~pyramid_localize.views.catalogue.CatalogueView.index`.
 
-* **localize:update** action, updates all .po files from respective .pot's, and if needed initializes them. See :meth:`~pyramid_localize.views.catalog.CatalogView.update_catalog`.
+* **localize:update** action, updates all .po files from respective .pot's, and if needed initializes them. See :meth:`~pyramid_localize.views.catalogue.CatalogueView.update_catalogue`.
 
-* **localize:compile** action, compiles all .po translation files into .mo used by gettext to serve translations on your site. See :meth:`~pyramid_localize.views.catalog.CatalogView.compile_catalog`.
+* **localize:compile** action, compiles all .po translation files into .mo used by gettext to serve translations on your site. See :meth:`~pyramid_localize.views.catalogue.CatalogueView.compile_catalogue`.
 
-* **localize:reload** action is more like an example action, but still usable. Reloads translation catalogues for application. See :meth:`~pyramid_localize.views.catalog.CatalogView.reload_catalog`.
+* **localize:reload** action is more like an example action, but still usable. Reloads translation catalogues for application. See :meth:`~pyramid_localize.views.catalogue.CatalogueView.reload_catalogue`.
