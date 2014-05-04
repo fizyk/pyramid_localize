@@ -2,6 +2,7 @@
 CHANGES
 =======
 
+
 current
 -------
 - weaker pyramid_yml requirements. Use ``registry['config']`` instead of ``request.config`` which gets added only when explicitly including tzf.pyramid_yml package.
@@ -12,9 +13,9 @@ tests
 - introduced pylama checks for:
     - pep8
     - pyflakes
+    - pep257
+    - mccabe
 
-0.1.0 (prerelease)
-------------------
 - license information
 - requires at least pyramid 1.5a1 (rely on default localizer reify method)
 - py3 compatibility (require at least babel 1.0)
@@ -24,6 +25,7 @@ tests
 backward incompatible
 +++++++++++++++++++++
 - required cookie name changed to _LOCALE_ to be consistent with other places
+- fixed a typo from catalog to catalogue
 
 0.0.5
 -----
