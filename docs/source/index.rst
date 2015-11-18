@@ -9,6 +9,7 @@ Contents
    basic
    advanced
    api
+   contributing
    changelog
 
 License
