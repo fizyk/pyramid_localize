@@ -38,9 +38,7 @@ setup(
     description='''Package to provide translation methods for pyramid,
         and means to reload translations without stopping the application''',
     long_description=(
-        read('README.rst')
-        + '\n\n' +
-        read('CHANGES.rst')
+        read('README.rst') + '\n\n' + read('CHANGES.rst')
     ),
     keywords='python template',
     author='Grzegorz Sliwinski',
