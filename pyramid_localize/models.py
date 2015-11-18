@@ -17,7 +17,6 @@ from pyramid_basemodel import Base
 
 
 class Language(Base):
-
     """Language table model definition."""
 
     __tablename__ = 'languages'

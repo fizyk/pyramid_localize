@@ -13,7 +13,6 @@ from pyramid_localize.models import Language
 
 
 class LocalizeRequestMixin(object):
-
     """Mixin adding overwriting Request methods."""
 
     def default_locale(self, **kw):

@@ -27,7 +27,6 @@ logger = logging.getLogger(__name__)
 @view_defaults(permission='manage_translations',
                renderer='pyramid_localize:resources/templates/index.mako')
 class CatalogueView(object):
-
     """View class for catalogue manipulation actions."""
 
     def __init__(self, request):
