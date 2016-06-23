@@ -6,11 +6,12 @@ python:
     - "3.4"
     - "3.5"
 install:
+    - "pip install -r requirements-test.txt"
     - "python setup.py install"
     - "pip install pyramid_localize[babel]"
     - "pip install pyramid_localize[tests] coveralls"
     # manually install wheel for deployment
-    - "pip install wheel pylama"
+    - "pip install wheel"
 script:
     - "py.test -v --cov pyramid_localize tests/"
     - pylama
