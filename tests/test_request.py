@@ -43,7 +43,7 @@ def test_request(web_request, kwargs, expected_locale):
 
 @pytest.fixture
 def db_session(request):
-    """SQLAlchemy session."""
+    """Session for SQLAlchemy."""
     from pyramid_localize.models import Base
 
     engine = create_engine('sqlite:///fullauth.sqlite', echo=False, poolclass=NullPool)
@@ -77,13 +77,13 @@ def test_locale_id(db_locales, web_request):
 
 
 def test_locales(db_locales, web_request):
-    """test return locales list."""
+    """Test return locales list."""
     assert len(web_request.locales()) == 3
 
 
 def test_locales_config(db_locales, web_request):
     """
-    test return locales list limited by config.
+    Test return locales list limited by config.
 
     There's a new locale, so it should create new Language entry.
     """
