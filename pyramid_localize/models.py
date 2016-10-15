@@ -15,6 +15,7 @@ from sqlalchemy import func
 from sqlalchemy import event
 
 from pyramid_basemodel import Base
+from pyramid.compat import PY3, text_type
 
 import gettext
 import pycountry
@@ -49,18 +50,27 @@ def before_language_insert(mapper, connection, language):
 
     except KeyError:
         # Language code not recognized, set defaults
-        language.name = 'UNKNOWN'
-        language.native_name = 'UNKNOWN'
+        language.name = text_type('UNKNOWN')
+        language.native_name = text_type('UNKNOWN')
         return
 
     # Set name and native_name
-    language.name = lang_data.name
+    language.name = text_type(lang_data.name)
 
-    lang_locale = gettext.translation(
-        'iso639_3',
-        pycountry.LOCALES_DIR,
-        languages=[language.language_code]
-    )
-    l = lang_locale.gettext
+    if language.language_code == text_type('en'):
+        # English does not have a translation file
+        language.native_name = text_type(lang_data.name)
 
-    language.native_name = l(lang_data.name)
+    else:
+        lang_locale = gettext.translation(
+            'iso639_3',
+            pycountry.LOCALES_DIR,
+            languages=[language.language_code]
+        )
+        l = lang_locale.gettext
+
+        if PY3:
+            language.native_name = text_type(l(lang_data.name))
+
+        else:
+            language.native_name = text_type(l(lang_data.name), 'utf-8')
