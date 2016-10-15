@@ -1,6 +1,10 @@
 CHANGES
 =======
 
+unreleased
+-------
+
+- [functionality] Language object's name and native_name will filled automatically on language creation from pycountry [rmed]
 
 0.1.0
 -----
