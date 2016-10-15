@@ -10,3 +10,4 @@ tzf.pyramid-yml==1.1.0
 pyramid-basemodel==0.3.6
 pyramid_mako==1.0.2
 babel==2.3.4
+pycountry==1.20
