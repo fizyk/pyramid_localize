@@ -17,8 +17,7 @@ requirements = [
     'pyramid_basemodel',
     'tzf.pyramid_yml >=0.2',
     'pyramid >=1.5a1',
-    'pyramid_mako',
-    'pycountry==1.20'
+    'pyramid_mako'
 ]
 
 test_requires = [
