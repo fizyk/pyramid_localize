@@ -67,10 +67,10 @@ def before_language_insert(mapper, connection, language):
             pycountry.LOCALES_DIR,
             languages=[language.language_code]
         )
-        l = lang_locale.gettext
+        localize = lang_locale.gettext
 
         if PY3:
-            language.native_name = text_type(l(lang_data.name))
+            language.native_name = text_type(localize(lang_data.name))
 
         else:
-            language.native_name = text_type(l(lang_data.name), 'utf-8')
+            language.native_name = text_type(localize(lang_data.name), 'utf-8')

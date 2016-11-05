@@ -1,23 +1,24 @@
 pyramid_localize
 ================
 
-.. image:: https://pypip.in/v/pyramid_localize/badge.png
+
+.. image:: https://img.shields.io/pypi/v/pyramid_localize.svg
     :target: https://pypi.python.org/pypi/pyramid_localize/
     :alt: Latest PyPI version
 
-.. image:: https://pypip.in/d/pyramid_localize/badge.png
-    :target: https://pypi.python.org/pypi/pyramid_localize/
-    :alt: Number of PyPI downloads
+.. image:: https://readthedocs.org/projects/pyramid_localize/badge/?version=v0.1.0
+    :target: http://pyramid_localize.readthedocs.io/en/v0.1.0/
+    :alt: Documentation Status
 
-.. image:: https://pypip.in/wheel/pyramid_localize/badge.png
+.. image:: https://img.shields.io/pypi/wheel/pyramid_localize.svg
     :target: https://pypi.python.org/pypi/pyramid_localize/
     :alt: Wheel Status
 
-.. image:: https://pypip.in/egg/pyramid_localize/badge.png
+.. image:: https://img.shields.io/pypi/pyversions/pyramid_localize.svg
     :target: https://pypi.python.org/pypi/pyramid_localize/
-    :alt: Egg Status
+    :alt: Supported Python Versions
 
-.. image:: https://pypip.in/license/pyramid_localize/badge.png
+.. image:: https://img.shields.io/pypi/l/pyramid_localize.svg
     :target: https://pypi.python.org/pypi/pyramid_localize/
     :alt: License
 
@@ -30,17 +31,17 @@ you to reload translations live, without reloading application.
 Package status
 --------------
 
-.. image:: https://travis-ci.org/fizyk/pyramid_localize.png?branch=master
+.. image:: https://travis-ci.org/fizyk/pyramid_localize.svg?branch=v0.1.0
     :target: https://travis-ci.org/fizyk/pyramid_localize
     :alt: Tests
 
-.. image:: https://coveralls.io/repos/fizyk/pyramid_localize/badge.png?branch=master
-    :target: https://coveralls.io/r/fizyk/pyramid_localize?branch=master
+.. image:: https://coveralls.io/repos/fizyk/pyramid_localize/badge.png?branch=v0.1.0
+    :target: https://coveralls.io/r/fizyk/pyramid_localize?branch=v0.1.0
     :alt: Coverage Status
 
-.. image:: https://requires.io/github/fizyk/pyramid_localize/requirements.png?branch=master
-   :target: https://requires.io/github/fizyk/pyramid_localize/requirements/?branch=master
-   :alt: Requirements Status
+.. image:: https://requires.io/github/fizyk/pyramid_localize/requirements.svg?tag=v0.1.0
+     :target: https://requires.io/github/fizyk/pyramid_localize/requirements/?tag=v0.1.0
+     :alt: Requirements Status
 
 
 
