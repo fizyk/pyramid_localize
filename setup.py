@@ -1,12 +1,9 @@
 """pyramid_localize installation file."""
 
 import os
-import re
 from setuptools import setup, find_packages
 
 here = os.path.dirname(__file__)
-with open(os.path.join(here, 'pyramid_localize', '__init__.py')) as v_file:
-    package_version = re.compile(r".*__version__ = '(.*?)'", re.S).match(v_file.read()).group(1)
 
 
 def read(fname):
@@ -36,7 +33,7 @@ extras_require = {
 
 setup(
     name='pyramid_localize',
-    version=package_version,
+    version='0.1.0',
     description='''Package to provide translation methods for pyramid,
         and means to reload translations without stopping the application''',
     long_description=(
