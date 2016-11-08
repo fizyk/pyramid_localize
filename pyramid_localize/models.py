@@ -46,7 +46,7 @@ def before_language_insert(mapper, connection, language):
     """Set name and native_name before creation."""
     # Check language code
     try:
-        lang_data = pycountry.languages.get(iso639_1_code=language.language_code)
+        lang_data = pycountry.languages.get(alpha_2=language.language_code)
 
     except KeyError:
         # Language code not recognized, set defaults

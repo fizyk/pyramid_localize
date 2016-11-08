@@ -16,7 +16,7 @@ requirements = [
     'tzf.pyramid_yml >=0.2',
     'pyramid >=1.5a1',
     'pyramid_mako',
-    'pycountry'
+    'pycountry>=16.11.08'  # major api change since 1.20
 ]
 
 test_requires = [
