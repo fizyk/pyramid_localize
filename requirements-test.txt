@@ -5,7 +5,7 @@ pycodestyle==2.2.0
 pyflakes==1.5.0
 mccabe==0.5.3
 pydocstyle==1.1.1
-pyramid==1.7.3
+pyramid==1.8
 tzf.pyramid-yml==1.1.0
 pyramid-basemodel==0.3.6
 pyramid_mako==1.0.2
