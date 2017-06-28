@@ -74,7 +74,7 @@ def destination_path(request):
 
 def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
     """
-    Method that simulate autotranslate.
+    Simulate autotranslate.
 
     :param str msgid: Message or message id
     :param str domain: Translation domain

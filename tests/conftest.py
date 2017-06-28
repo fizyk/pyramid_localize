@@ -8,7 +8,7 @@ from pyramid import testing
 
 @pytest.fixture
 def web_request():
-    """Mocked web request for views testing."""
+    """Mock web request for views testing."""
     from pyramid_localize.request import LocalizeRequestMixin
     from pyramid_localize.request import database_locales
     from pyramid_localize.request import locale_id

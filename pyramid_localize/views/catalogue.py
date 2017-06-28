@@ -69,7 +69,7 @@ class CatalogueView(object):
     @view_config(route_name='localize:index')
     def index(self):
         """
-        Simple action listing domains, and its files of files with metadata.
+        List domains, and its files of files with metadata.
 
         :returns:
 
