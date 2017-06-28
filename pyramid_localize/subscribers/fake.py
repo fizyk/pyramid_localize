@@ -13,7 +13,7 @@ from pyramid_localize.tools import dummy_autotranslate
 
 @subscriber(BeforeRender)
 def global_renderer(event):
-    """Subscriber for BeforeRender, adds fake localizer, and translation methods to context."""
+    """Add fake localizer, and translation methods to context."""
     request = event['request']
     try:
         event['_'] = request._
@@ -23,5 +23,5 @@ def global_renderer(event):
 
 @subscriber(NewRequest)
 def add_localizer(event):
-    """Subscriber for NewRequest, adds fake localizer and translation methods to request."""
+    """Add fake localizer and translation methods to request."""
     event.request._ = dummy_autotranslate

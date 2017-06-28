@@ -17,7 +17,7 @@ from pyramid.i18n import Localizer
 
 @pytest.fixture
 def request_i18n():
-    """New request with i18n subscribers on."""
+    """Create request with i18n subscribers on."""
     config = testing.setUp()
     config.scan('pyramid_localize.subscribers.i18n')
     request = Request({})
@@ -51,7 +51,7 @@ def test_i18n_before_render_and_request(request_i18n):
 
 @pytest.fixture
 def request_fake():
-    """New request with fake i18n subscribers on."""
+    """Create request with fake i18n subscribers on."""
     config = testing.setUp()
     config.scan('pyramid_localize.subscribers.fake')
     request = Request({})
