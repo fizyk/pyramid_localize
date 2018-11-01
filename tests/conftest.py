@@ -1,9 +1,19 @@
 """Test suite main conftest."""
+import transaction
 import pytest
 from mock import Mock
 from pyramid.decorator import reify
 from pyramid.request import Request
 from pyramid import testing
+from pyramid.compat import text_type
+from zope.sqlalchemy import ZopeTransactionExtension
+import pyramid_basemodel
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.pool import NullPool
+
+
+from pyramid_localize.models import Language
 
 
 @pytest.fixture
@@ -14,7 +24,8 @@ def web_request():
     from pyramid_localize.request import locale_id
     from pyramid_localize.request import locales
 
-    class TestRequest(LocalizeRequestMixin, Request):
+    class TestRequest(LocalizeRequestMixin, Request):  # pylint:disable=too-many-ancestors
+        """Test request object."""
 
         @reify
         def _database_locales(self):
@@ -22,9 +33,11 @@ def web_request():
 
         @reify
         def locale_id(self):
+            """Returns a database locale id."""
             return locale_id(self)
 
         def locales(self, *args, **kwargs):
+            """Return all availablee locales."""
             return locales(self, *args, **kwargs)
 
     request = TestRequest({})
@@ -33,7 +46,7 @@ def web_request():
         **{'localize.locales.available': ['en', 'pl', 'de', 'cz']}
     )
     configurator = testing.setUp()
-    request.registry = configurator.registry
+    request.registry = configurator.registry  # pylint:disable=attribute-defined-outside-init
     request.registry['config'] = config
 
     return request
@@ -55,4 +68,54 @@ def locale_negotiator_request():
         'localize.locales.default': 'en'
     })
     request.registry = {'config': config}
+    return request
+
+
+@pytest.fixture
+def db_session(request):
+    """Session for SQLAlchemy."""
+    from pyramid_localize.models import Base
+
+    engine = create_engine('sqlite:///fullauth.sqlite', echo=False, poolclass=NullPool)
+    pyramid_basemodel.Session = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+    pyramid_basemodel.bind_engine(
+        engine, pyramid_basemodel.Session, should_create=True, should_drop=True)
+
+    def destroy():
+        transaction.commit()
+        Base.metadata.drop_all(engine)
+
+    request.addfinalizer(destroy)
+
+    return pyramid_basemodel.Session
+
+
+@pytest.fixture
+def db_locales(db_session):  # pylint:disable=redefined-outer-name
+    """Add Languages to db_session."""
+    for locale in ['pl', 'cz', 'fr']:
+        locale_object = Language(name=text_type(locale),
+                                 native_name=text_type(locale),
+                                 language_code=text_type(locale))
+        db_session.add(locale_object)
+    transaction.commit()
+
+
+@pytest.fixture
+def request_i18n():
+    """Create request with i18n subscribers on."""
+    config = testing.setUp()
+    config.scan('pyramid_localize.subscribers.i18n')
+    request = Request({})
+    request.registry = config.registry
+    return request
+
+
+@pytest.fixture
+def request_fake():
+    """Create request with fake i18n subscribers on."""
+    config = testing.setUp()
+    config.scan('pyramid_localize.subscribers.fake')
+    request = Request({})
+    request.registry = config.registry
     return request

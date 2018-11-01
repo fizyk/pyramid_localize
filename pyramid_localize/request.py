@@ -80,23 +80,23 @@ def locale_id(request):
     return request._database_locales[request.locale_name].id
 
 
-def database_locales(request):
+def database_locales(request):  # pylint:disable=unused-argument
     """
-    Return list of all database locales available.
+    Return all database locales available.
 
     :returns: dictionary of Language objects language_code: Language
     :rtype: dict
     """
-    locales = {}
-    for language in pyramid_basemodel.Session.query(Language).all():
-        locales[language.language_code] = language
+    db_locales = {}
+    for language in pyramid_basemodel.Session.query(Language).all():  # pylint:disable=no-member
+        db_locales[language.language_code] = language
 
-    return locales
+    return db_locales
 
 
 def locales(request, config=False):
     """
-    Return a list of locales.
+    Return locales.
 
     :param bool config: Whether to restrict list with config
 
@@ -104,20 +104,20 @@ def locales(request, config=False):
     :rtype: dict
     """
     if config:
-        locales = {}
-        for locale in request.registry['config'].localize.locales.available:
-            if locale not in request._database_locales:
-                _create_locale(locale, request)
-            locales[locale] = request._database_locales[locale]
+        available_locales = {}
+        for available_locale in request.registry['config'].localize.locales.available:
+            if available_locale not in request._database_locales:
+                _create_locale(available_locale, request)
+            available_locales[available_locale] = request._database_locales[available_locale]
 
-        return locales
+        return available_locales
 
     return request._database_locales
 
 
-def _create_locale(locale, request):
-    new_locale = Language(name=text_type(locale),
-                          native_name=text_type(locale),
-                          language_code=text_type(locale))
-    pyramid_basemodel.Session.add(new_locale)
+def _create_locale(new_locale, request):
+    language = Language(name=text_type(new_locale),
+                        native_name=text_type(new_locale),
+                        language_code=text_type(new_locale))
+    pyramid_basemodel.Session.add(language)  # pylint:disable=no-member
     request._database_locales = database_locales(request)
