@@ -21,7 +21,7 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid_localize.tools import destination_path
 from pyramid_localize.tools import set_localizer
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 @view_defaults(permission='manage_translations',
@@ -50,7 +50,7 @@ class CatalogueView(object):
                                             'LC_MESSAGES',
                                             domain + '.' + extension))
 
-    def _translation_template_path(self, spec):
+    def _translation_template_path(self, spec):  # pylint:disable=no-self-use
         """
         Calculate path to translation template file.
 
@@ -60,11 +60,11 @@ class CatalogueView(object):
         package_name, filename = resolve_asset_spec(spec)
         if package_name is None:  # absolute filename
             return os.path.abspath(filename)
-        else:
-            __import__(package_name)
-            package = sys.modules[package_name]
-            return os.path.abspath(os.path.join(package_path(package),
-                                                filename))
+        __import__(package_name)
+        package = sys.modules[package_name]
+        return os.path.abspath(
+            os.path.join(package_path(package), filename)
+        )
 
     @view_config(route_name='localize:index')
     def index(self):
@@ -130,14 +130,14 @@ class CatalogueView(object):
 
             pot_file = self._translation_template_path(translation_sources[domain])
             if not os.path.isfile(pot_file):
-                logger.critical('pot file for {domain} does not exists!'.format(domain=domain))
+                log.critical('pot file for %s does not exists!', domain)
 
             for language in self.request.registry['config'].localize.locales.available:
                 po_file = self._translation_file(language, domain)
                 if os.path.isfile(po_file):
-                    logger.debug(
-                        'po file for {domain}, {language} exists, proceeding with update'.format(
-                            domain=domain, language=language))
+                    log.debug(
+                        'po file for %s, %s exists, proceeding with update', domain, language
+                    )
 
                     if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'update',
@@ -145,17 +145,18 @@ class CatalogueView(object):
                                         '-i', pot_file,
                                         '-o', po_file,
                                         '--previous']):
-                        logger.error('Error while trying to update {po} file!'.format(po=po_file))
+                        log.error('Error while trying to update %s file!', po_file)
                 else:
-                    logger.debug(
-                        '''po file for {domain}, {language} does not exists,
-                         proceeding with initialize'''.format(domain=domain, language=language))
+                    log.debug(
+                        'po file for %s, %s does not exists, proceeding with initialize',
+                        domain, language
+                    )
                     if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'init',
                                         '-l', language,
                                         '-i', pot_file,
                                         '-o', po_file]):
-                        logger.error('Error while trying to update {po} file!'.format(po=po_file))
+                        log.error('Error while trying to update %s file!', po_file)
 
         return HTTPFound(location=self.request.route_url('localize:index'))
 
@@ -177,16 +178,16 @@ class CatalogueView(object):
                 po_file = self._translation_file(language, domain)
                 mo_file = self._translation_file(language, domain, 'mo')
                 if os.path.isfile(po_file):
-                    logger.debug(
-                        '''po file for {domain}, {language} exists,
-                        proceeding with compilation'''.format(domain=domain, language=language))
+                    log.debug(
+                        'po file for %s, %s exists, proceeding with compilation', domain, language
+                    )
                     if subprocess.call([self.request.registry['config'].localize.pybabel,
                                         'compile',
                                         '-l', language,
                                         '-i', po_file,
                                         '-o', mo_file,
                                         '--use-fuzzy']):
-                        logger.error('Error while trying to compile {po} file!'.format(po=po_file))
+                        log.error('Error while trying to compile %s file!', po_file)
 
         return HTTPFound(location=self.request.route_url('localize:index'))
 

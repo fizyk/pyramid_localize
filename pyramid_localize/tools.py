@@ -17,7 +17,7 @@ from pyramid.interfaces import ILocalizer
 from pyramid.interfaces import ITranslationDirectories
 from pyramid.compat import text_type
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 def set_localizer(request, reset=False):
@@ -30,7 +30,7 @@ def set_localizer(request, reset=False):
     if reset:
 
         for locale in request.registry['config'].localize.locales.available:
-            logger.debug('Resetting {0} localizator'.format(locale))
+            log.debug('Resetting %s localizator', locale)
             tdirs = request.registry.queryUtility(ITranslationDirectories,
                                                   default=[])
             localizer = make_localizer(locale, tdirs)
@@ -72,7 +72,9 @@ def destination_path(request):
     return directory
 
 
-def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
+def dummy_autotranslate(
+        msgid, domain=None, default=None, mapping=None
+):  # pylint:disable=unused-argument
     """
     Simulate autotranslate.
 
