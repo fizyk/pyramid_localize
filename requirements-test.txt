@@ -1,10 +1,5 @@
 # test runs requirements (versions we'll be testing against) - automatically updated by requires.io
 coverage==4.5.1 # pytest-cov
-pylama==7.6.5
-pycodestyle==2.4.0
-pyflakes==2.0.0
-mccabe==0.6.1
-pydocstyle==3.0.0
 pyramid==1.10
 tzf.pyramid-yml==1.1.1
 pyramid-basemodel==0.3.6
