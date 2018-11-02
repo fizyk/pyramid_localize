@@ -1,35 +1,43 @@
 language: python
 sudo: false
 python:
-    - "2.7"
-    - "3.3"
-    - "3.4"
-    - "3.5"
-    - "3.6"
+- "2.7"
+- "3.4"
+- "3.5"
+- "3.6"
 # blocklist branches
 branches:
   except:
   - requires-io-master
 install:
-    - "pip install -r requirements-test.txt"
-    - "python setup.py install"
-    - "pip install pyramid_localize[babel]"
-    - "pip install pyramid_localize[tests] coveralls"
-    # manually install wheel for deployment
-    - "pip install wheel"
+- pip install -r requirements-test.txt
+- pip install .[tests,babel] coveralls wheel
 script:
-    - "py.test -v --cov pyramid_localize tests/"
-    - pylama
+- py.test -v --cov pyramid_localize tests/
 after_success:
     - coveralls
-
-
-deploy:
-    provider: pypi
-    user: fizyk
-    password:
+jobs:
+  include:
+  - stage: linters
+    python: 3.6
+    install:
+    - pip install -r requirements-lint.txt
+    - pip install .[tests]
+    script:
+    - pycodestyle
+    - pydocstyle
+    - pylint pyramid_localize tests
+    after_success: skip
+  - stage: deploy
+    python: 3.6
+    if: tag IS present
+    script: skip
+    deploy:
+      provider: pypi
+      user: fizyk
+      password:
         secure: DwNZeHXX6sLDVUZpRGy866jP1IuScKOqrYdQ3FmceDn2bRVfH3ebMzVQJLlOlqVizuR+SxhJ0W+/gfWdGxog2dDpEquUolNXx8S85I1GQaoUqqrMt8z9LqLIYjtgumMUczVvnWc7tQ0GFKrmQzjXxVfBxaFSjwB5BBgmWJXE+UY=
-    on:
+      on:
         tags: true
         repo: fizyk/pyramid_localize
-    distributions: "sdist bdist_egg bdist_wheel"
+      distributions: bdist_wheel

@@ -3,6 +3,7 @@
 # This module is part of pyramid_localize and is released under
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Language model."""
+import gettext
 
 
 from sqlalchemy import Column
@@ -13,11 +14,8 @@ from sqlalchemy import Unicode
 from sqlalchemy import DateTime
 from sqlalchemy import func
 from sqlalchemy import event
-
-from pyramid_basemodel import Base
 from pyramid.compat import PY3, text_type
-
-import gettext
+from pyramid_basemodel import Base
 import pycountry
 
 
@@ -42,7 +40,7 @@ class Language(Base):
 
 
 @event.listens_for(Language, 'before_insert')
-def before_language_insert(mapper, connection, language):
+def before_language_insert(_, __, language):
     """Set name and native_name before creation."""
     # Check language code
     try:
