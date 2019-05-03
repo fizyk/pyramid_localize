@@ -21,7 +21,7 @@ requirements = [
 
 test_requires = [
     'pytest-pyramid==0.3.1',
-    'pytest-cov==2.6.1',
+    'pytest-cov==2.7.1',
     'mock==3.0.3'
 ]
 
