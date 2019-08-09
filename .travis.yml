@@ -12,7 +12,7 @@ branches:
   - /^dependabot.*$/
 install:
 - pip install -r requirements-test.txt
-- pip install .[tests,babel] coveralls wheel
+- pip install .[babel] coveralls wheel
 script:
 - py.test -v --cov pyramid_localize tests/
 after_success:
