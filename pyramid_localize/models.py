@@ -43,10 +43,8 @@ class Language(Base):
 def before_language_insert(_, __, language):
     """Set name and native_name before creation."""
     # Check language code
-    try:
-        lang_data = pycountry.languages.get(alpha_2=language.language_code)
-
-    except KeyError:
+    lang_data = pycountry.languages.get(alpha_2=language.language_code)
+    if lang_data is None:
         # Language code not recognized, set defaults
         language.name = text_type('UNKNOWN')
         language.native_name = text_type('UNKNOWN')
