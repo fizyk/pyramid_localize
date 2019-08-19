@@ -5,7 +5,7 @@ tzf.pyramid-yml==1.1.1
 pyramid-basemodel==0.3.6
 pyramid_mako==1.1.0
 babel==2.7.0
-pycountry==19.7.15
+pycountry==19.8.18
 pytest==3.6.1
 pytest-pyramid==0.3.1
 pytest-cov==2.7.1
