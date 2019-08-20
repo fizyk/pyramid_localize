@@ -15,8 +15,7 @@ from sqlalchemy.pool import NullPool
 from pyramid_localize.models import Language
 
 
-@pytest.fixture
-def web_request():
+def web_request_func():
     """Mock web request for views testing."""
     from pyramid_localize.request import LocalizeRequestMixin
     from pyramid_localize.request import database_locales
@@ -49,6 +48,12 @@ def web_request():
     request.registry['config'] = config
 
     return request
+
+
+@pytest.fixture
+def web_request():
+    """Mock web request for views testing."""
+    return web_request_func()
 
 
 @pytest.fixture

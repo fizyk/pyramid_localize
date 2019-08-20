@@ -13,7 +13,7 @@ from pyramid_localize.tools import dummy_autotranslate
 from pyramid_localize.tools import destination_path
 from pyramid_localize.tools import set_localizer
 
-from tests.conftest import web_request as web_request_func
+from tests.conftest import web_request_func
 
 
 def test_simple(web_request):
