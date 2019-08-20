@@ -6,7 +6,6 @@
 
 import warnings
 
-from pyramid.compat import text_type
 import pyramid_basemodel
 
 from pyramid_localize.models import Language
@@ -116,8 +115,8 @@ def locales(request, config=False):
 
 
 def _create_locale(new_locale, request):
-    language = Language(name=text_type(new_locale),
-                        native_name=text_type(new_locale),
-                        language_code=text_type(new_locale))
+    language = Language(name=str(new_locale),
+                        native_name=str(new_locale),
+                        language_code=str(new_locale))
     pyramid_basemodel.Session.add(language)  # pylint:disable=no-member
     request._database_locales = database_locales(request)
