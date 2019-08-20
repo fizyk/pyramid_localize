@@ -15,7 +15,6 @@ from pyramid.asset import resolve_asset_spec
 from pyramid.path import package_path
 from pyramid.interfaces import ILocalizer
 from pyramid.interfaces import ITranslationDirectories
-from pyramid.compat import text_type
 
 log = logging.getLogger(__name__)
 
@@ -96,7 +95,7 @@ def dummy_autotranslate(
     if mapping and tstr:
         def replace(match):
             whole, param1, param2 = match.groups()
-            return text_type(mapping.get(param1 or param2, whole))
+            return str(mapping.get(param1 or param2, whole))
         tstr = _interp_regex.sub(replace, tstr)
 
     return tstr

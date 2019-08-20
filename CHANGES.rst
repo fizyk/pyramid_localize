@@ -4,6 +4,7 @@ CHANGES
 unreleased
 -------
 
+- [ehancement] Drop support for python 2
 - [dependency] Require pycountry at minimum 18.12.8, due to API change
 - [functionality] Language object's name and native_name will filled automatically on language creation from pycountry [rmed]
 

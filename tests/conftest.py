@@ -5,7 +5,6 @@ from mock import Mock
 from pyramid.decorator import reify
 from pyramid.request import Request
 from pyramid import testing
-from pyramid.compat import text_type
 from zope.sqlalchemy import ZopeTransactionExtension
 import pyramid_basemodel
 from sqlalchemy import create_engine
@@ -94,9 +93,9 @@ def db_session(request):
 def db_locales(db_session):  # pylint:disable=redefined-outer-name
     """Add Languages to db_session."""
     for locale in ['pl', 'cz', 'fr']:
-        locale_object = Language(name=text_type(locale),
-                                 native_name=text_type(locale),
-                                 language_code=text_type(locale))
+        locale_object = Language(name=locale,
+                                 native_name=locale,
+                                 language_code=locale)
         db_session.add(locale_object)
     transaction.commit()
 
