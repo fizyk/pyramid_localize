@@ -17,6 +17,7 @@ from pyramid_localize.models import Language
 
 def web_request_func():
     """Mock web request for views testing."""
+    # pylint:disable=import-outside-toplevel
     from pyramid_localize.request import LocalizeRequestMixin
     from pyramid_localize.request import database_locales
     from pyramid_localize.request import locale_id
@@ -78,7 +79,7 @@ def locale_negotiator_request():
 @pytest.fixture
 def db_session(request):
     """Session for SQLAlchemy."""
-    from pyramid_localize.models import Base
+    from pyramid_localize.models import Base  # pylint:disable=import-outside-toplevel
 
     engine = create_engine('sqlite:///fullauth.sqlite', echo=False, poolclass=NullPool)
     pyramid_basemodel.Session = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
