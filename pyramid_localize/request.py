@@ -36,7 +36,7 @@ class LocalizeRequestMixin(object):
 
         .. note:: see :meth:`pyramid.request.Request.route_url`
         """
-        return super(LocalizeRequestMixin, self).route_url(
+        return super().route_url(
             route_name, *elements, **self.default_locale(**kw)
         )
 
