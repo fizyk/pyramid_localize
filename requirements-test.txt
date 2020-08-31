@@ -2,7 +2,7 @@
 coverage==5.2.1 # pytest-cov
 pyramid==1.10.4
 tzf.pyramid-yml==2.0.0
-pyramid-basemodel==0.3.6
+pyramid-basemodel==0.3.7
 zope.sqlalchemy==1.1.0
 pyramid_mako==1.1.0
 babel==2.8.0
