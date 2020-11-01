@@ -5,7 +5,7 @@ from mock import Mock
 from pyramid.decorator import reify
 from pyramid.request import Request
 from pyramid import testing
-from zope.sqlalchemy import ZopeTransactionExtension
+from zope.sqlalchemy import register
 import pyramid_basemodel
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -82,7 +82,8 @@ def db_session(request):
     from pyramid_localize.models import Base  # pylint:disable=import-outside-toplevel
 
     engine = create_engine('sqlite:///fullauth.sqlite', echo=False, poolclass=NullPool)
-    pyramid_basemodel.Session = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+    pyramid_basemodel.Session = scoped_session(sessionmaker())
+    register(pyramid_basemodel.Session)
     pyramid_basemodel.bind_engine(
         engine, pyramid_basemodel.Session, should_create=True, should_drop=True)
 
