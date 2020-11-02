@@ -19,7 +19,7 @@ __version__ = '0.1.0'
 
 def build_localize_config(settings):
     localize_config = {
-        "pybabel" "pybabel"
+        "pybabel": "pybabel",
         "locales": {  # available and default locale for your app
             "available": ["en", "de", "pl"],
             "default": "en",
@@ -38,6 +38,10 @@ def build_localize_config(settings):
             localize_config["locales"]["default"] = setting_value
         elif setting_key == "localize.translation.dirs":
             localize_config["translation"]["dirs"] = setting_value
+        elif setting_key == "localize.translation.destination":
+            localize_config["translation"]["destination"] = setting_value
+        elif setting_key == "localize.domain":
+            localize_config["domain"] = setting_value
 
     return localize_config
 

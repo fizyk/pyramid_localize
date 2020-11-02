@@ -11,7 +11,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.pool import NullPool
 
-
+from pyramid_localize import build_localize_config
 from pyramid_localize.models import Language
 
 
@@ -40,13 +40,13 @@ def web_request_func():
             return locales(self, *args, **kwargs)
 
     request = TestRequest({})
-    config = Mock()
-    config.configure_mock(
-        **{'localize.locales.available': ['en', 'pl', 'de', 'cz']}
-    )
+    localize_config = build_localize_config({
+        'localize.locales.available': ['en', 'pl', 'de', 'cz'],
+        "localize.domain": "test",
+    })
     configurator = testing.setUp()
     request.registry = configurator.registry  # pylint:disable=attribute-defined-outside-init
-    request.registry['config'] = config
+    request.registry['localize'] = localize_config
 
     return request
 
@@ -65,14 +65,15 @@ def locale_negotiator_request():
         'cookies': {'_LOCALE_': 'cz'},
         '_LOCALE_': 'fr',
         'accept_language.best_match.return_value': 'de',
-        'path': '/pl/page'}
+        'path': '/pl/page',
+        'registry': {
+            "localize": build_localize_config({
+                'localize.locales.available': ['en', 'pl', 'de', 'cz', 'fr'],
+                'localize.locales.default': 'en'
+            })
+        }
+    }
     request.configure_mock(**mock_configuration)
-    config = Mock()
-    config.configure_mock(**{
-        'localize.locales.available': ['en', 'pl', 'de', 'cz', 'fr'],
-        'localize.locales.default': 'en'
-    })
-    request.registry = {'config': config}
     return request
 
 

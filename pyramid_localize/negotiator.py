@@ -22,8 +22,8 @@ def locale_negotiator(request):
     :returns: locale name
     :rtype: str
     """
-    available_languages = request.registry['config'].localize.locales.available
-    locale = request.registry['config'].localize.locales.default
+    available_languages = request.registry["localize"]["locales"]["available"]
+    locale = request.registry["localize"]["locales"]["default"]
     # We do not have a matchdict present at the moment, lets get our own split
     # (request.path is always a /, so we'll get two elements)
     route_elements = request.path.split('/')

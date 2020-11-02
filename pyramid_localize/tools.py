@@ -28,7 +28,7 @@ def set_localizer(request, reset=False):
     """
     if reset:
 
-        for locale in request.registry['config'].localize.locales.available:
+        for locale in request.registry["localize"]["locales"]["available"]:
             log.debug('Resetting %s localizator', locale)
             tdirs = request.registry.queryUtility(ITranslationDirectories,
                                                   default=[])
@@ -40,7 +40,7 @@ def set_localizer(request, reset=False):
         # lets pass default domain, so we don't have to determine it with
         # each _() function in apps.
         if len(args) <= 1 and 'domain' not in kwargs:
-            kwargs['domain'] = request.registry['config'].localize.domain
+            kwargs['domain'] = request.registry["localize"]["domain"]
 
         # unlike in examples we use TranslationString, to make sure we always
         # use appropriate domain
@@ -59,7 +59,7 @@ def destination_path(request):
     :rtype: str
     """
     package_name, filename = resolve_asset_spec(
-        request.registry['config'].localize.translation.destination
+        request.registry["localize"]["translation"]["destination"]
     )
 
     if package_name is None:  # absolute filename

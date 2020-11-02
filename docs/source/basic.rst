@@ -37,27 +37,25 @@ Configuration
 
 This is full usage example, where **pyramid_localize** provides everything needed for your application, including :func:`~pyramid_localize.negotiator.locale_negotiator`, and sqlalchemy model for :class:`~pyramid_localize.models.Language`, to be able to store localized data in database.
 
-.. code-block:: yaml
+.. code-block:: ini
 
-    localize:
-        pybabel: pybabel # pybabel's bin localisation. Used to call compile and extract commands
-        domain: APP_DOMAIN  # your application domain name
-        locales:    # available and default locale for your app
-            available: [en, de, pl]
-            default: en
-        translation:
-            # directory, where translatons can be found, might be a list,
-            # defaults to empty list
-            dirs: 'roots.app:resources/locale'
-            # destination, where .po and .mo files will be created
-            # can be same format as pyramid's asset path,
-            # it's also added to dirs, as translation source
-            destination: 'app:resources/locale'
-            # sources, where translations can be found domain: localisation
-            # can be same format as pyramid's asset path
-            sources:
-                APP_DOMAIN: 'app:resources/locale/'
-                PACKAGE: 'package.subpackage:resources/locale/'
+    localize.pybabel = "pybabel"    # pybabel's bin localisation. Used to call compile and extract commands
+    localize.domain = "APP_DOMAIN"  # your application domain name
+    localize.locales.available = en,
+                                 de,
+                                 pl
+    localize.locales.default = en
+    # directory, where translatons can be found, might be a list,
+    # defaults to empty list
+    localize.translation.dirs = "roots.app:resources/locale"
+    # destination, where .po and .mo files will be created
+    # can be same format as pyramid's asset path,
+    # it's also added to dirs, as translation source
+    localize.translation.destination = "app:resources/locale"
+    # sources, where translations can be found domain: localisation
+    # can be same format as pyramid's asset path
+    localize.translation.sources.APP_DOMAIN = "app:resources/locale/"
+    localize.translation.sources.PACKAGE = "package.subpackage:resources/locale/"
 
 Having configured this, your app, and all subpackages will be fully localized, you'll also have the ability to automatically reload translations without having to restart application. See :ref:`web-api`.
 

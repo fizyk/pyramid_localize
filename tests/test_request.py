@@ -27,7 +27,7 @@ def test_request(web_request, kwargs, expected_locale):
     """Test whether route-parameters gets filled correctly."""
     route_params = web_request.default_locale(**kwargs)
     assert '__LOCALE__' in route_params
-    assert route_params['__LOCALE__'] in web_request.registry['config'].localize.locales.available
+    assert route_params['__LOCALE__'] in web_request.registry["localize"]["locales"]["available"]
     assert route_params['__LOCALE__'] == expected_locale
 
 
