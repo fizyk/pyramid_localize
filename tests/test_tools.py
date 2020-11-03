@@ -65,7 +65,11 @@ def test_destination_filename():
     """Testing translation fullpath resolve."""
     request = Mock()
     path = '/some/path/to/translations'
-    request.registry = {'localize': build_localize_config({'localize.translation.destination': path})}
+    request.registry = {
+        'localize': build_localize_config({
+            'localize.translation.destination': path
+        })
+    }
     result = destination_path(request)
     assert result == path
 
@@ -73,7 +77,11 @@ def test_destination_filename():
 def test_destination_package():
     """Testing translation package:path resolve."""
     request = Mock()
-    request.registry = {'localize': build_localize_config({'localize.translation.destination': 'tests:translations'})}
+    request.registry = {
+        'localize': build_localize_config({
+            'localize.translation.destination': 'tests:translations'
+        })
+    }
     result = destination_path(request)
     assert result == os.path.join(package_path(sys.modules['tests']), 'translations')
 

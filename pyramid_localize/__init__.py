@@ -16,8 +16,8 @@ from pyramid_localize.request import (
 __version__ = '0.1.0'
 
 
-
 def build_localize_config(settings):
+    "Build localize settings."
     localize_config = {
         "pybabel": "pybabel",
         "locales": {  # available and default locale for your app
@@ -44,7 +44,6 @@ def build_localize_config(settings):
             localize_config["domain"] = setting_value
 
     return localize_config
-
 
 
 def includeme(configurator):
