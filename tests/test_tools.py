@@ -9,6 +9,7 @@ from pyramid.path import package_path
 from pyramid.i18n import Localizer
 from pyramid.interfaces import ILocalizer
 
+from pyramid_localize import build_localize_config
 from pyramid_localize.tools import dummy_autotranslate
 from pyramid_localize.tools import destination_path
 from pyramid_localize.tools import set_localizer
@@ -63,11 +64,12 @@ def test_translate(web_request):
 def test_destination_filename():
     """Testing translation fullpath resolve."""
     request = Mock()
-    request.registry = {'config': Mock()}
     path = '/some/path/to/translations'
-    mock_configuration = {
-        'localize.translation.destination': path}
-    request.registry['config'].configure_mock(**mock_configuration)
+    request.registry = {
+        'localize': build_localize_config({
+            'localize.translation.destination': path
+        })
+    }
     result = destination_path(request)
     assert result == path
 
@@ -75,9 +77,11 @@ def test_destination_filename():
 def test_destination_package():
     """Testing translation package:path resolve."""
     request = Mock()
-    request.registry = {'config': Mock()}
-    mock_configuration = {'localize.translation.destination': 'tests:translations'}
-    request.registry['config'].configure_mock(**mock_configuration)
+    request.registry = {
+        'localize': build_localize_config({
+            'localize.translation.destination': 'tests:translations'
+        })
+    }
     result = destination_path(request)
     assert result == os.path.join(package_path(sys.modules['tests']), 'translations')
 

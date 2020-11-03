@@ -4,9 +4,12 @@ CHANGES
 unreleased
 -------
 
-- [ehancement] Drop support for python 2
+- [breaking] Removed dependency on tzf.pyramid_yml. Now all settings should be
+  set in the standard ini file.
+- [enhancement] Drop support for python 2
 - [dependency] Require pycountry at minimum 18.12.8, due to API change
-- [functionality] Language object's name and native_name will filled automatically on language creation from pycountry [rmed]
+- [functionality] Language object's name and native_name will filled automatically
+  on language creation from pycountry [rmed]
 
 0.1.0
 -----
