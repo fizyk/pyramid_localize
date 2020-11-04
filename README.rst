@@ -28,23 +28,6 @@ and add some configuration. localize provides also a web interface that allows
 you to reload translations live, without reloading application.
 
 
-Package status
---------------
-
-.. image:: https://travis-ci.org/fizyk/pyramid_localize.svg?branch=v0.1.0
-    :target: https://travis-ci.org/fizyk/pyramid_localize
-    :alt: Tests
-
-.. image:: https://coveralls.io/repos/fizyk/pyramid_localize/badge.png?branch=v0.1.0
-    :target: https://coveralls.io/r/fizyk/pyramid_localize?branch=v0.1.0
-    :alt: Coverage Status
-
-.. image:: https://requires.io/github/fizyk/pyramid_localize/requirements.svg?tag=v0.1.0
-     :target: https://requires.io/github/fizyk/pyramid_localize/requirements/?tag=v0.1.0
-     :alt: Requirements Status
-
-
-
 Package resources
 -----------------
 
@@ -58,12 +41,4 @@ Instalation:
 
 ``pip install pyramid_localize``
 
-or add **pyramid_localize** to your **setup.py** requirements.
-
-
-Tests:
-======
-
-You'll need: packages defined in extra_requires[tests] to run tests, and then:
-
-``python setup.py nosetests``
+or add **pyramid_localize** to your project requirements.
