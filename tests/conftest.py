@@ -82,7 +82,7 @@ def db_session(request):
     """Session for SQLAlchemy."""
     from pyramid_localize.models import Base  # pylint:disable=import-outside-toplevel
 
-    engine = create_engine('sqlite:///fullauth.sqlite', echo=False, poolclass=NullPool)
+    engine = create_engine('sqlite:///localize.sqlite', echo=False, poolclass=NullPool)
     pyramid_basemodel.Session = scoped_session(sessionmaker())
     register(pyramid_basemodel.Session)
     pyramid_basemodel.bind_engine(
