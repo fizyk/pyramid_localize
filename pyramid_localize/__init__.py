@@ -10,7 +10,7 @@ except ImportError:  # pragma: no cover
     babel = False
 
 from pyramid_localize.request import (
-    locale, database_locales, locales, locale_id
+    database_locales, locales, locale_id
 )
 
 __version__ = '0.1.0'
@@ -76,7 +76,6 @@ def includeme(configurator):
         configurator.add_route(name='localize:reload', pattern='catalogue/reload')
 
         # getting requests methods
-        configurator.add_request_method(locale, name='locale', reify=True)
         configurator.add_request_method(database_locales, name='_database_locales', reify=True)
         configurator.add_request_method(locales, name='locales')
         configurator.add_request_method(locale_id, name='locale_id', reify=True)

@@ -4,6 +4,7 @@ CHANGES
 unreleased
 -------
 
+- [dropped deprecation] removed request.locale in favour of pyramid's request.locale_name
 - [breaking] Removed dependency on tzf.pyramid_yml. Now all settings should be
   set in the standard ini file.
 - [enhancement] Drop support for python 2
