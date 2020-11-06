@@ -13,7 +13,7 @@ from pyramid_localize.request import (
     database_locales, locales, locale_id
 )
 
-__version__ = '0.1.0'
+__version__ = '1.0.0'
 
 
 def build_localize_config(settings):

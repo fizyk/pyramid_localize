@@ -34,7 +34,7 @@ extras_require = {
 
 setup(
     name='pyramid_localize',
-    version='0.1.0',
+    version='1.0.0',
     description='''Package to provide translation methods for pyramid,
         and means to reload translations without stopping the application''',
     long_description=(

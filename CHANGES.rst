@@ -1,7 +1,7 @@
 CHANGES
 =======
 
-unreleased
+1.0.0
 -------
 
 - [dropped deprecation] removed request.locale in favour of pyramid's request.locale_name
