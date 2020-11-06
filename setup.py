@@ -13,7 +13,7 @@ def read(fname):
 
 requirements = [
     'pyramid_basemodel',
-    'pyramid >=1.5a1',
+    'pyramid >=1.5',
     'pyramid_mako',
     'pycountry>=18.12.8'  # major api change
 ]

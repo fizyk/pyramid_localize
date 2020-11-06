@@ -4,8 +4,6 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Request related code."""
 
-import warnings
-
 import pyramid_basemodel
 
 from pyramid_localize.models import Language
@@ -39,31 +37,6 @@ class LocalizeRequestMixin(object):
         return super().route_url(
             route_name, *elements, **self.default_locale(**kw)
         )
-
-
-def locale(request):
-    """
-    Return locale name.
-
-    .. warning::
-
-        Since pyramid 1.5 this function is obsolete and will be deprecated
-        in future versions of pyramid_localize
-
-    When called for the first time, it ask environment for language code,
-    which is later available as a pure property
-    overriding this method
-
-    :returns: language code needed for translations
-    :rtype: string
-    """
-    warnings.warn(
-        'request.locale is deprecated as of pyramid_localize 0.1. '
-        'Please use request.locale_name delivered by Pyramid 1.5.',
-        DeprecationWarning,
-        2
-    )
-    return request.locale_name
 
 
 def locale_id(request):
