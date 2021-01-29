@@ -21,7 +21,7 @@ def test_simple(web_request):
     """Simple localizer setting test on a request."""
     set_localizer(web_request)
     assert isinstance(web_request.localizer, Localizer)
-    assert hasattr(web_request, '_')
+    assert hasattr(web_request, "_")
 
 
 def test_reset(web_request):
@@ -37,7 +37,8 @@ def test_reset(web_request):
     old_localizer = web_request.localizer
 
     queried_localizer = web_request.registry.queryUtility(
-        ILocalizer, name=web_request.locale_name)
+        ILocalizer, name=web_request.locale_name
+    )
     assert queried_localizer == web_request.localizer
     # resetting localizer
     set_localizer(web_request, reset=True)
@@ -45,7 +46,8 @@ def test_reset(web_request):
     # being reify property since pyramid 1.5
     assert old_localizer == web_request.localizer
     queried_localizer_after_reset = web_request.registry.queryUtility(
-        ILocalizer, name=web_request.locale_name)
+        ILocalizer, name=web_request.locale_name
+    )
 
     assert queried_localizer_after_reset is not queried_localizer
     # let's create a new request, to check that
@@ -56,7 +58,7 @@ def test_reset(web_request):
 
 def test_translate(web_request):
     """Simple test for translating method call."""
-    msgid = 'Test message'
+    msgid = "Test message"
     set_localizer(web_request)
     assert msgid == web_request._(msgid)
 
@@ -64,11 +66,9 @@ def test_translate(web_request):
 def test_destination_filename():
     """Testing translation fullpath resolve."""
     request = Mock()
-    path = '/some/path/to/translations'
+    path = "/some/path/to/translations"
     request.registry = {
-        'localize': build_localize_config({
-            'localize.translation.destination': path
-        })
+        "localize": build_localize_config({"localize.translation.destination": path})
     }
     result = destination_path(request)
     assert result == path
@@ -78,32 +78,25 @@ def test_destination_package():
     """Testing translation package:path resolve."""
     request = Mock()
     request.registry = {
-        'localize': build_localize_config({
-            'localize.translation.destination': 'tests:translations'
-        })
+        "localize": build_localize_config(
+            {"localize.translation.destination": "tests:translations"}
+        )
     }
     result = destination_path(request)
-    assert result == os.path.join(package_path(sys.modules['tests']), 'translations')
+    assert result == os.path.join(package_path(sys.modules["tests"]), "translations")
 
 
-@pytest.mark.parametrize('kwargs, result', (
+@pytest.mark.parametrize(
+    "kwargs, result",
     (
-        {'msgid': 'Simple fake text'},
-        'Simple fake text'
-    ), (
-        {
-            'msgid': 'test-msgid',
-            'default': 'Simple fake text'
-        },
-        'Simple fake text'
-    ), (
-        {
-            'msgid': 'Simple ${what} text',
-            'mapping': {'what': 'fake'}
-        },
-        'Simple fake text'
+        ({"msgid": "Simple fake text"}, "Simple fake text"),
+        ({"msgid": "test-msgid", "default": "Simple fake text"}, "Simple fake text"),
+        (
+            {"msgid": "Simple ${what} text", "mapping": {"what": "fake"}},
+            "Simple fake text",
+        ),
     ),
-))
+)
 def test_dummy_message(kwargs, result):
     """Test dummy autotranslate method."""
     assert dummy_autotranslate(**kwargs) == result

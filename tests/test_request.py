@@ -3,32 +3,32 @@
 import pytest
 
 
-@pytest.mark.parametrize('kwargs, expected_locale', (
-    (  # not filled __LOCALE__ , should return default one
-        {'slug': 'some-slug'},
-        'en'
+@pytest.mark.parametrize(
+    "kwargs, expected_locale",
+    (
+        (  # not filled __LOCALE__ , should return default one
+            {"slug": "some-slug"},
+            "en",
+        ),
+        (  # filled __LOCALE__ within available, returned exact that
+            {"slug": "some-slug", "__LOCALE__": "pl"},
+            "pl",
+        ),
+        (  # filled __LOCALE__ within one not in available, returned default one
+            {"slug": "some-slug", "__LOCALE__": "fr"},
+            "en",
+        ),
     ),
-    (  # filled __LOCALE__ within available, returned exact that
-        {
-            'slug': 'some-slug',
-            '__LOCALE__': 'pl'
-        },
-        'pl'
-    ),
-    (  # filled __LOCALE__ within one not in available, returned default one
-        {
-            'slug': 'some-slug',
-            '__LOCALE__': 'fr'
-        },
-        'en'
-    ),
-))
+)
 def test_request(web_request, kwargs, expected_locale):
     """Test whether route-parameters gets filled correctly."""
     route_params = web_request.default_locale(**kwargs)
-    assert '__LOCALE__' in route_params
-    assert route_params['__LOCALE__'] in web_request.registry["localize"]["locales"]["available"]
-    assert route_params['__LOCALE__'] == expected_locale
+    assert "__LOCALE__" in route_params
+    assert (
+        route_params["__LOCALE__"]
+        in web_request.registry["localize"]["locales"]["available"]
+    )
+    assert route_params["__LOCALE__"] == expected_locale
 
 
 def test_locale_id(db_locales, web_request):  # pylint:disable=unused-argument

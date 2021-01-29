@@ -21,10 +21,12 @@ import pycountry
 class Language(Base):
     """Language table model definition."""
 
-    __tablename__ = 'languages'
+    __tablename__ = "languages"
 
-    id = Column(Integer, Sequence(__tablename__ + '_sq'), primary_key=True)
-    updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
+    id = Column(Integer, Sequence(__tablename__ + "_sq"), primary_key=True)
+    updated_at = Column(
+        DateTime, default=func.now(), onupdate=func.now(), nullable=False
+    )
     name = Column(Unicode(45), nullable=False)
     native_name = Column(Unicode(45), nullable=False)
     language_code = Column(String(2), unique=True, nullable=False)  # ISO 639-1 (Alpha2)
@@ -35,32 +37,30 @@ class Language(Base):
 
     def __str__(self):  # pragma: no cover
         """Language to string conversion."""
-        return self.name.encode('utf8')
+        return self.name.encode("utf8")
 
 
-@event.listens_for(Language, 'before_insert')
+@event.listens_for(Language, "before_insert")
 def before_language_insert(_, __, language):
     """Set name and native_name before creation."""
     # Check language code
     lang_data = pycountry.languages.get(alpha_2=language.language_code)
     if lang_data is None:
         # Language code not recognized, set defaults
-        language.name = 'UNKNOWN'
-        language.native_name = 'UNKNOWN'
+        language.name = "UNKNOWN"
+        language.native_name = "UNKNOWN"
         return
 
     # Set name and native_name
     language.name = str(lang_data.name)
 
-    if language.language_code == 'en':
+    if language.language_code == "en":
         # English does not have a translation file
         language.native_name = str(lang_data.name)
 
     else:
         lang_locale = gettext.translation(
-            'iso639_3',
-            pycountry.LOCALES_DIR,
-            languages=[language.language_code]
+            "iso639_3", pycountry.LOCALES_DIR, languages=[language.language_code]
         )
         localize = lang_locale.gettext
 

@@ -23,7 +23,9 @@ def web_request_func():
     from pyramid_localize.request import locale_id
     from pyramid_localize.request import locales
 
-    class TestRequest(LocalizeRequestMixin, Request):  # pylint:disable=too-many-ancestors
+    class TestRequest(
+        LocalizeRequestMixin, Request
+    ):  # pylint:disable=too-many-ancestors
         """Test request object."""
 
         @reify
@@ -40,13 +42,17 @@ def web_request_func():
             return locales(self, *args, **kwargs)
 
     request = TestRequest({})
-    localize_config = build_localize_config({
-        'localize.locales.available': ['en', 'pl', 'de', 'cz'],
-        "localize.domain": "test",
-    })
+    localize_config = build_localize_config(
+        {
+            "localize.locales.available": ["en", "pl", "de", "cz"],
+            "localize.domain": "test",
+        }
+    )
     configurator = testing.setUp()
-    request.registry = configurator.registry  # pylint:disable=attribute-defined-outside-init
-    request.registry['localize'] = localize_config
+    request.registry = (  # pylint:disable=attribute-defined-outside-init
+        configurator.registry
+    )
+    request.registry["localize"] = localize_config
 
     return request
 
@@ -62,16 +68,18 @@ def locale_negotiator_request():
     """Request for locale_negotiator tests."""
     request = Mock()
     mock_configuration = {
-        'cookies': {'_LOCALE_': 'cz'},
-        '_LOCALE_': 'fr',
-        'accept_language.best_match.return_value': 'de',
-        'path': '/pl/page',
-        'registry': {
-            "localize": build_localize_config({
-                'localize.locales.available': ['en', 'pl', 'de', 'cz', 'fr'],
-                'localize.locales.default': 'en'
-            })
-        }
+        "cookies": {"_LOCALE_": "cz"},
+        "_LOCALE_": "fr",
+        "accept_language.best_match.return_value": "de",
+        "path": "/pl/page",
+        "registry": {
+            "localize": build_localize_config(
+                {
+                    "localize.locales.available": ["en", "pl", "de", "cz", "fr"],
+                    "localize.locales.default": "en",
+                }
+            )
+        },
     }
     request.configure_mock(**mock_configuration)
     return request
@@ -82,11 +90,12 @@ def db_session(request):
     """Session for SQLAlchemy."""
     from pyramid_localize.models import Base  # pylint:disable=import-outside-toplevel
 
-    engine = create_engine('sqlite:///localize.sqlite', echo=False, poolclass=NullPool)
+    engine = create_engine("sqlite:///localize.sqlite", echo=False, poolclass=NullPool)
     pyramid_basemodel.Session = scoped_session(sessionmaker())
     register(pyramid_basemodel.Session)
     pyramid_basemodel.bind_engine(
-        engine, pyramid_basemodel.Session, should_create=True, should_drop=True)
+        engine, pyramid_basemodel.Session, should_create=True, should_drop=True
+    )
 
     def destroy():
         transaction.commit()
@@ -100,10 +109,8 @@ def db_session(request):
 @pytest.fixture
 def db_locales(db_session):  # pylint:disable=redefined-outer-name
     """Add Languages to db_session."""
-    for locale in ['pl', 'cz', 'fr']:
-        locale_object = Language(name=locale,
-                                 native_name=locale,
-                                 language_code=locale)
+    for locale in ["pl", "cz", "fr"]:
+        locale_object = Language(name=locale, native_name=locale, language_code=locale)
         db_session.add(locale_object)
     transaction.commit()
 
@@ -112,7 +119,7 @@ def db_locales(db_session):  # pylint:disable=redefined-outer-name
 def request_i18n():
     """Create request with i18n subscribers on."""
     config = testing.setUp()
-    config.scan('pyramid_localize.subscribers.i18n')
+    config.scan("pyramid_localize.subscribers.i18n")
     request = Request({})
     request.registry = config.registry
     return request
@@ -122,7 +129,7 @@ def request_i18n():
 def request_fake():
     """Create request with fake i18n subscribers on."""
     config = testing.setUp()
-    config.scan('pyramid_localize.subscribers.fake')
+    config.scan("pyramid_localize.subscribers.fake")
     request = Request({})
     request.registry = config.registry
     return request

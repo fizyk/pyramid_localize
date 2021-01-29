@@ -14,11 +14,11 @@ from pyramid_localize.tools import set_localizer
 @subscriber(BeforeRender)
 def global_renderer(event):
     """Add localizer, and translation methods to context."""
-    request = event['request']
+    request = event["request"]
     set_localizer(request)
 
-    event['_'] = request._
-    event['localizer'] = request.localizer
+    event["_"] = request._
+    event["localizer"] = request.localizer
 
 
 @subscriber(NewRequest)
