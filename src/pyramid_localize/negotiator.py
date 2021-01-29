@@ -26,15 +26,18 @@ def locale_negotiator(request):
     locale = request.registry["localize"]["locales"]["default"]
     # We do not have a matchdict present at the moment, lets get our own split
     # (request.path is always a /, so we'll get two elements)
-    route_elements = request.path.split('/')
-    if hasattr(request, '_LOCALE_') and request._LOCALE_ in available_languages:
+    route_elements = request.path.split("/")
+    if hasattr(request, "_LOCALE_") and request._LOCALE_ in available_languages:
         locale = request._LOCALE_
     # we check if route_element[1] is a locale indicator for path
     elif len(route_elements[1]) == 2 and route_elements[1] in available_languages:
         locale = route_elements[1]
-    elif request.cookies and '_LOCALE_' in request.cookies and\
-            request.cookies['_LOCALE_'] in available_languages:
-        locale = request.cookies['_LOCALE_']
+    elif (
+        request.cookies
+        and "_LOCALE_" in request.cookies
+        and request.cookies["_LOCALE_"] in available_languages
+    ):
+        locale = request.cookies["_LOCALE_"]
     elif request.accept_language:
         locale = request.accept_language.best_match(available_languages)
 

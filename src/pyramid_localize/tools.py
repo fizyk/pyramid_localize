@@ -29,18 +29,16 @@ def set_localizer(request, reset=False):
     if reset:
 
         for locale in request.registry["localize"]["locales"]["available"]:
-            log.debug('Resetting %s localizator', locale)
-            tdirs = request.registry.queryUtility(ITranslationDirectories,
-                                                  default=[])
+            log.debug("Resetting %s localizator", locale)
+            tdirs = request.registry.queryUtility(ITranslationDirectories, default=[])
             localizer = make_localizer(locale, tdirs)
-            request.registry.registerUtility(localizer, ILocalizer,
-                                             name=locale)
+            request.registry.registerUtility(localizer, ILocalizer, name=locale)
 
     def auto_translate(*args, **kwargs):
         # lets pass default domain, so we don't have to determine it with
         # each _() function in apps.
-        if len(args) <= 1 and 'domain' not in kwargs:
-            kwargs['domain'] = request.registry["localize"]["domain"]
+        if len(args) <= 1 and "domain" not in kwargs:
+            kwargs["domain"] = request.registry["localize"]["domain"]
 
         # unlike in examples we use TranslationString, to make sure we always
         # use appropriate domain
@@ -72,7 +70,7 @@ def destination_path(request):
 
 
 def dummy_autotranslate(
-        msgid, domain=None, default=None, mapping=None
+    msgid, domain=None, default=None, mapping=None
 ):  # pylint:disable=unused-argument
     """
     Simulate autotranslate.
@@ -93,9 +91,11 @@ def dummy_autotranslate(
         tstr = msgid
 
     if mapping and tstr:
+
         def replace(match):
             whole, param1, param2 = match.groups()
             return str(mapping.get(param1 or param2, whole))
+
         tstr = _interp_regex.sub(replace, tstr)
 
     return tstr

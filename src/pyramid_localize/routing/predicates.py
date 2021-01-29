@@ -7,13 +7,18 @@
 
 def language(field):
     """Create language predicate for given url match field."""
+
     def predicate(info, request):
         """Check whether language is one of the defaults."""
-        if field in info['match'] and\
-                info['match'][field] in request.registry["localize"]["locales"]["available"]:
+        if (
+            field in info["match"]
+            and info["match"][field]
+            in request.registry["localize"]["locales"]["available"]
+        ):
             return True
         return False
+
     return predicate
 
 
-language.__text__ = 'language predicate, to determine allowed languages in route'
+language.__text__ = "language predicate, to determine allowed languages in route"

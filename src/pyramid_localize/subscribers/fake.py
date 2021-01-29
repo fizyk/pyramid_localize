@@ -14,11 +14,11 @@ from pyramid_localize.tools import dummy_autotranslate
 @subscriber(BeforeRender)
 def global_renderer(event):
     """Add fake localizer, and translation methods to context."""
-    request = event['request']
+    request = event["request"]
     try:
-        event['_'] = request._
+        event["_"] = request._
     except AttributeError:
-        event['_'] = dummy_autotranslate
+        event["_"] = dummy_autotranslate
 
 
 @subscriber(NewRequest)
