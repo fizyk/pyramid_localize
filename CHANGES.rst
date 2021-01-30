@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+unreleased
+-------
+
+- [packaging] use setup.cfg to define package metadata nad options
+
 1.0.0
 -------
 
