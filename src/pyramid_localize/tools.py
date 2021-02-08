@@ -56,9 +56,7 @@ def destination_path(request):
     :returns: A combined translation destination path
     :rtype: str
     """
-    package_name, filename = resolve_asset_spec(
-        request.registry["localize"]["translation"]["destination"]
-    )
+    package_name, filename = resolve_asset_spec(request.registry["localize"]["translation"]["destination"])
 
     if package_name is None:  # absolute filename
         directory = filename
@@ -69,9 +67,7 @@ def destination_path(request):
     return directory
 
 
-def dummy_autotranslate(
-    msgid, domain=None, default=None, mapping=None
-):  # pylint:disable=unused-argument
+def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):  # pylint:disable=unused-argument
     """
     Simulate autotranslate.
 

@@ -22,10 +22,7 @@ class LocalizeRequestMixin(object):
 
         :returns: kw
         """
-        if (
-            "__LOCALE__" not in kw
-            or kw["__LOCALE__"] not in self.registry["localize"]["locales"]["available"]
-        ):
+        if "__LOCALE__" not in kw or kw["__LOCALE__"] not in self.registry["localize"]["locales"]["available"]:
             kw["__LOCALE__"] = self.locale_name
 
         return kw
@@ -60,9 +57,7 @@ def database_locales(request):  # pylint:disable=unused-argument
     :rtype: dict
     """
     db_locales = {}
-    for language in pyramid_basemodel.Session.query(  # pylint:disable=no-member
-        Language
-    ).all():
+    for language in pyramid_basemodel.Session.query(Language).all():  # pylint:disable=no-member
         db_locales[language.language_code] = language
 
     return db_locales
@@ -82,9 +77,7 @@ def locales(request, config=False):
         for available_locale in request.registry["localize"]["locales"]["available"]:
             if available_locale not in request._database_locales:
                 _create_locale(available_locale, request)
-            available_locales[available_locale] = request._database_locales[
-                available_locale
-            ]
+            available_locales[available_locale] = request._database_locales[available_locale]
 
         return available_locales
 
@@ -92,8 +85,6 @@ def locales(request, config=False):
 
 
 def _create_locale(new_locale, request):
-    language = Language(
-        name=str(new_locale), native_name=str(new_locale), language_code=str(new_locale)
-    )
+    language = Language(name=str(new_locale), native_name=str(new_locale), language_code=str(new_locale))
     pyramid_basemodel.Session.add(language)  # pylint:disable=no-member
     request._database_locales = database_locales(request)

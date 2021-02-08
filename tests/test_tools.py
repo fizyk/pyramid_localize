@@ -36,18 +36,14 @@ def test_reset(web_request):
     set_localizer(web_request)
     old_localizer = web_request.localizer
 
-    queried_localizer = web_request.registry.queryUtility(
-        ILocalizer, name=web_request.locale_name
-    )
+    queried_localizer = web_request.registry.queryUtility(ILocalizer, name=web_request.locale_name)
     assert queried_localizer == web_request.localizer
     # resetting localizer
     set_localizer(web_request, reset=True)
     # these are equal due to request.localizer
     # being reify property since pyramid 1.5
     assert old_localizer == web_request.localizer
-    queried_localizer_after_reset = web_request.registry.queryUtility(
-        ILocalizer, name=web_request.locale_name
-    )
+    queried_localizer_after_reset = web_request.registry.queryUtility(ILocalizer, name=web_request.locale_name)
 
     assert queried_localizer_after_reset is not queried_localizer
     # let's create a new request, to check that
@@ -67,9 +63,7 @@ def test_destination_filename():
     """Testing translation fullpath resolve."""
     request = Mock()
     path = "/some/path/to/translations"
-    request.registry = {
-        "localize": build_localize_config({"localize.translation.destination": path})
-    }
+    request.registry = {"localize": build_localize_config({"localize.translation.destination": path})}
     result = destination_path(request)
     assert result == path
 
@@ -77,11 +71,7 @@ def test_destination_filename():
 def test_destination_package():
     """Testing translation package:path resolve."""
     request = Mock()
-    request.registry = {
-        "localize": build_localize_config(
-            {"localize.translation.destination": "tests:translations"}
-        )
-    }
+    request.registry = {"localize": build_localize_config({"localize.translation.destination": "tests:translations"})}
     result = destination_path(request)
     assert result == os.path.join(package_path(sys.modules["tests"]), "translations")
 

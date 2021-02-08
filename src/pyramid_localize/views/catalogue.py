@@ -93,9 +93,7 @@ class CatalogueView(object):
                 }
         """
         translations = {}
-        translation_sources = self.request.registry["localize"]["translation"][
-            "sources"
-        ]
+        translation_sources = self.request.registry["localize"]["translation"]["sources"]
 
         for language in self.request.registry["localize"]["locales"]["available"]:
             translations[language] = {}
@@ -103,21 +101,15 @@ class CatalogueView(object):
                 translations[language][domain] = {"po": None, "pot": None, "mo": None}
                 po_file = self._translation_file(language, domain)
                 if os.path.isfile(po_file):
-                    translations[language][domain]["po"] = time.ctime(
-                        os.path.getmtime(po_file)
-                    )
+                    translations[language][domain]["po"] = time.ctime(os.path.getmtime(po_file))
 
                 pot_file = self._translation_template_path(translation_sources[domain])
                 if os.path.isfile(pot_file):
-                    translations[language][domain]["pot"] = time.ctime(
-                        os.path.getmtime(pot_file)
-                    )
+                    translations[language][domain]["pot"] = time.ctime(os.path.getmtime(pot_file))
 
                 mo_file = self._translation_file(language, domain, "mo")
                 if os.path.isfile(mo_file):
-                    translations[language][domain]["mo"] = time.ctime(
-                        os.path.getmtime(mo_file)
-                    )
+                    translations[language][domain]["mo"] = time.ctime(os.path.getmtime(mo_file))
 
         return {"translations": translations}
 
@@ -133,9 +125,7 @@ class CatalogueView(object):
         Redirects itself to **localize:index**.
         """
         self.index()
-        translation_sources = self.request.registry["localize"]["translation"][
-            "sources"
-        ]
+        translation_sources = self.request.registry["localize"]["translation"]["sources"]
 
         for domain in translation_sources:
 
@@ -198,9 +188,7 @@ class CatalogueView(object):
         Redirects to **localize:index**.
         """
         self.index()
-        translation_sources = self.request.registry["localize"]["translation"][
-            "sources"
-        ]
+        translation_sources = self.request.registry["localize"]["translation"]["sources"]
 
         for domain in translation_sources:
 

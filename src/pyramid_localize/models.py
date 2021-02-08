@@ -24,9 +24,7 @@ class Language(Base):
     __tablename__ = "languages"
 
     id = Column(Integer, Sequence(__tablename__ + "_sq"), primary_key=True)
-    updated_at = Column(
-        DateTime, default=func.now(), onupdate=func.now(), nullable=False
-    )
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
     name = Column(Unicode(45), nullable=False)
     native_name = Column(Unicode(45), nullable=False)
     language_code = Column(String(2), unique=True, nullable=False)  # ISO 639-1 (Alpha2)
@@ -59,9 +57,7 @@ def before_language_insert(_, __, language):
         language.native_name = str(lang_data.name)
 
     else:
-        lang_locale = gettext.translation(
-            "iso639_3", pycountry.LOCALES_DIR, languages=[language.language_code]
-        )
+        lang_locale = gettext.translation("iso639_3", pycountry.LOCALES_DIR, languages=[language.language_code])
         localize = lang_locale.gettext
 
         language.native_name = str(localize(lang_data.name))

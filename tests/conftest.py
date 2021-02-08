@@ -23,9 +23,7 @@ def web_request_func():
     from pyramid_localize.request import locale_id
     from pyramid_localize.request import locales
 
-    class TestRequest(
-        LocalizeRequestMixin, Request
-    ):  # pylint:disable=too-many-ancestors
+    class TestRequest(LocalizeRequestMixin, Request):  # pylint:disable=too-many-ancestors
         """Test request object."""
 
         @reify
@@ -49,9 +47,7 @@ def web_request_func():
         }
     )
     configurator = testing.setUp()
-    request.registry = (  # pylint:disable=attribute-defined-outside-init
-        configurator.registry
-    )
+    request.registry = configurator.registry  # pylint:disable=attribute-defined-outside-init
     request.registry["localize"] = localize_config
 
     return request
@@ -93,9 +89,7 @@ def db_session(request):
     engine = create_engine("sqlite:///localize.sqlite", echo=False, poolclass=NullPool)
     pyramid_basemodel.Session = scoped_session(sessionmaker())
     register(pyramid_basemodel.Session)
-    pyramid_basemodel.bind_engine(
-        engine, pyramid_basemodel.Session, should_create=True, should_drop=True
-    )
+    pyramid_basemodel.bind_engine(engine, pyramid_basemodel.Session, should_create=True, should_drop=True)
 
     def destroy():
         transaction.commit()
