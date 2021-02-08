@@ -53,9 +53,7 @@ def includeme(configurator):
         configurator.registry["localize"] = localize_config
         configurator.include("pyramid_mako")
 
-        configurator.set_locale_negotiator(
-            "pyramid_localize.negotiator.locale_negotiator"
-        )
+        configurator.set_locale_negotiator("pyramid_localize.negotiator.locale_negotiator")
         translation_dirs = localize_config["translation"]["dirs"]
         # if it's not a list, lets make it a list.
         # This is to allow creating both single, and list-like config entry
@@ -76,9 +74,7 @@ def includeme(configurator):
         configurator.add_route(name="localize:reload", pattern="catalogue/reload")
 
         # getting requests methods
-        configurator.add_request_method(
-            database_locales, name="_database_locales", reify=True
-        )
+        configurator.add_request_method(database_locales, name="_database_locales", reify=True)
         configurator.add_request_method(locales, name="locales")
         configurator.add_request_method(locale_id, name="locale_id", reify=True)
 

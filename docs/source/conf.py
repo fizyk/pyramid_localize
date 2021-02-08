@@ -41,10 +41,10 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"pyramid_localize"
+project = "pyramid_localize"
 basename = "".join(project.split("."))
-author = u"Grzegorz Śliwiński"
-copyright = u"2013-2020 " + author
+author = "Grzegorz Śliwiński"
+copyright = "2013-2020 " + author
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -213,7 +213,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [("index", basename, project + u" Documentation", [author], 1)]
+man_pages = [("index", basename, project + " Documentation", [author], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -228,7 +228,7 @@ texinfo_documents = [
     (
         "index",
         basename,
-        project + u" Documentation",
+        project + " Documentation",
         author,
         basename,
         "One line description of project.",
@@ -252,7 +252,7 @@ texinfo_documents = [
 epub_title = project
 epub_author = author
 epub_publisher = author
-epub_copyright = u"2012, " + author
+epub_copyright = "2012, " + author
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
