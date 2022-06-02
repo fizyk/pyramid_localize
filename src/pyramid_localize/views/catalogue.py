@@ -57,7 +57,7 @@ class CatalogueView(object):
             )
         )
 
-    def _translation_template_path(self, spec):  # pylint:disable=no-self-use
+    def _translation_template_path(self, spec):
         """
         Calculate path to translation template file.
 
