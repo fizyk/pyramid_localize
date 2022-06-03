@@ -1,5 +1,5 @@
 # test runs requirements (versions we'll be testing against) - automatically updated by requires.io
-coverage==6.4 # pytest-cov
+coverage==6.4.1 # pytest-cov
 pyramid==2.0
 pyramid-basemodel==0.5.1; python_version>='3.7'
 zope.sqlalchemy==1.6
