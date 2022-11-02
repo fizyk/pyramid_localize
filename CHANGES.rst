@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+unreleased
+----------
+
+- [enhancement] Support Python 3.11
+
+
 1.0.1
 -------
 
