@@ -1,0 +1,26 @@
+name: Run test commands
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+#  bump:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out repository
+#        uses: actions/checkout@v3
+#      - uses: ./.github/actions/pipenv
+#        with:
+#          python-version: "3.11"
+#          pipenv-install-options: "--skip-lock"
+#          command: tbump --dry-run --only-patch $(pipenv run tbump current-version)"-x"
+  towncrier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fizyk/actions-reuse/.github/actions/pipenv@v1.4.1
+        with:
+          python-version: "3.11"
+          pipenv-install-options: "--skip-lock"
+          command: towncrier check --compare-with origin/main
+          fetch-depth: 0

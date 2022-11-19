@@ -27,6 +27,7 @@ Pull requests
 #. Start with a bug report or feature request
 #. Use a clear and descriptive title
 #. Provide a description - which issue does it refers to, and what part of the issue is being solved
+#. Add proper newsfragment. Use `pipenv run towncrier create [issue_number].[type].rst` And fill note with the changes description.
 #. Be ready for code review :)
 
 Commits
@@ -40,5 +41,4 @@ Commits
 Coding style
 ------------
 
-#. All python coding style are being enforced by `Pylama <https://pypi.python.org/pypi/pylama>`_ and configured in pylama.ini file.
-#. Additional, not always mandatory checks are being performed by `QuantifiedCode <https://www.quantifiedcode.com/app/project/gh:fizyk:pyramid_localize>`_
+#. See linters github-actions workflow.
