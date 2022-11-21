@@ -3,6 +3,16 @@ CHANGES
 
 .. towncrier release notes start
 
+1.0.2 (2022-11-21)
+==================
+
+Miscellaneus
+------------
+
+- Add towncrier to manage CHANGES.rst automatically. (`#193 <https://https://github.com/fizyk/pyramid_localize/issues/193>`_)
+- Migrate version bumping tool to tbump (`#403 <https://https://github.com/fizyk/pyramid_localize/issues/403>`_)
+
+
 unreleased
 ----------
 

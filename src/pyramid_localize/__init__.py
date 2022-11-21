@@ -11,7 +11,7 @@ except ImportError:  # pragma: no cover
 
 from pyramid_localize.request import database_locales, locales, locale_id
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 
 
 def build_localize_config(settings):
