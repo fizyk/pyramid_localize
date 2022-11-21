@@ -42,3 +42,12 @@ Instalation:
 ``pip install pyramid_localize``
 
 or add **pyramid_localize** to your project requirements.
+
+Release
+=======
+
+Install pipenv first, Then run:
+
+.. code-block::
+
+    pipenv run tbump [NEW_VERSION]
