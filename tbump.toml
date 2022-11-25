@@ -35,7 +35,7 @@ default = ""
 src = "docs/source/conf.py"
 
 [[file]]
-src = "src/pyramid_localize/__init__.py"
+src = "pyramid_localize/__init__.py"
 
 [[file]]
 src = "README.rst"

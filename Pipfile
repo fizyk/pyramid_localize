@@ -10,7 +10,6 @@ pyramid-basemodel = "==0.5.1"
 pyramid-mako = "==1.1.0"
 babel = "==2.11.0"
 pycountry = "==22.3.5"
-pyramid-localize = {path = "."}
 
 [dev-packages]
 pycodestyle = "==2.10.0"
