@@ -44,6 +44,10 @@ src = "README.rst"
 src = "setup.cfg"
 search = 'version = {current_version}'
 
+[[file]]
+src = "setup.cfg"
+search = 'Changelog = https://github.com/fizyk/pyramid_localize/blob/v{current_version}/CHANGES.rst'
+
 # You can specify a list of commands to
 # run after the files have been patched
 # and before the git commit is made
