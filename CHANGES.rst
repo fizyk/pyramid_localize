@@ -3,6 +3,16 @@ CHANGES
 
 .. towncrier release notes start
 
+1.0.3 (2022-11-25)
+==================
+
+Miscellaneus
+------------
+
+- Fixed Changelog project url bumping. (`#408 <https://https://github.com/fizyk/pyramid_localize/issues/408>`_)
+- Changed package structure to make it easier to develop it with pipenv without installing it. (`#410 <https://https://github.com/fizyk/pyramid_localize/issues/410>`_)
+
+
 1.0.2 (2022-11-21)
 ==================
 

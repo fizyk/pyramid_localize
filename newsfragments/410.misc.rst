@@ -1,1 +1,0 @@
-Changed package structure to make it easier to develop it with pipenv without installing it.
