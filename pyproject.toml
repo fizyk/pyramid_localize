@@ -1,8 +1,151 @@
+[project]
+name = "pyramid_localize"
+version = "1.0.3"
+description = "pyramid_localize provides translation methods for pyramid, and means to reload translations without stopping the application"
+readme = "README.rst"
+keywords = ["pyramid", "babel", "i18n", "l10n"]
+license = {file = "LICENSE"}
+authors = [
+    {name = "Grzegorz Śliwiński", email = "fizyk+pypi@fizyk.dev"}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Framework :: Pyramid",
+    "Topic :: Database :: Front-Ends",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: WSGI",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "pyramid >= 1.5",
+    "pyramid_basemodel",
+    "pyramid_mako",
+    "pycountry >= 18.12.8",
+]
+requires-python = ">= 3.8"
+
+[project.urls]
+"Source" = "https://github.com/fizyk/pyramid_localize/"
+"Bug Tracker" = "https://github.com/fizyk/pyramid_localize/issues"
+"Changelog" = "https://github.com/fizyk/pyramid_localize/blob/v1.0.3/CHANGES.rst"
+
+[project.optional-dependencies]
+docs = ["sphinx"]
+babel = ["Babel >= 1.0"]
+
 [build-system]
-requires = ["setuptools >= 40.6.0", "wheel"]
+requires = ["setuptools >= 61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+zip-safe = true
+packages = ["pyramid_localize"]
+
+[tool.towncrier]
+directory = "newsfragments"
+single_file=true
+filename="CHANGES.rst"
+issue_format="`#{issue} <https://https://github.com/fizyk/pyramid_localize/issues/{issue}>`_"
+
+[tool.towncrier.fragment.feature]
+name = "Features"
+showcontent = true
+
+[tool.towncrier.fragment.bugfix]
+name = "Bugfixes"
+showcontent = true
+
+[tool.towncrier.fragment.break]
+name = "Breaking changes"
+showcontent = true
+
+[tool.towncrier.fragment.misc]
+name = "Miscellaneus"
+showcontent = true
+
+
+[tool.pydocstyle]
+ignore = "D203,D212"
 
 [tool.black]
 line-length = 120
 target-version = ['py39']
 include = '.*\.pyi?$'
+
+
+[tool.tbump]
+# Uncomment this if your project is hosted on GitHub:
+# github_url = "https://github.com/<user or organization>/<project>/"
+
+[tool.tbump.version]
+current = "1.0.3"
+
+# Example of a semver regexp.
+# Make sure this matches current_version before
+# using tbump
+regex = '''
+  (?P<major>\d+)
+  \.
+  (?P<minor>\d+)
+  \.
+  (?P<patch>\d+)
+  (\-
+    (?P<extra>.+)
+  )?
+  '''
+
+[tool.tbump.git]
+message_template = "Release {new_version}"
+tag_template = "v{new_version}"
+
+[[tool.tbump.field]]
+# the name of the field
+name = "extra"
+# the default value to use, if there is no match
+default = ""
+
+
+# For each file to patch, add a [[file]] config
+# section containing the path of the file, relative to the
+# tbump.toml location.
+[[tool.tbump.file]]
+src = "docs/source/conf.py"
+
+[[tool.tbump.file]]
+src = "pyramid_localize/__init__.py"
+
+[[tool.tbump.file]]
+src = "README.rst"
+
+[[tool.tbump.file]]
+src = "pyproject.toml"
+search = 'version = "{current_version}"'
+
+[[tool.tbump.file]]
+src = "pyproject.toml"
+search = '"Changelog" = "https://github.com/fizyk/pyramid_localize/blob/v{current_version}/CHANGES.rst"'
+
+# You can specify a list of commands to
+# run after the files have been patched
+# and before the git commit is made
+
+[[tool.tbump.before_commit]]
+name = "Build changelog"
+cmd = "pipenv run towncrier build --version {new_version} --yes"
+
+# Or run some commands after the git tag and the branch
+# have been pushed:
+#  [[tool.tbump.after_push]]
+#  name = "publish"
+#  cmd = "./publish.sh"

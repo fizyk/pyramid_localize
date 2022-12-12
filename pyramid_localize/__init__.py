@@ -15,7 +15,7 @@ __version__ = "1.0.3"
 
 
 def build_localize_config(settings):
-    "Build localize settings."
+    """Build localize settings."""
     localize_config = {
         "pybabel": "pybabel",
         "locales": {  # available and default locale for your app
