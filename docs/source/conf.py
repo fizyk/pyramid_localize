@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Sphinx documentation configuration module."""
 #
 # tzf.pyramid_yml documentation build configuration file, created by
 # sphinx-quickstart on Thu Nov  8 20:47:06 2012.

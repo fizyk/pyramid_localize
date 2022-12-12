@@ -32,7 +32,7 @@ def web_request_func():
 
         @reify
         def locale_id(self):
-            """Returns a database locale id."""
+            """Return a database locale id."""
             return locale_id(self)
 
         def locales(self, *args, **kwargs):
