@@ -50,7 +50,11 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 zip-safe = true
-packages = ["pyramid_localize"]
+
+[tool.setuptools.packages.find]
+include = ["pyramid_localize*"]
+exclude = ["tests*"]
+namespaces = false
 
 [tool.towncrier]
 directory = "newsfragments"
