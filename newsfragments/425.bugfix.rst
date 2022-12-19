@@ -1,0 +1,1 @@
+Fixed packaging, which previously missed subscribers subpacakge after moving package definition to pyproject.toml
