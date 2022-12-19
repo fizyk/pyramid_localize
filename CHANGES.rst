@@ -3,6 +3,23 @@ CHANGES
 
 .. towncrier release notes start
 
+1.0.4 (2022-12-19)
+==================
+
+Bugfixes
+--------
+
+- Fixed packaging, which previously missed subscribers subpacakge after moving package definition to pyproject.toml (`#425 <https://https://github.com/fizyk/pyramid_localize/issues/425>`_)
+
+
+Miscellaneus
+------------
+
+- Migrate automerge `fizyk/actions-reuse/.github/workflows/automerge-shared.yml`
+  using github application for maintaining short lived acess tokens for merge-me actions. (`#414 <https://https://github.com/fizyk/pyramid_localize/issues/414>`_)
+- Move as much of the project configuration to pyproject.toml as possible. And drop setup.py. (`#416 <https://https://github.com/fizyk/pyramid_localize/issues/416>`_)
+
+
 1.0.3 (2022-11-25)
 ==================
 
