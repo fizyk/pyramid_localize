@@ -13,3 +13,13 @@ jobs:
       pipenv: true
       pipenv-install-options: "--skip-lock"
       pylint: true
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - uses: fizyk/actions-reuse/.github/actions/pipenv@v1.6.4
+        with:
+          python-version: "3.11"
+          pipenv-install-options: "--skip-lock"
+          command: pip freeze
