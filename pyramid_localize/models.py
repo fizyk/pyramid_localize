@@ -24,7 +24,12 @@ class Language(Base):
     __tablename__ = "languages"
 
     id = Column(Integer, Sequence(__tablename__ + "_sq"), primary_key=True)
-    updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
+    updated_at = Column(
+        DateTime,
+        default=func.now(),  # pylint:disable=not-callable
+        onupdate=func.now(),  # pylint:disable=not-callable
+        nullable=False,
+    )
     name = Column(Unicode(45), nullable=False)
     native_name = Column(Unicode(45), nullable=False)
     language_code = Column(String(2), unique=True, nullable=False)  # ISO 639-1 (Alpha2)
