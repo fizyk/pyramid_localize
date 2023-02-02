@@ -27,7 +27,6 @@ def set_localizer(request, reset=False):
     :param bool reset: flag that directs resetting localizer within app
     """
     if reset:
-
         for locale in request.registry["localize"]["locales"]["available"]:
             log.debug("Resetting %s localizator", locale)
             tdirs = request.registry.queryUtility(ITranslationDirectories, default=[])

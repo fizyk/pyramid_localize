@@ -1,1 +1,0 @@
-Fixed `Language.updated_at` default, which previously contained timestamp evaluated at import-time, instead of callable.

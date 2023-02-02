@@ -128,7 +128,6 @@ class CatalogueView(object):
         translation_sources = self.request.registry["localize"]["translation"]["sources"]
 
         for domain in translation_sources:
-
             pot_file = self._translation_template_path(translation_sources[domain])
             if not os.path.isfile(pot_file):
                 log.critical("pot file for %s does not exists!", domain)
@@ -191,7 +190,6 @@ class CatalogueView(object):
         translation_sources = self.request.registry["localize"]["translation"]["sources"]
 
         for domain in translation_sources:
-
             for language in self.request.registry["localize"]["locales"]["available"]:
                 po_file = self._translation_file(language, domain)
                 mo_file = self._translation_file(language, domain, "mo")
