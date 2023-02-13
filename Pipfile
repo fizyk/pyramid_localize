@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pyramid = "==2.0"
+pyramid = "==2.0.1"
 pyramid-basemodel = "==0.6.0"
 "zope.sqlalchemy" = "==1.6"
 pyramid-mako = "==1.1.0"
