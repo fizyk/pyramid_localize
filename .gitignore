@@ -37,3 +37,5 @@ nosetests.xml
 .pydevproject
 # PyCharm
 .idea
+
+Pipfile.lock
