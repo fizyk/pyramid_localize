@@ -1,0 +1,1 @@
+Rely on cached Pipfile.lock which is created for each python version.
