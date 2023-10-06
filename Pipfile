@@ -14,7 +14,7 @@ pycountry = "==22.3.5"
 [dev-packages]
 pycodestyle = "==2.11.0"
 pydocstyle = "==6.3.0"
-pylint = "==3.0.0"
+pylint = "==3.0.1"
 black = "==23.9.1"
 pytest = "==7.4.2"
 pytest-pyramid = "==1.0.2"
