@@ -6,8 +6,8 @@ pyramid_localize
     :target: https://pypi.python.org/pypi/pyramid_localize/
     :alt: Latest PyPI version
 
-.. image:: https://readthedocs.org/projects/pyramid_localize/badge/?version=v1.0.4
-    :target: http://pyramid_localize.readthedocs.io/en/v1.0.4/
+.. image:: https://readthedocs.org/projects/pyramid_localize/badge/?version=v1.0.5
+    :target: http://pyramid_localize.readthedocs.io/en/v1.0.5/
     :alt: Documentation Status
 
 .. image:: https://img.shields.io/pypi/wheel/pyramid_localize.svg

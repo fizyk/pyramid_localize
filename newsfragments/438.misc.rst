@@ -1,1 +1,0 @@
-Adjusted pylint's `overgeneral-exceptions` configuration for new pylint version.

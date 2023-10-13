@@ -1,6 +1,6 @@
 [project]
 name = "pyramid_localize"
-version = "1.0.4"
+version = "1.0.5"
 description = "pyramid_localize provides translation methods for pyramid, and means to reload translations without stopping the application"
 readme = "README.rst"
 keywords = ["pyramid", "babel", "i18n", "l10n"]
@@ -39,7 +39,7 @@ requires-python = ">= 3.8"
 [project.urls]
 "Source" = "https://github.com/fizyk/pyramid_localize/"
 "Bug Tracker" = "https://github.com/fizyk/pyramid_localize/issues"
-"Changelog" = "https://github.com/fizyk/pyramid_localize/blob/v1.0.4/CHANGES.rst"
+"Changelog" = "https://github.com/fizyk/pyramid_localize/blob/v1.0.5/CHANGES.rst"
 
 [project.optional-dependencies]
 docs = ["sphinx"]
@@ -101,7 +101,7 @@ select = [
 # github_url = "https://github.com/<user or organization>/<project>/"
 
 [tool.tbump.version]
-current = "1.0.4"
+current = "1.0.5"
 
 # Example of a semver regexp.
 # Make sure this matches current_version before

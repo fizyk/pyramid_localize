@@ -1,1 +1,0 @@
-Use codecov token as it apparently can help with codecov's Github API issue.

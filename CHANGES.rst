@@ -3,6 +3,21 @@ CHANGES
 
 .. towncrier release notes start
 
+1.0.5 (2023-10-13)
+==================
+
+Features
+--------
+
+- Add Support for Python 3.12 (`#491 <https://https://github.com/fizyk/pyramid_localize/issues/491>`_)
+
+
+Miscellaneus
+------------
+
+- `#426 <https://https://github.com/fizyk/pyramid_localize/issues/426>`_, `#437 <https://https://github.com/fizyk/pyramid_localize/issues/437>`_, `#438 <https://https://github.com/fizyk/pyramid_localize/issues/438>`_, `#458 <https://https://github.com/fizyk/pyramid_localize/issues/458>`_, `#460 <https://https://github.com/fizyk/pyramid_localize/issues/460>`_, `#482 <https://https://github.com/fizyk/pyramid_localize/issues/482>`_
+
+
 1.0.4 (2022-12-19)
 ==================
 
