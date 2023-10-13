@@ -5,17 +5,9 @@
 """Language model."""
 import gettext
 
-
-from sqlalchemy import Column
-from sqlalchemy import Sequence
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import Unicode
-from sqlalchemy import DateTime
-from sqlalchemy import func
-from sqlalchemy import event
-from pyramid_basemodel import Base
 import pycountry
+from pyramid_basemodel import Base
+from sqlalchemy import Column, DateTime, Integer, Sequence, String, Unicode, event, func
 
 
 class Language(Base):
@@ -26,8 +18,8 @@ class Language(Base):
     id = Column(Integer, Sequence(__tablename__ + "_sq"), primary_key=True)
     updated_at = Column(
         DateTime,
-        default=func.now(),  # pylint:disable=not-callable
-        onupdate=func.now(),  # pylint:disable=not-callable
+        default=func.now(),
+        onupdate=func.now(),
         nullable=False,
     )
     name = Column(Unicode(45), nullable=False)

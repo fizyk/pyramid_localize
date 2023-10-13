@@ -1,15 +1,15 @@
 """Test suite main conftest."""
-import transaction
+import pyramid_basemodel
 import pytest
+import transaction
 from mock import Mock
+from pyramid import testing
 from pyramid.decorator import reify
 from pyramid.request import Request
-from pyramid import testing
-from zope.sqlalchemy import register
-import pyramid_basemodel
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.pool import NullPool
+from zope.sqlalchemy import register
 
 from pyramid_localize import build_localize_config
 from pyramid_localize.models import Language
@@ -17,13 +17,9 @@ from pyramid_localize.models import Language
 
 def web_request_func():
     """Mock web request for views testing."""
-    # pylint:disable=import-outside-toplevel
-    from pyramid_localize.request import LocalizeRequestMixin
-    from pyramid_localize.request import database_locales
-    from pyramid_localize.request import locale_id
-    from pyramid_localize.request import locales
+    from pyramid_localize.request import LocalizeRequestMixin, database_locales, locale_id, locales
 
-    class TestRequest(LocalizeRequestMixin, Request):  # pylint:disable=too-many-ancestors
+    class TestRequest(LocalizeRequestMixin, Request):
         """Test request object."""
 
         @reify
@@ -47,7 +43,7 @@ def web_request_func():
         }
     )
     configurator = testing.setUp()
-    request.registry = configurator.registry  # pylint:disable=attribute-defined-outside-init
+    request.registry = configurator.registry
     request.registry["localize"] = localize_config
 
     return request
@@ -84,7 +80,7 @@ def locale_negotiator_request():
 @pytest.fixture
 def db_session(request):
     """Session for SQLAlchemy."""
-    from pyramid_localize.models import Base  # pylint:disable=import-outside-toplevel
+    from pyramid_localize.models import Base
 
     engine = create_engine("sqlite:///localize.sqlite", echo=False, poolclass=NullPool)
     pyramid_basemodel.Session = scoped_session(sessionmaker())
@@ -101,7 +97,7 @@ def db_session(request):
 
 
 @pytest.fixture
-def db_locales(db_session):  # pylint:disable=redefined-outer-name
+def db_locales(db_session):
     """Add Languages to db_session."""
     for locale in ["pl", "cz", "fr"]:
         locale_object = Language(name=locale, native_name=locale, language_code=locale)

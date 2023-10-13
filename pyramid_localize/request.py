@@ -13,8 +13,7 @@ class LocalizeRequestMixin(object):
     """Mixin adding overwriting Request methods."""
 
     def default_locale(self, **kw):
-        """
-        Set up default locale for path kwargs.
+        """Set up default locale for path kwargs.
 
         Can be used in custom route_url overwrites.
 
@@ -28,8 +27,7 @@ class LocalizeRequestMixin(object):
         return kw
 
     def route_url(self, route_name, *elements, **kw):
-        """
-        Overwrite original route_url to handle default locale within route.
+        """Overwrite original route_url to handle default locale within route.
 
         .. note:: see :meth:`pyramid.request.Request.route_url`
         """
@@ -37,8 +35,7 @@ class LocalizeRequestMixin(object):
 
 
 def locale_id(request):
-    """
-    Return database id of a current locale name.
+    """Return database id of a current locale name.
 
     :returns: database id of a language code needed for translations
     :rtype: int
@@ -49,23 +46,21 @@ def locale_id(request):
     return request._database_locales[request.locale_name].id
 
 
-def database_locales(request):  # pylint:disable=unused-argument
-    """
-    Return all database locales available.
+def database_locales(request):
+    """Return all database locales available.
 
     :returns: dictionary of Language objects language_code: Language
     :rtype: dict
     """
     db_locales = {}
-    for language in pyramid_basemodel.Session.query(Language).all():  # pylint:disable=no-member
+    for language in pyramid_basemodel.Session.query(Language).all():
         db_locales[language.language_code] = language
 
     return db_locales
 
 
 def locales(request, config=False):
-    """
-    Return locales.
+    """Return locales.
 
     :param bool config: Whether to restrict list with config
 
@@ -86,5 +81,5 @@ def locales(request, config=False):
 
 def _create_locale(new_locale, request):
     language = Language(name=str(new_locale), native_name=str(new_locale), language_code=str(new_locale))
-    pyramid_basemodel.Session.add(language)  # pylint:disable=no-member
+    pyramid_basemodel.Session.add(language)
     request._database_locales = database_locales(request)

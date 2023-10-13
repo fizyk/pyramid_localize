@@ -5,21 +5,18 @@
 """Catalogue view."""
 
 
-import sys
-import os
-import time
 import logging
+import os
 import subprocess
+import sys
+import time
 
-
-from pyramid.view import view_config
-from pyramid.view import view_defaults
 from pyramid.asset import resolve_asset_spec
-from pyramid.path import package_path
 from pyramid.httpexceptions import HTTPFound
+from pyramid.path import package_path
+from pyramid.view import view_config, view_defaults
 
-from pyramid_localize.tools import destination_path
-from pyramid_localize.tools import set_localizer
+from pyramid_localize.tools import destination_path, set_localizer
 
 log = logging.getLogger(__name__)
 
@@ -32,16 +29,14 @@ class CatalogueView(object):
     """View class for catalogue manipulation actions."""
 
     def __init__(self, request):
-        """
-        Assign request.
+        """Assign request.
 
         :param pyramid.request.Request request:
         """
         self.request = request
 
     def _translation_file(self, language, domain, extension="po"):
-        """
-        Create a translation file path.
+        """Create a translation file path.
 
         :param str language: two-letter language code
         :param str domain: translation domain name
@@ -58,8 +53,7 @@ class CatalogueView(object):
         )
 
     def _translation_template_path(self, spec):
-        """
-        Calculate path to translation template file.
+        """Calculate path to translation template file.
 
         :param str spec: either full path, or package related path
         """
@@ -73,8 +67,7 @@ class CatalogueView(object):
 
     @view_config(route_name="localize:index")
     def index(self):
-        """
-        List domains, and its files of files with metadata.
+        """List domains, and its files of files with metadata.
 
         :returns:
 
@@ -115,8 +108,7 @@ class CatalogueView(object):
 
     @view_config(route_name="localize:update")
     def update_catalogue(self):
-        """
-        Update or initialize translation catalogues.
+        """Update or initialize translation catalogues.
 
         Create (.po files) for each language/catalogue from their respective
         translation templates (.pot). This action is performed for every language
@@ -179,8 +171,7 @@ class CatalogueView(object):
 
     @view_config(route_name="localize:compile")
     def compile_catalogue(self):
-        """
-        Compile all translation files.
+        """Compile all translation files.
 
         For every language defined compile .po files into into .mo file that's used by gettext.
 
@@ -219,8 +210,7 @@ class CatalogueView(object):
     @view_config(route_name="localize:reload", xhr="True", renderer="json")
     @view_config(route_name="localize:reload")
     def reload_catalogue(self):
-        """
-        Reload translation catalogue for application it's run in.
+        """Reload translation catalogue for application it's run in.
 
         .. note::
 

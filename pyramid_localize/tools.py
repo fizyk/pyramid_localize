@@ -4,24 +4,21 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """methods in this module are tools, thank to which pyramid_localize works most of its magic."""
 
-import sys
-import os
 import logging
+import os
+import sys
 
-from translationstring import _interp_regex
-from pyramid.i18n import make_localizer
-from pyramid.i18n import TranslationString
 from pyramid.asset import resolve_asset_spec
+from pyramid.i18n import TranslationString, make_localizer
+from pyramid.interfaces import ILocalizer, ITranslationDirectories
 from pyramid.path import package_path
-from pyramid.interfaces import ILocalizer
-from pyramid.interfaces import ITranslationDirectories
+from translationstring import _interp_regex
 
 log = logging.getLogger(__name__)
 
 
 def set_localizer(request, reset=False):
-    """
-    Set localizer and auto_translate methods for request.
+    """Set localizer and auto_translate methods for request.
 
     :param pyramid.request.Request request: request object
     :param bool reset: flag that directs resetting localizer within app
@@ -47,8 +44,7 @@ def set_localizer(request, reset=False):
 
 
 def destination_path(request):
-    """
-    Return absolute path of the translation destination.
+    """Return absolute path of the translation destination.
 
     :param pyramid.request.Request request: a request object
 
@@ -66,9 +62,8 @@ def destination_path(request):
     return directory
 
 
-def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):  # pylint:disable=unused-argument
-    """
-    Simulate autotranslate.
+def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
+    """Simulate autotranslate.
 
     :param str msgid: Message or message id
     :param str domain: Translation domain

@@ -9,7 +9,7 @@ try:  # pragma: no cover
 except ImportError:  # pragma: no cover
     babel = False
 
-from pyramid_localize.request import database_locales, locales, locale_id
+from pyramid_localize.request import database_locales, locale_id, locales
 
 __version__ = "1.0.4"
 

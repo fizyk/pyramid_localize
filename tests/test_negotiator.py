@@ -27,8 +27,7 @@ def test_negotiate_cookie(locale_negotiator_request):
 
 
 def test_negotiate_headers(locale_negotiator_request):
-    """
-    Locale_negotiator:header.
+    """Locale_negotiator:header.
 
     Negotiate locale from a header.
     """
@@ -41,8 +40,7 @@ def test_negotiate_headers(locale_negotiator_request):
 
 
 def test_negotiate_default(locale_negotiator_request):
-    """
-    Locale_negotiator:default.
+    """Locale_negotiator:default.
 
     Other ways fail, return default locale.
     """

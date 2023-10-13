@@ -1,6 +1,5 @@
 """Subscribers related tests."""
-from pyramid.events import BeforeRender
-from pyramid.events import NewRequest
+from pyramid.events import BeforeRender, NewRequest
 from pyramid.i18n import Localizer
 
 # for this tests, these will be imported internally by pyramid's config
