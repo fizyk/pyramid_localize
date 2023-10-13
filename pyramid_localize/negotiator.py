@@ -6,8 +6,7 @@
 
 
 def locale_negotiator(request):
-    """
-    Locale negotiator.
+    """Locale negotiator.
 
     It sets best suited locale variable for given user:
 
@@ -30,7 +29,7 @@ def locale_negotiator(request):
     if hasattr(request, "_LOCALE_") and request._LOCALE_ in available_languages:
         locale = request._LOCALE_
     # we check if route_element[1] is a locale indicator for path
-    elif len(route_elements[1]) == 2 and route_elements[1] in available_languages:
+    elif len(route_elements[1]) == 2 and route_elements[1] in available_languages:  # noqa: PLR2004
         locale = route_elements[1]
     elif request.cookies and "_LOCALE_" in request.cookies and request.cookies["_LOCALE_"] in available_languages:
         locale = request.cookies["_LOCALE_"]

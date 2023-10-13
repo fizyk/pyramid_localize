@@ -4,9 +4,7 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Subscribers adding mocked translation methods to render context, and request."""
 
-from pyramid.events import subscriber
-from pyramid.events import BeforeRender
-from pyramid.events import NewRequest
+from pyramid.events import BeforeRender, NewRequest, subscriber
 
 from pyramid_localize.tools import dummy_autotranslate
 

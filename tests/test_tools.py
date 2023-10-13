@@ -1,19 +1,16 @@
 """Tools related tests."""
 
-import sys
 import os
+import sys
 
 import pytest
 from mock import Mock
-from pyramid.path import package_path
 from pyramid.i18n import Localizer
 from pyramid.interfaces import ILocalizer
+from pyramid.path import package_path
 
 from pyramid_localize import build_localize_config
-from pyramid_localize.tools import dummy_autotranslate
-from pyramid_localize.tools import destination_path
-from pyramid_localize.tools import set_localizer
-
+from pyramid_localize.tools import destination_path, dummy_autotranslate, set_localizer
 from tests.conftest import web_request_func
 
 
@@ -25,8 +22,7 @@ def test_simple(web_request):
 
 
 def test_reset(web_request):
-    """
-    Test resetting localizer capabilites.
+    """Test resetting localizer capabilites.
 
     1. localizer gets set on a request.
     2. Reset localizer call gets issued.

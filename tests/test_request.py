@@ -28,20 +28,19 @@ def test_request(web_request, kwargs, expected_locale):
     assert route_params["__LOCALE__"] == expected_locale
 
 
-def test_locale_id(db_locales, web_request):  # pylint:disable=unused-argument
+def test_locale_id(db_locales, web_request):
     """Test for creating, and getting loacel id."""
     assert isinstance(web_request.locale_id, int)
 
 
-def test_locales(db_locales, web_request):  # pylint:disable=unused-argument
+def test_locales(db_locales, web_request):
     """Test return locales list."""
-    assert len(web_request.locales()) == 3
+    assert len(web_request.locales()) == 3  # noqa: PLR2004
 
 
-def test_locales_config(db_locales, web_request):  # pylint:disable=unused-argument
-    """
-    Test return locales list limited by config.
+def test_locales_config(db_locales, web_request):
+    """Test return locales list limited by config.
 
     There's a new locale, so it should create new Language entry.
     """
-    assert len(web_request.locales(True)) == 4
+    assert len(web_request.locales(True)) == 4  # noqa: PLR2004
