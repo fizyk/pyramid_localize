@@ -13,7 +13,7 @@ pycountry = "==22.3.5"
 
 [dev-packages]
 black = "==23.10.1"
-pytest = "==7.4.2"
+pytest = "==7.4.3"
 pytest-pyramid = "==1.0.3"
 pytest-cov = "==4.1.0"
 mock = "==5.1.0"
