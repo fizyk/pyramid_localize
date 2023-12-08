@@ -9,7 +9,7 @@ pyramid-basemodel = "==0.6.1"
 "zope.sqlalchemy" = "==3.1"
 pyramid-mako = "==1.1.0"
 babel = "==2.13.1"
-pycountry = "==22.3.5"
+pycountry = "==23.12.7"
 
 [dev-packages]
 black = "==23.11.0"
