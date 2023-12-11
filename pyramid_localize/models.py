@@ -54,7 +54,7 @@ def before_language_insert(_, __, language):
         language.native_name = str(lang_data.name)
 
     else:
-        lang_locale = gettext.translation("iso639_3", pycountry.LOCALES_DIR, languages=[language.language_code])
+        lang_locale = gettext.translation("iso639-3", pycountry.LOCALES_DIR, languages=[language.language_code])
         localize = lang_locale.gettext
 
         language.native_name = str(localize(lang_data.name))

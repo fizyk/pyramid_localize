@@ -32,7 +32,7 @@ dependencies = [
     "pyramid >= 1.5",
     "pyramid_basemodel",
     "pyramid_mako",
-    "pycountry >= 18.12.8",
+    "pycountry >= 23.12.7",
 ]
 requires-python = ">= 3.8"
 
