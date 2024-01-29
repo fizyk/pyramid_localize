@@ -1,4 +1,5 @@
 """Test suite main conftest."""
+
 import pyramid_basemodel
 import pytest
 import transaction
