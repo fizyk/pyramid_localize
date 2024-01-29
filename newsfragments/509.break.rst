@@ -1,1 +1,0 @@
-pyramid_localize is requiring pycountry 23.12.7

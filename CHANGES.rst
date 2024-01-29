@@ -3,6 +3,21 @@ CHANGES
 
 .. towncrier release notes start
 
+1.0.6 (2024-01-29)
+==================
+
+Breaking changes
+----------------
+
+- pyramid_localize is requiring pycountry 23.12.7 (`#509 <https://https://github.com/fizyk/pyramid_localize/issues/509>`_)
+
+
+Miscellaneus
+------------
+
+- `#522 <https://https://github.com/fizyk/pyramid_localize/issues/522>`_
+
+
 1.0.5 (2023-10-13)
 ==================
 
