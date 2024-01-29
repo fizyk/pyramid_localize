@@ -1,4 +1,5 @@
 """Subscribers related tests."""
+
 from pyramid.events import BeforeRender, NewRequest
 from pyramid.i18n import Localizer
 

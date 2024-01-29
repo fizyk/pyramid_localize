@@ -1,4 +1,5 @@
 """Locale negotiator related tests."""
+
 from pyramid_localize.negotiator import locale_negotiator
 
 
