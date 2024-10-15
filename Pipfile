@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pyramid = "==2.0.2"
-pyramid-basemodel = "==0.6.1"
+pyramid-basemodel = "==0.6.3"
 "zope.sqlalchemy" = "==3.1"
 pyramid-mako = "==1.1.0"
 babel = "==2.16.0"
