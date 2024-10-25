@@ -3,6 +3,21 @@ CHANGES
 
 .. towncrier release notes start
 
+1.0.7 (2024-10-25)
+==================
+
+Breaking changes
+----------------
+
+- Drop support for Python 3.8 (Already reached EOL)
+
+
+Features
+--------
+
+- Declare Support for Python 3.13
+
+
 1.0.6 (2024-01-29)
 ==================
 
