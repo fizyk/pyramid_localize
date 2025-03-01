@@ -70,6 +70,3 @@ In order to be able to allow application creation, that will be usable with tran
 If Babel will not be found, then pyramid_localize will install dummy translation methods, that will do nothing, except placing translation string args in place, after getting all the arguments, so You can still create apps, or pyramid plugins using translation functionality.
 
 Code behind that can be seen here :func:`pyramid_localize.tools.dummy_autotranslate`.
-
-
-
