@@ -14,7 +14,7 @@ pycountry = "==24.6.1"
 [dev-packages]
 pytest = "==8.3.5"
 pytest-pyramid = "==1.0.4"
-pytest-cov = "==6.1.0"
+pytest-cov = "==6.1.1"
 mock = "==5.2.0"
 towncrier = "==24.8.0"
 tbump = "==6.11.0"
