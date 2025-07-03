@@ -14,11 +14,11 @@ from zope.sqlalchemy import register
 
 from pyramid_localize import build_localize_config
 from pyramid_localize.models import Language
+from pyramid_localize.request import LocalizeRequestMixin, database_locales, locale_id, locales
 
 
 def web_request_func():
     """Mock web request for views testing."""
-    from pyramid_localize.request import LocalizeRequestMixin, database_locales, locale_id, locales
 
     class TestRequest(LocalizeRequestMixin, Request):
         """Test request object."""
@@ -81,7 +81,7 @@ def locale_negotiator_request():
 @pytest.fixture
 def db_session(request):
     """Session for SQLAlchemy."""
-    from pyramid_localize.models import Base
+    from pyramid_localize.models import Base  # noqa: PLC0415
 
     engine = create_engine("sqlite:///localize.sqlite", echo=False, poolclass=NullPool)
     pyramid_basemodel.Session = scoped_session(sessionmaker())
