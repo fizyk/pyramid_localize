@@ -3,6 +3,7 @@
 # This module is part of pyramid_localize and is released under
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Language model."""
+
 import gettext
 
 import pycountry

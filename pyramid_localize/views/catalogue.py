@@ -4,7 +4,6 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Catalogue view."""
 
-
 import logging
 import os
 import subprocess
