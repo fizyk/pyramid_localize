@@ -3,6 +3,31 @@ CHANGES
 
 .. towncrier release notes start
 
+pyramid_localize 1.0.8 (2026-01-12)
+===================================
+
+Breaking changes
+----------------
+
+- Drop support for Python 3.9
+
+
+Features
+--------
+
+- Add support for Python 3.14
+
+
+Miscellaneus
+------------
+
+- Add your info here
+- Adjust workflows for actions-reuse 3
+- Replace black with ruff-format
+- Update code formatting to new ruff
+- Use pre-commit for maintaining code style and linting
+
+
 1.0.7 (2024-10-25)
 ==================
 
