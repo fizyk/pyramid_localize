@@ -63,24 +63,27 @@ single_file=true
 filename="CHANGES.rst"
 issue_format="`#{issue} <https://https://github.com/fizyk/pyramid_localize/issues/{issue}>`_"
 
-[tool.towncrier.fragment.feature]
-name = "Features"
-showcontent = true
-
-[tool.towncrier.fragment.bugfix]
-name = "Bugfixes"
-showcontent = true
-
-[tool.towncrier.fragment.break]
+[[tool.towncrier.type]]
+directory = "break"
 name = "Breaking changes"
 showcontent = true
 
-[tool.towncrier.fragment.misc]
-name = "Miscellaneus"
-showcontent = false
+[[tool.towncrier.type]]
+directory = "feature"
+name = "Features"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "Bugfixes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "misc"
+name = "Miscellaneous"
+showcontent = true
 
 [tool.ruff]
-# Decrease the maximum line length to 79 characters.
 line-length = 120
 target-version = 'py310'
 select = [
