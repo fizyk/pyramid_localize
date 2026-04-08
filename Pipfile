@@ -12,7 +12,7 @@ babel = "==2.18.0"
 pycountry = "==26.2.16"
 
 [dev-packages]
-pytest = "==9.0.2"
+pytest = "==9.0.3"
 pytest-pyramid = "==1.1.0"
 pytest-cov = "==7.1.0"
 mock = "==5.2.0"
