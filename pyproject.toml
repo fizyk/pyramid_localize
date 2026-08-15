@@ -11,14 +11,14 @@ description = """\
     """
 readme = "README.rst"
 keywords = [ "babel", "i18n", "l10n", "pyramid" ]
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = [ "LICENSE" ]
 requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Web Environment",
     "Framework :: Pyramid",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
@@ -67,12 +67,12 @@ dev = [
     "pytest-cov==7.1.0",
     "pytest-pyramid==1.1.0",
     "sqlalchemy==2.0.51",
+    "towncrier==25.8.0",
     "translationstring==1.4",
     "zope-sqlalchemy==4.1",
 ]
 release = [
     "tbump==6.11.0",
-    "towncrier==25.8.0",
 ]
 
 [tool.uv.build-backend]
@@ -103,7 +103,7 @@ sub_table_spacing = "\n"
 
 [[tool.tbump.before_commit]]
 name = "Build changelog"
-cmd = "pipenv run towncrier build --version {new_version} --yes"
+cmd = "uv run towncrier build --version {new_version} --yes"
 
 [[tool.tbump.field]]
 name = "extra"

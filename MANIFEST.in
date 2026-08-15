@@ -1,3 +1,0 @@
-include *.rst *.py
-recursive-include src/pyramid_localize *.py *.yml
-recursive-include src/pyramid_localize/resources *.mako *.pot

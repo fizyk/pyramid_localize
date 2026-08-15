@@ -27,7 +27,7 @@ Pull requests
 #. Start with a bug report or feature request
 #. Use a clear and descriptive title
 #. Provide a description - which issue does it refers to, and what part of the issue is being solved
-#. Add proper newsfragment. Use `pipenv run towncrier create [issue_number].[type].rst` And fill note with the changes description.
+#. Add proper newsfragment. Use `uv run towncrier create [issue_number].[type].rst` And fill note with the changes description.
 #. Be ready for code review :)
 
 Commits
