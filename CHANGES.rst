@@ -49,13 +49,13 @@ Features
 Breaking changes
 ----------------
 
-- pyramid_localize is requiring pycountry 23.12.7 (`#509 <https://https://github.com/fizyk/pyramid_localize/issues/509>`_)
+- pyramid_localize is requiring pycountry 23.12.7 (`#509 <https://github.com/fizyk/pyramid_localize/issues/509>`_)
 
 
 Miscellaneus
 ------------
 
-- `#522 <https://https://github.com/fizyk/pyramid_localize/issues/522>`_
+- `#522 <https://github.com/fizyk/pyramid_localize/issues/522>`_
 
 
 1.0.5 (2023-10-13)
@@ -64,13 +64,13 @@ Miscellaneus
 Features
 --------
 
-- Add Support for Python 3.12 (`#491 <https://https://github.com/fizyk/pyramid_localize/issues/491>`_)
+- Add Support for Python 3.12 (`#491 <https://github.com/fizyk/pyramid_localize/issues/491>`_)
 
 
 Miscellaneus
 ------------
 
-- `#426 <https://https://github.com/fizyk/pyramid_localize/issues/426>`_, `#437 <https://https://github.com/fizyk/pyramid_localize/issues/437>`_, `#438 <https://https://github.com/fizyk/pyramid_localize/issues/438>`_, `#458 <https://https://github.com/fizyk/pyramid_localize/issues/458>`_, `#460 <https://https://github.com/fizyk/pyramid_localize/issues/460>`_, `#482 <https://https://github.com/fizyk/pyramid_localize/issues/482>`_
+- `#426 <https://github.com/fizyk/pyramid_localize/issues/426>`_, `#437 <https://github.com/fizyk/pyramid_localize/issues/437>`_, `#438 <https://github.com/fizyk/pyramid_localize/issues/438>`_, `#458 <https://github.com/fizyk/pyramid_localize/issues/458>`_, `#460 <https://github.com/fizyk/pyramid_localize/issues/460>`_, `#482 <https://github.com/fizyk/pyramid_localize/issues/482>`_
 
 
 1.0.4 (2022-12-19)
@@ -79,15 +79,15 @@ Miscellaneus
 Bugfixes
 --------
 
-- Fixed packaging, which previously missed subscribers subpacakge after moving package definition to pyproject.toml (`#425 <https://https://github.com/fizyk/pyramid_localize/issues/425>`_)
+- Fixed packaging, which previously missed subscribers subpacakge after moving package definition to pyproject.toml (`#425 <https://github.com/fizyk/pyramid_localize/issues/425>`_)
 
 
 Miscellaneus
 ------------
 
 - Migrate automerge `fizyk/actions-reuse/.github/workflows/automerge-shared.yml`
-  using github application for maintaining short lived acess tokens for merge-me actions. (`#414 <https://https://github.com/fizyk/pyramid_localize/issues/414>`_)
-- Move as much of the project configuration to pyproject.toml as possible. And drop setup.py. (`#416 <https://https://github.com/fizyk/pyramid_localize/issues/416>`_)
+  using github application for maintaining short lived acess tokens for merge-me actions. (`#414 <https://github.com/fizyk/pyramid_localize/issues/414>`_)
+- Move as much of the project configuration to pyproject.toml as possible. And drop setup.py. (`#416 <https://github.com/fizyk/pyramid_localize/issues/416>`_)
 
 
 1.0.3 (2022-11-25)
@@ -96,8 +96,8 @@ Miscellaneus
 Miscellaneus
 ------------
 
-- Fixed Changelog project url bumping. (`#408 <https://https://github.com/fizyk/pyramid_localize/issues/408>`_)
-- Changed package structure to make it easier to develop it with pipenv without installing it. (`#410 <https://https://github.com/fizyk/pyramid_localize/issues/410>`_)
+- Fixed Changelog project url bumping. (`#408 <https://github.com/fizyk/pyramid_localize/issues/408>`_)
+- Changed package structure to make it easier to develop it with pipenv without installing it. (`#410 <https://github.com/fizyk/pyramid_localize/issues/410>`_)
 
 
 1.0.2 (2022-11-21)
@@ -106,8 +106,8 @@ Miscellaneus
 Miscellaneus
 ------------
 
-- Add towncrier to manage CHANGES.rst automatically. (`#193 <https://https://github.com/fizyk/pyramid_localize/issues/193>`_)
-- Migrate version bumping tool to tbump (`#403 <https://https://github.com/fizyk/pyramid_localize/issues/403>`_)
+- Add towncrier to manage CHANGES.rst automatically. (`#193 <https://github.com/fizyk/pyramid_localize/issues/193>`_)
+- Migrate version bumping tool to tbump (`#403 <https://github.com/fizyk/pyramid_localize/issues/403>`_)
 
 
 unreleased
