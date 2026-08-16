@@ -84,11 +84,12 @@ source-include = [ "CHANGES.rst" ]
 target-version = "py310"
 line-length = 120
 select = [
-    "E",  # pycodestyle
-    "F",  # pyflakes
-    "I",  # isort
-    "D",  # pydocstyle
-    "PL", # pylint
+    "E",   # pycodestyle
+    "F",   # pyflakes
+    "I",   # isort
+    "D",   # pydocstyle
+    "PL",  # pylint
+    "FBT", # flake8-boolean-trap
 ]
 
 [tool.pyproject-fmt]

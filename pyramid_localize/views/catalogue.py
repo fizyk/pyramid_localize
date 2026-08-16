@@ -231,7 +231,7 @@ class CatalogueView(object):
 
 
         """
-        set_localizer(self.request, True)
+        set_localizer(self.request, reset=True)
 
         if self.request.is_xhr:
             return {

@@ -17,7 +17,7 @@ from translationstring import _interp_regex
 log = logging.getLogger(__name__)
 
 
-def set_localizer(request, reset=False):
+def set_localizer(request, *, reset=False):
     """Set localizer and auto_translate methods for request.
 
     :param pyramid.request.Request request: request object

@@ -59,7 +59,7 @@ def database_locales(request):
     return db_locales
 
 
-def locales(request, config=False):
+def locales(request, *, config=False):
     """Return locales.
 
     :param bool config: Whether to restrict list with config
