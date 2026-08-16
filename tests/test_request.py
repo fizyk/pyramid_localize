@@ -43,4 +43,4 @@ def test_locales_config(db_locales, web_request):
 
     There's a new locale, so it should create new Language entry.
     """
-    assert len(web_request.locales(True)) == 4  # noqa: PLR2004
+    assert len(web_request.locales(config=True)) == 4  # noqa: PLR2004
