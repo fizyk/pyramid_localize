@@ -17,6 +17,6 @@ updates:
   cooldown:
     default-days: 7
   groups:
-    fizyk-actions-reuse::
+    fizyk-actions-reuse:
       patterns:
       - "fizyk/actions-reuse/*"
