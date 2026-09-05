@@ -3,6 +3,30 @@ CHANGES
 
 .. towncrier release notes start
 
+pyramid-localize 2.0.0 (2026-09-05)
+===================================
+
+Breaking changes
+----------------
+
+- Boolean falgs onf `locales(request, *, config=False)` and `set_localizer(request, *, reset=False)` methods,
+  are keyword-only now. (`#762 <https://github.com/fizyk/pyramid_localize/issues/762>`_)
+
+
+Miscellaneous
+-------------
+
+- Add zizmor to pre-commit (`#758 <https://github.com/fizyk/pyramid_localize/issues/758>`_)
+- Add pyproject-fmt formatter to the pre-commit config. (`#759 <https://github.com/fizyk/pyramid_localize/issues/759>`_)
+- Migrated development environment to uv (`#760 <https://github.com/fizyk/pyramid_localize/issues/760>`_)
+- Add Python 3.15 to CI (`#761 <https://github.com/fizyk/pyramid_localize/issues/761>`_)
+- Add FBT linter class to ruff configuration (`#762 <https://github.com/fizyk/pyramid_localize/issues/762>`_)
+- Add release-schedule workflow. (`#764 <https://github.com/fizyk/pyramid_localize/issues/764>`_)
+- Migrated the Automerge workflow to `fizyk/actions-reuse` version 5.4.1. (`#769 <https://github.com/fizyk/pyramid_localize/issues/769>`_)
+- Pin setuptools to below 82, as pyramid depends on ``pkg_resources`` which was removed in setuptools 82.
+- Use stable version for release workflow
+
+
 pyramid_localize 1.0.8 (2026-01-12)
 ===================================
 

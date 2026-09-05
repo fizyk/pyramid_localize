@@ -1,2 +1,0 @@
-Boolean falgs onf `locales(request, *, config=False)` and `set_localizer(request, *, reset=False)` methods,
-are keyword-only now.

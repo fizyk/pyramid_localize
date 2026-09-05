@@ -1,1 +1,0 @@
-Use stable version for release workflow

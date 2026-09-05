@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.12,<0.13" ]
 
 [project]
 name = "pyramid-localize"
-version = "1.0.8"
+version = "2.0.0"
 description = """\
     pyramid_localize provides translation methods for pyramid, and means to reload translations without stopping the \
     application\
@@ -53,7 +53,7 @@ babel = [ "babel>=1.0" ]
 [project.urls]
 Source = "https://github.com/fizyk/pyramid_localize/"
 "Bug Tracker" = "https://github.com/fizyk/pyramid_localize/issues"
-Changelog = "https://github.com/fizyk/pyramid_localize/blob/v1.0.8/CHANGES.rst"
+Changelog = "https://github.com/fizyk/pyramid_localize/blob/v2.0.0/CHANGES.rst"
 
 [dependency-groups]
 dev = [
@@ -132,7 +132,7 @@ message_template = "Release {new_version}"
 tag_template = "v{new_version}"
 
 [tool.tbump.version]
-current = "1.0.8"
+current = "2.0.0"
 regex = '''
   (?P<major>\d+)
   \.
