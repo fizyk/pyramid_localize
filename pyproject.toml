@@ -65,7 +65,7 @@ dev = [
     "pyramid-mako==1.1.0",
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
-    "pytest-pyramid==1.1.0",
+    "pytest-pyramid==1.1.1",
     "sqlalchemy==2.0.52",
     "towncrier==26.9.0",
     "translationstring==1.4",
