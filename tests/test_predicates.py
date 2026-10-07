@@ -1,6 +1,9 @@
 """Route predicate related tests."""
 
+from typing import Any
+
 import pytest
+from pyramid.request import Request
 
 from pyramid_localize.routing.predicates import language
 
@@ -13,7 +16,7 @@ from pyramid_localize.routing.predicates import language
         ({"match": {}}, False),
     ),
 )
-def test_predicate(web_request, match_info, matched):
+def test_predicate(web_request: Request, match_info: dict[str, Any], matched: bool) -> None:  # noqa: FBT001
     """Test matches according to web_request config."""
     predicate = language("_LOCALE_")
     assert predicate(match_info, web_request) == matched

@@ -10,7 +10,7 @@ from pyramid_localize.tools import set_localizer
 
 
 @subscriber(BeforeRender)
-def global_renderer(event):
+def global_renderer(event: BeforeRender) -> None:
     """Add localizer, and translation methods to context."""
     request = event["request"]
     set_localizer(request)
@@ -20,6 +20,6 @@ def global_renderer(event):
 
 
 @subscriber(NewRequest)
-def add_localizer(event):
+def add_localizer(event: NewRequest) -> None:
     """Add localizer and translation methods to request."""
     set_localizer(event.request)

@@ -7,17 +7,20 @@
 import logging
 import os
 import sys
+from re import Match
+from typing import Any
 
 from pyramid.asset import resolve_asset_spec
 from pyramid.i18n import TranslationString, make_localizer
 from pyramid.interfaces import ILocalizer, ITranslationDirectories
 from pyramid.path import package_path
-from translationstring import _interp_regex
+from pyramid.request import Request
+from translationstring import _interp_regex  # type: ignore[attr-defined]
 
 log = logging.getLogger(__name__)
 
 
-def set_localizer(request, *, reset=False):
+def set_localizer(request: Request, *, reset: bool = False) -> None:
     """Set localizer and auto_translate methods for request.
 
     :param pyramid.request.Request request: request object
@@ -30,7 +33,7 @@ def set_localizer(request, *, reset=False):
             localizer = make_localizer(locale, tdirs)
             request.registry.registerUtility(localizer, ILocalizer, name=locale)
 
-    def auto_translate(*args, **kwargs):
+    def auto_translate(*args: Any, **kwargs: Any) -> str:
         # lets pass default domain, so we don't have to determine it with
         # each _() function in apps.
         if len(args) <= 1 and "domain" not in kwargs:
@@ -38,12 +41,12 @@ def set_localizer(request, *, reset=False):
 
         # unlike in examples we use TranslationString, to make sure we always
         # use appropriate domain
-        return request.localizer.translate(TranslationString(*args, **kwargs))
+        return request.localizer.translate(TranslationString(*args, **kwargs))  # type: ignore[no-any-return]
 
     request._ = auto_translate
 
 
-def destination_path(request):
+def destination_path(request: Request) -> str:
     """Return absolute path of the translation destination.
 
     :param pyramid.request.Request request: a request object
@@ -51,6 +54,8 @@ def destination_path(request):
     :returns: A combined translation destination path
     :rtype: str
     """
+    package_name: str | None
+    filename: str
     package_name, filename = resolve_asset_spec(request.registry["localize"]["translation"]["destination"])
 
     if package_name is None:  # absolute filename
@@ -62,7 +67,12 @@ def destination_path(request):
     return directory
 
 
-def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
+def dummy_autotranslate(
+    msgid: str,
+    domain: str | None = None,
+    default: str | None = None,
+    mapping: dict[str, Any] | None = None,
+) -> str:
     """Simulate autotranslate.
 
     :param str msgid: Message or message id
@@ -74,7 +84,6 @@ def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
     :rtype: str
     """
     # Try to return defaults first:
-    tstr = None
     if default:
         tstr = default
     else:
@@ -82,7 +91,7 @@ def dummy_autotranslate(msgid, domain=None, default=None, mapping=None):
 
     if mapping and tstr:
 
-        def replace(match):
+        def replace(match: Match[str]) -> str:
             whole, param1, param2 = match.groups()
             return str(mapping.get(param1 or param2, whole))
 

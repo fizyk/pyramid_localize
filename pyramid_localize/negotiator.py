@@ -4,8 +4,10 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Locale negotiator."""
 
+from pyramid.request import Request
 
-def locale_negotiator(request):
+
+def locale_negotiator(request: Request) -> str:
     """Locale negotiator.
 
     It sets best suited locale variable for given user:
@@ -36,4 +38,4 @@ def locale_negotiator(request):
     elif request.accept_language:
         locale = request.accept_language.best_match(available_languages)
 
-    return locale
+    return locale  # type: ignore[no-any-return]

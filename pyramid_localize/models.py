@@ -5,10 +5,14 @@
 """Language model."""
 
 import gettext
+from datetime import datetime
+from typing import Any
 
 import pycountry
 from pyramid_basemodel import Base
-from sqlalchemy import Column, DateTime, Integer, Sequence, String, Unicode, event, func
+from sqlalchemy import DateTime, Integer, Sequence, String, Unicode, event, func
+from sqlalchemy.engine import Connection
+from sqlalchemy.orm import Mapped, Mapper, mapped_column
 
 
 class Language(Base):
@@ -16,28 +20,24 @@ class Language(Base):
 
     __tablename__ = "languages"
 
-    id = Column(Integer, Sequence(__tablename__ + "_sq"), primary_key=True)
-    updated_at = Column(
+    id: Mapped[int] = mapped_column(Integer, Sequence(__tablename__ + "_sq"), primary_key=True)
+    updated_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=func.now(),
         onupdate=func.now(),
         nullable=False,
     )
-    name = Column(Unicode(45), nullable=False)
-    native_name = Column(Unicode(45), nullable=False)
-    language_code = Column(String(2), unique=True, nullable=False)  # ISO 639-1 (Alpha2)
+    name: Mapped[str] = mapped_column(Unicode(45), nullable=False)
+    native_name: Mapped[str] = mapped_column(Unicode(45), nullable=False)
+    language_code: Mapped[str] = mapped_column(String(2), unique=True, nullable=False)  # ISO 639-1 (Alpha2)
 
-    def __unicode__(self):  # pragma: no cover
-        """Language to unicode conversion."""
-        return self.name
-
-    def __str__(self):  # pragma: no cover
+    def __str__(self) -> str:  # pragma: no cover
         """Language to string conversion."""
-        return self.name.encode("utf8")
+        return self.name
 
 
 @event.listens_for(Language, "before_insert")
-def before_language_insert(_, __, language):
+def before_language_insert(_: Mapper[Any], __: Connection, language: Language) -> None:
     """Set name and native_name before creation."""
     # Check language code
     lang_data = pycountry.languages.get(alpha_2=language.language_code)

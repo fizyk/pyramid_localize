@@ -1,0 +1,2 @@
+Declare ``Language`` columns in the SQLAlchemy 2.0 style with ``Mapped``/``mapped_column``.
+The generated schema is unchanged. Type-check the code with mypy in pre-commit.
