@@ -15,7 +15,7 @@ from pyramid.i18n import TranslationString, make_localizer
 from pyramid.interfaces import ILocalizer, ITranslationDirectories
 from pyramid.path import package_path
 from pyramid.request import Request
-from translationstring import _interp_regex  # type: ignore[attr-defined]
+from translationstring import _interp_regex  # type: ignore[attr-defined]  # ty: ignore[unresolved-import]
 
 log = logging.getLogger(__name__)
 

@@ -136,6 +136,12 @@ ignore_missing_imports = true
 module = [ "pyramid_localize.subscribers.*", "pyramid_localize.views.*" ]
 disallow_untyped_decorators = false
 
+[tool.ty.analysis]
+# Same reasoning as for mypy above: treat untyped packages as Any instead of
+# inferring from their sources, since pyramid attaches most request attributes
+# dynamically.
+replace-imports-with-any = [ "pyramid.**", "transaction.**", "zope.**" ]
+
 [tool.tbump]
 
 [[tool.tbump.before_commit]]

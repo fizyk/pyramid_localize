@@ -1,0 +1,1 @@
+Type-check the code with ty alongside mypy in pre-commit.

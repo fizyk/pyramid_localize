@@ -22,4 +22,4 @@ def language(field: str) -> Callable[[dict[str, Any], Request], bool]:
     return predicate
 
 
-language.__text__ = "language predicate, to determine allowed languages in route"  # type: ignore[attr-defined]
+language.__text__ = "language predicate, to determine allowed languages in route"  # type: ignore[attr-defined]  # ty: ignore[unresolved-attribute]

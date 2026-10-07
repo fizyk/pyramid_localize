@@ -1,6 +1,6 @@
 ---
 ci:
-  skip: [mypy]
+  skip: [mypy, ty]
 
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
@@ -49,6 +49,11 @@ repos:
     rev: v1.29.0
     hooks:
       - id: zizmor
+
+  - repo: https://github.com/astral-sh/ty-pre-commit
+    rev: v0.0.85
+    hooks:
+      - id: ty
 
   - repo: local
     hooks:

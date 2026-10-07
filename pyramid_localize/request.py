@@ -38,7 +38,8 @@ class LocalizeRequestMixin:
 
         .. note:: see :meth:`pyramid.request.Request.route_url`
         """
-        return super().route_url(route_name, *elements, **self.default_locale(**kw))  # type: ignore[misc,no-any-return]
+        route_kw = self.default_locale(**kw)
+        return super().route_url(route_name, *elements, **route_kw)  # type: ignore[misc,no-any-return]  # ty: ignore[unresolved-attribute]
 
 
 def locale_id(request: Request) -> int:
