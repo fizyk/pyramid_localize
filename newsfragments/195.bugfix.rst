@@ -1,0 +1,2 @@
+``str(Language)`` now returns the language name. It used to return bytes, which
+made ``str()`` raise ``TypeError``. The Python 2 leftover ``Language.__unicode__`` was removed.

@@ -59,6 +59,7 @@ Changelog = "https://github.com/fizyk/pyramid_localize/blob/v2.0.0/CHANGES.rst"
 dev = [
     "babel==2.18.0",
     "mock==5.2.0",
+    "mypy==2.3.1; implementation_name=='cpython'",
     "pycountry==26.2.16",
     "pyramid==2.1.0",
     "pyramid-basemodel==1.0.0",
@@ -69,6 +70,8 @@ dev = [
     "sqlalchemy==2.0.54",
     "towncrier==26.9.0",
     "translationstring==1.4",
+    "types-mock==5.2.0.20260518",
+    "types-translationstring==1.4.0.20260408",
     "zope-sqlalchemy==4.1",
 ]
 release = [
@@ -99,6 +102,45 @@ keep_full_version = true
 generate_python_version_classifiers = false
 table_format = "long"
 sub_table_spacing = "\n"
+
+[tool.mypy]
+exclude = [ "^\\.venv/", "^docs/" ]
+ignore_missing_imports = false
+follow_imports = "silent"
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_return_any = true
+warn_unreachable = true
+allow_untyped_globals = false
+allow_redefinition = false
+implicit_reexport = false
+strict_equality = true
+pretty = true
+no_implicit_optional = true
+show_error_codes = true
+
+# Neither pyramid, transaction nor the zope packages ship a py.typed marker,
+# and no stub distributions exist for them on PyPI.
+[[tool.mypy.overrides]]
+module = [ "pyramid.*", "transaction", "zope.*" ]
+ignore_missing_imports = true
+
+# pyramid's view_config, view_defaults and subscriber decorators are untyped.
+[[tool.mypy.overrides]]
+module = [ "pyramid_localize.subscribers.*", "pyramid_localize.views.*" ]
+disallow_untyped_decorators = false
+
+[tool.ty.analysis]
+# Same reasoning as for mypy above: treat untyped packages as Any instead of
+# inferring from their sources, since pyramid attaches most request attributes
+# dynamically.
+replace-imports-with-any = [ "pyramid.**", "transaction.**", "zope.**" ]
 
 [tool.tbump]
 

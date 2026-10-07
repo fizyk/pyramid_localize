@@ -4,19 +4,23 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """pyramid_localize configuration module."""
 
+from typing import Any
+
+from pyramid.config import Configurator
+
 try:  # pragma: no cover
     import babel
 except ImportError:  # pragma: no cover
-    babel = False
+    babel = None  # type: ignore[assignment]
 
 from pyramid_localize.request import database_locales, locale_id, locales
 
 __version__ = "2.0.0"
 
 
-def build_localize_config(settings):
+def build_localize_config(settings: dict[str, Any]) -> dict[str, Any]:
     """Build localize settings."""
-    localize_config = {
+    localize_config: dict[str, Any] = {
         "pybabel": "pybabel",
         "locales": {  # available and default locale for your app
             "available": ["en", "de", "pl"],
@@ -44,7 +48,7 @@ def build_localize_config(settings):
     return localize_config
 
 
-def includeme(configurator):
+def includeme(configurator: Configurator) -> None:
     """pyramid_localize configuration method."""
     # let's check if we have any configuration, or not
     if babel:

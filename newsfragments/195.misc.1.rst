@@ -1,0 +1,1 @@
+Run pre-commit, including mypy, in a GitHub Actions workflow.

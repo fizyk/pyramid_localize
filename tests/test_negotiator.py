@@ -1,16 +1,18 @@
 """Locale negotiator related tests."""
 
+from mock import Mock
+
 from pyramid_localize.negotiator import locale_negotiator
 
 
-def test_negotiate_attr(locale_negotiator_request):
+def test_negotiate_attr(locale_negotiator_request: Mock) -> None:
     """Locale_negotiator - negotiate locale from request attribute."""
     locale = locale_negotiator(locale_negotiator_request)
 
     assert locale == "fr"
 
 
-def test_negotiate_path(locale_negotiator_request):
+def test_negotiate_path(locale_negotiator_request: Mock) -> None:
     """Locale_negotiator - negotiate locale from path."""
     locale_negotiator_request._LOCALE_ = None
     locale = locale_negotiator(locale_negotiator_request)
@@ -18,7 +20,7 @@ def test_negotiate_path(locale_negotiator_request):
     assert locale == "pl"
 
 
-def test_negotiate_cookie(locale_negotiator_request):
+def test_negotiate_cookie(locale_negotiator_request: Mock) -> None:
     """locale_negotiator - negotiate locale from cookie."""
     locale_negotiator_request._LOCALE_ = None
     locale_negotiator_request.path = "/page"
@@ -27,7 +29,7 @@ def test_negotiate_cookie(locale_negotiator_request):
     assert locale == "cz"
 
 
-def test_negotiate_headers(locale_negotiator_request):
+def test_negotiate_headers(locale_negotiator_request: Mock) -> None:
     """Locale_negotiator:header.
 
     Negotiate locale from a header.
@@ -40,7 +42,7 @@ def test_negotiate_headers(locale_negotiator_request):
     assert locale == "de"
 
 
-def test_negotiate_default(locale_negotiator_request):
+def test_negotiate_default(locale_negotiator_request: Mock) -> None:
     """Locale_negotiator:default.
 
     Other ways fail, return default locale.

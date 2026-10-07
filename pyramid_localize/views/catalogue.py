@@ -9,10 +9,12 @@ import os
 import subprocess
 import sys
 import time
+from typing import Any
 
 from pyramid.asset import resolve_asset_spec
 from pyramid.httpexceptions import HTTPFound
 from pyramid.path import package_path
+from pyramid.request import Request
 from pyramid.view import view_config, view_defaults
 
 from pyramid_localize.tools import destination_path, set_localizer
@@ -24,17 +26,17 @@ log = logging.getLogger(__name__)
     permission="manage_translations",
     renderer="pyramid_localize:resources/templates/index.mako",
 )
-class CatalogueView(object):
+class CatalogueView:
     """View class for catalogue manipulation actions."""
 
-    def __init__(self, request):
+    def __init__(self, request: Request) -> None:
         """Assign request.
 
         :param pyramid.request.Request request:
         """
         self.request = request
 
-    def _translation_file(self, language, domain, extension="po"):
+    def _translation_file(self, language: str, domain: str, extension: str = "po") -> str:
         """Create a translation file path.
 
         :param str language: two-letter language code
@@ -51,12 +53,14 @@ class CatalogueView(object):
             )
         )
 
-    def _translation_template_path(self, spec):
+    def _translation_template_path(self, spec: str) -> str:
         """Calculate path to translation template file.
 
         :param str spec: either full path, or package related path
         """
         # resolving possible asset spec to path (pyramid way):
+        package_name: str | None
+        filename: str
         package_name, filename = resolve_asset_spec(spec)
         if package_name is None:  # absolute filename
             return os.path.abspath(filename)
@@ -65,7 +69,7 @@ class CatalogueView(object):
         return os.path.abspath(os.path.join(package_path(package), filename))
 
     @view_config(route_name="localize:index")
-    def index(self):
+    def index(self) -> dict[str, Any]:
         """List domains, and its files of files with metadata.
 
         :returns:
@@ -84,7 +88,7 @@ class CatalogueView(object):
                     # more languages
                 }
         """
-        translations = {}
+        translations: dict[str, dict[str, dict[str, str | None]]] = {}
         translation_sources = self.request.registry["localize"]["translation"]["sources"]
 
         for language in self.request.registry["localize"]["locales"]["available"]:
@@ -106,7 +110,7 @@ class CatalogueView(object):
         return {"translations": translations}
 
     @view_config(route_name="localize:update")
-    def update_catalogue(self):
+    def update_catalogue(self) -> HTTPFound:
         """Update or initialize translation catalogues.
 
         Create (.po files) for each language/catalogue from their respective
@@ -169,7 +173,7 @@ class CatalogueView(object):
         return HTTPFound(location=self.request.route_url("localize:index"))
 
     @view_config(route_name="localize:compile")
-    def compile_catalogue(self):
+    def compile_catalogue(self) -> HTTPFound:
         """Compile all translation files.
 
         For every language defined compile .po files into into .mo file that's used by gettext.
@@ -208,7 +212,7 @@ class CatalogueView(object):
 
     @view_config(route_name="localize:reload", xhr="True", renderer="json")
     @view_config(route_name="localize:reload")
-    def reload_catalogue(self):
+    def reload_catalogue(self) -> HTTPFound | dict[str, Any]:
         """Reload translation catalogue for application it's run in.
 
         .. note::

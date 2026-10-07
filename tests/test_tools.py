@@ -2,26 +2,28 @@
 
 import os
 import sys
+from typing import Any
 
 import pytest
 from mock import Mock
 from pyramid.i18n import Localizer
 from pyramid.interfaces import ILocalizer
 from pyramid.path import package_path
+from pyramid.request import Request
 
 from pyramid_localize import build_localize_config
 from pyramid_localize.tools import destination_path, dummy_autotranslate, set_localizer
 from tests.conftest import web_request_func
 
 
-def test_simple(web_request):
+def test_simple(web_request: Request) -> None:
     """Simple localizer setting test on a request."""
     set_localizer(web_request)
     assert isinstance(web_request.localizer, Localizer)
     assert hasattr(web_request, "_")
 
 
-def test_reset(web_request):
+def test_reset(web_request: Request) -> None:
     """Test resetting localizer capabilites.
 
     1. localizer gets set on a request.
@@ -48,14 +50,14 @@ def test_reset(web_request):
     assert old_localizer is not request.localizer
 
 
-def test_translate(web_request):
+def test_translate(web_request: Request) -> None:
     """Simple test for translating method call."""
     msgid = "Test message"
     set_localizer(web_request)
     assert msgid == web_request._(msgid)
 
 
-def test_destination_filename():
+def test_destination_filename() -> None:
     """Testing translation fullpath resolve."""
     request = Mock()
     path = "/some/path/to/translations"
@@ -64,7 +66,7 @@ def test_destination_filename():
     assert result == path
 
 
-def test_destination_package():
+def test_destination_package() -> None:
     """Testing translation package:path resolve."""
     request = Mock()
     request.registry = {"localize": build_localize_config({"localize.translation.destination": "tests:translations"})}
@@ -83,6 +85,6 @@ def test_destination_package():
         ),
     ),
 )
-def test_dummy_message(kwargs, result):
+def test_dummy_message(kwargs: dict[str, Any], result: str) -> None:
     """Test dummy autotranslate method."""
     assert dummy_autotranslate(**kwargs) == result

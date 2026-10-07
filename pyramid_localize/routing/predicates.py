@@ -4,11 +4,16 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Localize route predicate."""
 
+from collections.abc import Callable
+from typing import Any
 
-def language(field):
+from pyramid.request import Request
+
+
+def language(field: str) -> Callable[[dict[str, Any], Request], bool]:
     """Create language predicate for given url match field."""
 
-    def predicate(info, request):
+    def predicate(info: dict[str, Any], request: Request) -> bool:
         """Check whether language is one of the defaults."""
         if field in info["match"] and info["match"][field] in request.registry["localize"]["locales"]["available"]:
             return True
@@ -17,4 +22,4 @@ def language(field):
     return predicate
 
 
-language.__text__ = "language predicate, to determine allowed languages in route"
+language.__text__ = "language predicate, to determine allowed languages in route"  # type: ignore[attr-defined]  # ty: ignore[unresolved-attribute]

@@ -4,15 +4,22 @@
 # the MIT License (MIT): http://opensource.org/licenses/MIT
 """Request related code."""
 
+from typing import Any
+
 import pyramid_basemodel
+from pyramid.registry import Registry
+from pyramid.request import Request
 
 from pyramid_localize.models import Language
 
 
-class LocalizeRequestMixin(object):
+class LocalizeRequestMixin:
     """Mixin adding overwriting Request methods."""
 
-    def default_locale(self, **kw):
+    registry: Registry
+    locale_name: str
+
+    def default_locale(self, **kw: Any) -> dict[str, Any]:
         """Set up default locale for path kwargs.
 
         Can be used in custom route_url overwrites.
@@ -26,15 +33,16 @@ class LocalizeRequestMixin(object):
 
         return kw
 
-    def route_url(self, route_name, *elements, **kw):
+    def route_url(self, route_name: str, *elements: Any, **kw: Any) -> str:
         """Overwrite original route_url to handle default locale within route.
 
         .. note:: see :meth:`pyramid.request.Request.route_url`
         """
-        return super().route_url(route_name, *elements, **self.default_locale(**kw))
+        route_kw = self.default_locale(**kw)
+        return super().route_url(route_name, *elements, **route_kw)  # type: ignore[misc,no-any-return]  # ty: ignore[unresolved-attribute]
 
 
-def locale_id(request):
+def locale_id(request: Request) -> int:
     """Return database id of a current locale name.
 
     :returns: database id of a language code needed for translations
@@ -43,23 +51,23 @@ def locale_id(request):
     if request.locale_name not in request._database_locales:
         _create_locale(request.locale_name, request)
 
-    return request._database_locales[request.locale_name].id
+    return request._database_locales[request.locale_name].id  # type: ignore[no-any-return]
 
 
-def database_locales(request):
+def database_locales(request: Request) -> dict[str, Language]:
     """Return all database locales available.
 
     :returns: dictionary of Language objects language_code: Language
     :rtype: dict
     """
-    db_locales = {}
+    db_locales: dict[str, Language] = {}
     for language in pyramid_basemodel.Session.query(Language).all():
         db_locales[language.language_code] = language
 
     return db_locales
 
 
-def locales(request, *, config=False):
+def locales(request: Request, *, config: bool = False) -> dict[str, Language]:
     """Return locales.
 
     :param bool config: Whether to restrict list with config
@@ -68,7 +76,7 @@ def locales(request, *, config=False):
     :rtype: dict
     """
     if config:
-        available_locales = {}
+        available_locales: dict[str, Language] = {}
         for available_locale in request.registry["localize"]["locales"]["available"]:
             if available_locale not in request._database_locales:
                 _create_locale(available_locale, request)
@@ -76,10 +84,10 @@ def locales(request, *, config=False):
 
         return available_locales
 
-    return request._database_locales
+    return request._database_locales  # type: ignore[no-any-return]
 
 
-def _create_locale(new_locale, request):
+def _create_locale(new_locale: str, request: Request) -> None:
     language = Language(name=str(new_locale), native_name=str(new_locale), language_code=str(new_locale))
     pyramid_basemodel.Session.add(language)
     request._database_locales = database_locales(request)
