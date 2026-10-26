@@ -67,7 +67,7 @@ dev = [
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
     "pytest-pyramid==1.1.1",
-    "sqlalchemy==2.0.54",
+    "sqlalchemy==2.0.55",
     "towncrier==26.9.0",
     "translationstring==1.4",
     "types-mock==5.2.0.20260518",
