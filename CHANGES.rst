@@ -3,6 +3,36 @@ CHANGES
 
 .. towncrier release notes start
 
+pyramid-localize 2.1.0 (2026-11-05)
+===================================
+
+Features
+--------
+
+- Add type annotations throughout and ship a ``py.typed`` marker, so the package's
+  types are now used by type checkers in downstream projects. (`#195 <https://github.com/fizyk/pyramid_localize/issues/195>`_)
+
+
+Bugfixes
+--------
+
+- ``str(Language)`` now returns the language name. It used to return bytes, which
+  made ``str()`` raise ``TypeError``. The Python 2 leftover ``Language.__unicode__`` was removed. (`#195 <https://github.com/fizyk/pyramid_localize/issues/195>`_)
+
+
+Miscellaneous
+-------------
+
+- Run pre-commit, including mypy, in a GitHub Actions workflow. (`#195 <https://github.com/fizyk/pyramid_localize/issues/195>`_)
+- Declare ``Language`` columns in the SQLAlchemy 2.0 style with ``Mapped``/``mapped_column``.
+  The generated schema is unchanged. Type-check the code with mypy in pre-commit. (`#195 <https://github.com/fizyk/pyramid_localize/issues/195>`_)
+- Add actionlint to pre-commit (`#778 <https://github.com/fizyk/pyramid_localize/issues/778>`_)
+- Configure Dependabot to update pre-commit dependencies. (`#781 <https://github.com/fizyk/pyramid_localize/issues/781>`_)
+- Turn off autofix_prs and change pre-commit's autoupdate schedule to quarterly (`#789 <https://github.com/fizyk/pyramid_localize/issues/789>`_)
+- Type-check the code with ty alongside mypy in pre-commit. (`#805 <https://github.com/fizyk/pyramid_localize/issues/805>`_)
+- Update workflows after zizmor update to 1.30.1 (`#811 <https://github.com/fizyk/pyramid_localize/issues/811>`_)
+
+
 pyramid-localize 2.0.0 (2026-09-05)
 ===================================
 
